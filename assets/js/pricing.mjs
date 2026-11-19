@@ -99,7 +99,7 @@ export function priceCart(catalog, items, couponCode, opts = {}) {
       unitPrice: u.price, unitOriginal: u.original, saleReason: u.reason,
       vatRate: Number.isFinite(p.vat) ? p.vat : (catalog.vatDefault ?? 24),
       amount: u.price * qty, cat: p.cat, note, ask: p.ask || null, priceNote: p.priceNote || null,
-      _req: (u.variant && u.variant.requires) || p.requires || null, _site: !!p.needsSite, _kind: p.kind || null, _not: p.notWith || null
+      _req: (u.variant && u.variant.requires && u.variant.requires.length ? u.variant.requires : p.requires) || null, _site: !!p.needsSite, _kind: p.kind || null, _not: p.notWith || null
     });
   }
 
@@ -108,7 +108,7 @@ export function priceCart(catalog, items, couponCode, opts = {}) {
   const name = id => (byId.get(id) || {}).name || id;
   const hasBuild = lines.some(l => l._kind === 'build');
   for (const l of lines) {
-    if (l._req && !l._req.some(id => ids.has(id))) errors.push('Για «' + l.name + '» χρειάζεται επίσης: ' + l._req.map(name).join(' ή ') + '.');
+    if (l._req && l._req.length && !l._req.some(id => ids.has(id))) errors.push('Για «' + l.name + '» χρειάζεται επίσης: ' + l._req.map(name).join(' ή ') + '.');
     if (l._site && !hasBuild && !l.note) errors.push('«' + l.name + '»: γράψτε για ποια ιστοσελίδα είναι (π.χ. onoma.gr).');
     if (l._not && l._not.some(id => ids.has(id))) errors.push('«' + l.name + '»: περιλαμβάνεται ήδη στο ' + l._not.filter(id => ids.has(id)).map(name).join(', ') + '.');
     if (l._kind === 'hosting' && !lines.some(b => b._kind === 'build')) errors.push('Η φιλοξενία μπαίνει μαζί με μια ιστοσελίδα. Για ανανέωση, δείτε τη σελίδα «Ανανέωση».');

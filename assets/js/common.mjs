@@ -20,11 +20,14 @@ const CART = 'advon-shop:cart';
 let fullDemo = null;
 export async function demoCatalog() {
   if (fullDemo) return fullDemo;
+  let base = null;
+  try { const r = await fetch('data/catalog.json', { cache: 'no-store' }); if (r.ok) base = await r.json(); } catch (e) {}
+  if (!base) base = JSON.parse(document.getElementById('seed').textContent);
   const own = LS.get(DEMO_CAT, null);
-  if (own && own.products) return (fullDemo = own);
-  try { const r = await fetch('data/catalog.json', { cache: 'no-store' }); if (r.ok) return (fullDemo = await r.json()); } catch (e) {}
-  const seed = document.getElementById('seed');
-  return (fullDemo = JSON.parse(seed.textContent));
+  /* a demo catalogue saved from an older shop layout is dropped (its settings and coupons are kept) */
+  if (own && own.products && (own.schema || 1) === (base.schema || 1)) return (fullDemo = own);
+  if (own && own.products) { base.settings = { ...base.settings, ...(own.settings || {}) }; base.coupons = own.coupons || base.coupons; LS.set(DEMO_CAT, base); }
+  return (fullDemo = base);
 }
 export function resetDemoCache() { fullDemo = null; }
 

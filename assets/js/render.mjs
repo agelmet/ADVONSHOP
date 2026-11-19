@@ -42,7 +42,7 @@ export const listed = cat => (cat.products || []).filter(p => p.active !== false
 export const inCat = (cat, id) => listed(cat).filter(p => p.cat === id);
 export const catOf = (cat, id) => (cat.categories || []).find(c => c.id === id) || { name: '', desc: '' };
 export const byId = (cat, id) => (cat.products || []).find(p => p.id === id);
-const imgOf = (p, big) => p.img ? (big ? p.img : p.img.replace(/\.webp$/, '-600.webp')) : '';
+const imgOf = (p, big) => p.img ? (big ? p.img : p.img.replace(/\.webp$/, '-450.webp')) : '';
 
 export function fromPrice(cat, p, day = athensDay()) {
   if (p.variants && p.variants.length) {
@@ -51,136 +51,72 @@ export function fromPrice(cat, p, day = athensDay()) {
   }
   return { ...unitPrice(cat, p, null, day), from: false };
 }
-export function priceTxt(cat, p, vId) {
+const UNIT_SHORT = { year: '/ έτος', month: '/ μήνα', request: '/ αίτημα', page: '/ σελίδα', once: '', piece: '' };
+export const unitShort = u => UNIT_SHORT[u || 'once'] ?? '';
+/* THE price shown everywhere: one big number, its unit, and one short line under it */
+export function priceBlock(cat, p, vId, { big = false } = {}) {
   const u = vId ? unitPrice(cat, p, vId) : fromPrice(cat, p);
-  if (p.quote) return '<b class="pr">Κατόπιν προσφοράς</b>';
-  if (!u || u.price == null) return '';
-  if (u.price === 0 && p.kind === 'build') return '<b class="pr free">Δωρεάν κατασκευή</b>';
-  if (u.price === 0 && p.unit === 'month') return `<b class="pr free">0 €</b><small>1ος μήνας</small>`;
-  const was = u.original > u.price ? `<s>${euro(u.original)}</s> ` : (p.compareAt && p.compareAt > u.price ? `<s>${euro(p.compareAt)}</s> ` : '');
-  return `${u.from && !vId ? '<small>από</small> ' : ''}${was}<b class="pr">${euro(u.price)}</b><small>${esc(unitEl(p.unit))}${u.price ? vatPlus(cat) : ''}</small>`;
+  if (!u) return '';
+  const show = p.listPrice != null && u.price === 0 ? p.listPrice : u.price;
+  const was = u.original > u.price ? u.original : (p.compareAt && p.compareAt > show ? p.compareAt : 0);
+  const note = p.priceNote ? `<span class="pnote${/0 €|δωρεάν|δώρο/i.test(p.priceNote) ? ' g' : ''}">${esc(p.priceNote)}</span>` : '';
+  return `<div class="price${big ? ' big' : ''}"><div class="pl">${was ? `<s>${euro(was)}</s>` : ''}<b class="pr">${euro(show)}</b><span class="pu">${esc(unitShort(p.unit))}${unitShort(p.unit) ? ' ' : ''}+ ΦΠΑ</span></div>${note}</div>`;
 }
-const variantOf = (p, st) => p.variants && p.variants.length ? ((st.vOf || {})[p.id] || p.variants[0].id) : null;
 export function includesTxt(cat, ref) {
-  const [id, v] = String(ref).split(':'); const p = byId(cat, id); if (!p) return id;
-  const vv = v && (p.variants || []).find(x => x.id === v);
-  return p.name + (vv ? ' · ' + vv.name : '');
-}
-export function includesSum(cat, p) {
-  return (p.includes || []).reduce((a, ref) => { const [id, v] = ref.split(':'); const q = byId(cat, id); if (!q) return a; const u = unitPrice(cat, q, v || null); return a + (u ? (u.price || (q.priceNote && /59/.test(q.priceNote) ? 5900 : 0)) : 0); }, 0);
+  const [id, v] = String(ref).split(':'), q = byId(cat, id); if (!q) return id;
+  const vn = v && q.variants ? (q.variants.find(x => x.id === v) || {}).name : '';
+  return q.name + (vn ? ' · ' + vn : '');
 }
 
-/* ---------- one product card ---------- */
-export function card(cat, p, st = {}, { wide = false } = {}) {
-  const inCart = (st.ids || []).includes(p.id);
-  const vId = variantOf(p, st);
-  const k = catOf(cat, p.cat).name;
-  const vs = (p.variants || []).length > 1 && p.kind !== 'build' ? `<div class="vs" role="group" aria-label="Επιλογή">${p.variants.map(v => `<button type="button" class="vchip${vId === v.id ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}" aria-pressed="${vId === v.id}">${esc(v.name)}</button>`).join('')}</div>` : '';
-  const quote = p.quote;
-  const btn = quote ? `<a class="add" href="https://advonmedia.com/#contact">Ζητήστε προσφορά ${icon('arrow')}</a>`
-    : p.kind === 'build' ? `<button type="button" class="add" data-open="${esc(p.id)}" data-step="buy">${inCart ? icon('check') + ' Στο καλάθι' : 'Επιλογή'}</button>`
-    : `<button type="button" class="add${inCart ? ' on' : ''}" data-add="${esc(p.id)}">${inCart ? icon('check') + ' Στο καλάθι' : icon('cart') + ' Προσθήκη'}</button>`;
-  return `<article class="pc${wide ? ' wide' : ''}${inCart ? ' in' : ''}" data-pid="${esc(p.id)}">
-   <button type="button" class="pimg" data-open="${esc(p.id)}" aria-label="Λεπτομέρειες: ${esc(p.name)}">${p.img ? `<img src="${esc(imgOf(p))}" srcset="${esc(imgOf(p))} 600w, ${esc(imgOf(p, true))} 1200w" sizes="${wide ? '(max-width:900px) 100vw, 600px' : '(max-width:700px) 100vw, (max-width:1100px) 50vw, 400px'}" width="600" height="450" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="pic">${icon(p.icon)}</span>`}
-    ${inCart ? `<span class="incart">${icon('check')} Στο καλάθι</span>` : ''}</button>
+/* one product card — the same for every product in the shop */
+export function card(cat, p, st = {}) {
+  const ids = st.ids || [], inCart = ids.includes(p.id), vOf = st.vOf || {};
+  const vId = p.variants && p.variants.length ? (vOf[p.id] || p.variants[0].id) : null;
+  const img = imgOf(p);
+  const chips = vId ? `<div class="vs" role="group" aria-label="Επιλογή">${p.variants.map(v => `<button type="button" class="vchip${v.id === vId ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}" aria-pressed="${v.id === vId}">${esc(v.name)}</button>`).join('')}</div>` : '';
+  const vnote = vId ? (p.variants.find(v => v.id === vId) || {}).note : '';
+  const btn = p.link ? `<a class="add" href="${esc(p.link)}">Συνέχεια ${icon('arrow')}</a>`
+    : inCart ? `<button type="button" class="add on" data-add="${esc(p.id)}">${icon('check')} Στο καλάθι</button>`
+    : `<button type="button" class="add" data-add="${esc(p.id)}">${icon('cart')} Στο καλάθι</button>`;
+  return `<article class="pc${inCart ? ' in' : ''}" id="p-${esc(p.id)}">
+   <button type="button" class="pimg" data-open="${esc(p.id)}" aria-label="${esc(p.name)} — λεπτομέρειες">${img ? `<img src="${esc(img)}" srcset="${esc(img)} 450w, ${esc(imgOf(p, true))} 900w" sizes="(max-width:700px) 50vw, 340px" width="450" height="450" alt="${esc(p.name)}" loading="lazy" decoding="async">` : ''}${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ''}</button>
    <div class="pb">
-    <div class="pk">${esc(k)}${p.badge ? `<span class="badge s">${esc(p.badge)}</span>` : ''}</div>
     <h3><button type="button" data-open="${esc(p.id)}">${esc(p.name)}</button></h3>
-    <p class="ps">${esc(p.short)}</p>
-    ${bullets(p.desc, wide ? 5 : 3)}
-    ${vs}
-    <div class="pf"><div class="pp"><div class="price">${priceTxt(cat, p, vs ? vId : undefined)}</div>${p.priceNote ? `<div class="pnote">${esc(p.priceNote)}</div>` : ''}</div>
-     <div class="pa">${btn}<button type="button" class="det" data-open="${esc(p.id)}">Λεπτομέρειες</button></div></div>
+    <p class="ps">${esc(p.short || '')}</p>
+    ${chips}${vnote ? `<p class="vnote">${esc(vnote)}</p>` : ''}
+    <div class="pf">${priceBlock(cat, p, vId)}</div>
+    <div class="pa">${btn}<button type="button" class="det" data-open="${esc(p.id)}">Λεπτομέρειες</button></div>
    </div></article>`;
 }
-
 export function grid(cat, catId, st) {
-  const ps = inCat(cat, catId);
-  if (ps.length === 1) return `<div class="pgrid g1">${card(cat, ps[0], st, { wide: true })}</div>`;
-  return `<div class="pgrid g${Math.min(3, ps.length)}">${ps.map(p => card(cat, p, st)).join('')}</div>`;
+  const ps = inCat(cat, catId), n = ps.length;
+  const cols = n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n <= 2 ? 2 : 4;
+  return `<div class="pgrid c${cols}">${ps.map(p => card(cat, p, st)).join('')}</div>`;
 }
 
-/* hosting comparison under the websites */
-export function hostingStrip(cat) {
-  const h = byId(cat, 'hosting'), g = byId(cat, 'growth'); if (!h || !g) return '';
-  const col = (p, rec) => `<div class="hc${rec ? ' rec' : ''}"><div class="hct"><b>${esc(p.name)}</b>${p.badge ? `<span class="badge s">${esc(p.badge)}</span>` : ''}</div><div class="price">${priceTxt(cat, p)}</div><p>${esc(p.short)}</p>${bullets(p.desc)}</div>`;
-  return `<div class="hstrip"><div class="hsi"><span class="hico">${icon('shield')}</span><div><h3>Φιλοξενία — μπαίνει μαζί με κάθε ιστοσελίδα</h3><p>Τη διαλέγετε όταν προσθέτετε την ιστοσελίδα στο καλάθι. Το domain name είναι δώρο. Η ανανέωση γίνεται κάθε χρόνο από τη σελίδα <a href="ananeosi.html">Ανανέωση</a>.</p></div></div><div class="hcols">${col(h)}${col(g, true)}</div></div>`;
-}
-
-/* ---------- bundles ---------- */
-export function bundles(cat, st = {}) {
-  const ps = inCat(cat, 'bundles');
-  return `<div class="pgrid g${Math.min(3, ps.length)}">${ps.map(p => {
-    const inCart = (st.ids || []).includes(p.id), sum = p.compareAt || includesSum(cat, p), u = unitPrice(cat, p, null), save = sum - (u ? u.price : 0);
-    return `<article class="pc bc${p.badge ? ' hot' : ''}${inCart ? ' in' : ''}" data-pid="${esc(p.id)}">
-     <button type="button" class="pimg" data-open="${esc(p.id)}" aria-label="Λεπτομέρειες: ${esc(p.name)}">${p.img ? `<img src="${esc(imgOf(p))}" srcset="${esc(imgOf(p))} 600w, ${esc(imgOf(p, true))} 1200w" sizes="(max-width:700px) 100vw, 400px" width="600" height="450" alt="Πακέτο ${esc(p.name)}" loading="lazy" decoding="async">` : ''}
-      ${save > 0 ? `<span class="save">−${euro(save)} / μήνα</span>` : ''}</button>
-     <div class="pb"><div class="pk">Πακέτο${p.badge ? `<span class="badge s">${esc(p.badge)}</span>` : ''}</div><h3><button type="button" data-open="${esc(p.id)}">${esc(p.name)}</button></h3>
-      <ul class="ticks inc">${(p.includes || []).map(r => `<li>${icon('check')}<span>${esc(includesTxt(cat, r))}</span></li>`).join('')}</ul>
-      <div class="pf"><div class="pp"><div class="price">${priceTxt(cat, p)}</div>${p.priceNote ? `<div class="pnote">${esc(p.priceNote)}</div>` : ''}</div>
-      <div class="pa"><button type="button" class="add${inCart ? ' on' : ''}" data-add="${esc(p.id)}">${inCart ? icon('check') + ' Στο καλάθι' : icon('cart') + ' Προσθήκη'}</button><button type="button" class="det" data-open="${esc(p.id)}">Λεπτομέρειες</button></div></div></div></article>`;
-  }).join('')}</div>`;
-}
-
-/* ---------- add-ons, by group ---------- */
-export function extras(cat, st = {}) {
-  const ps = inCat(cat, 'extras'), groups = [];
-  ps.forEach(p => { const g = p.group || 'Προσθήκες'; let x = groups.find(y => y.n === g); if (!x) groups.push(x = { n: g, ps: [] }); x.ps.push(p); });
-  return groups.map(g => `<div class="xg"><h3 class="xgh">${esc(g.n)}</h3><div class="xgrid c${g.ps.length % 3 === 0 ? 3 : g.ps.length % 2 === 0 ? 2 : 3}">${g.ps.map(p => {
-    const inCart = (st.ids || []).includes(p.id), blocked = (p.notWith || []).some(id => (st.ids || []).includes(id));
-    const vId = variantOf(p, st);
-    return `<article class="xc${inCart ? ' in' : ''}" data-pid="${esc(p.id)}">
-     <button type="button" class="ximg" data-open="${esc(p.id)}" aria-label="Λεπτομέρειες: ${esc(p.name)}">${p.img ? `<img src="${esc(imgOf(p))}" width="600" height="450" alt="${esc(p.name)}" loading="lazy" decoding="async">` : `<span class="pic">${icon(p.icon)}</span>`}</button>
-     <div class="xb"><h4><button type="button" data-open="${esc(p.id)}">${esc(p.name)}</button></h4><p>${esc(blocked ? 'Περιλαμβάνεται ήδη στο Growth.' : p.short)}</p>
-      ${(p.variants || []).length > 1 ? `<div class="vs sm">${p.variants.map(v => `<button type="button" class="vchip${vId === v.id ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}">${esc(v.name)}</button>`).join('')}</div>` : ''}
-      <div class="xf"><div class="price">${priceTxt(cat, p, (p.variants || []).length > 1 ? vId : undefined)}</div>
-       <button type="button" class="add sm${inCart ? ' on' : ''}" data-add="${esc(p.id)}" ${blocked ? 'disabled' : ''} aria-label="${inCart ? 'Στο καλάθι' : 'Προσθήκη'}: ${esc(p.name)}">${inCart ? icon('check') : icon('plus')}</button></div></div></article>`;
-  }).join('')}</div></div>`).join('');
-}
-
-/* ---------- existing clients + more ---------- */
-export function clientsBlock(cat) {
-  const ch = byId(cat, 'changes');
-  return `<div class="cgrid">
-   ${ch ? `<div class="cc"><span class="cico">${icon('edit')}</span><h3>${esc(ch.name)}</h3><p>${esc(ch.short)}</p><div class="price">${priceTxt(cat, ch)}</div>
-     <label class="fl"><span>Ποια είναι η ιστοσελίδα σας;</span><input id="chgDom" placeholder="π.χ. onoma.gr" inputmode="url" autocomplete="url"></label>
-     <button type="button" class="add" data-chgadd>${icon('cart')} Προσθήκη</button></div>` : ''}
-   <a class="cc link" href="ananeosi.html"><span class="cico">${icon('cal')}</span><h3>Ανανέωση φιλοξενίας</h3><p>Ανανεώστε τη φιλοξενία της σελίδας σας για έναν ακόμα χρόνο — σε ένα λεπτό, με κάρτα ή IRIS.</p><div class="price"><small>από</small> <b class="pr">130 €</b><small>/ έτος + ΦΠΑ</small></div><span class="add ghost">Ανανέωση ${icon('arrow')}</span></a>
-  </div>`;
-}
-export function moreBlock(cat, st) { return grid(cat, 'more', st); }
-
-/* ---------- product details (modal) ---------- */
+/* the product window */
 export function details(cat, p, st = {}) {
-  const vId = variantOf(p, st), inCart = (st.ids || []).includes(p.id);
-  const steps = lines(p.steps);
-  const isB = p.kind === 'build', isBundle = p.kind === 'bundle';
-  const hostOpts = isB ? (((p.variants || []).find(v => v.id === vId) || {}).requires || p.requires || []) : [];
-  const hostSel = (st.hostSel && hostOpts.includes(st.hostSel)) ? st.hostSel : hostOpts[0];
-  const ups = (st.ups || []).map(id => byId(cat, id)).filter(Boolean);
-  return `<div class="md">
-   <div class="mdimg">${p.img ? `<img src="${esc(imgOf(p, true))}" width="1200" height="900" alt="${esc(p.name)}">` : `<span class="pic big">${icon(p.icon)}</span>`}</div>
-   <div class="mdb">
-    <div class="pk">${esc(isBundle ? 'Πακέτο' : catOf(cat, p.cat).name)}${p.badge ? `<span class="badge s">${esc(p.badge)}</span>` : ''}</div>
-    <h2 id="mdT">${esc(p.name)}</h2>
-    <p class="lead2">${esc(p.long || p.short)}</p>
-    ${(p.variants || []).length > 1 ? `<div class="mdsec"><h4>${isB ? 'Τι θέλετε να περιλαμβάνει' : 'Διαλέξτε'}</h4><div class="opts">${p.variants.map(v => { const u = unitPrice(cat, p, v.id); return `<button type="button" class="opt${vId === v.id ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}"><span class="rd"></span><span class="ot">${esc(v.name)}</span><b>${u && u.price ? euro(u.price) : (isB ? 'Δωρεάν' : '0 €')}</b></button>`; }).join('')}</div></div>` : ''}
-    ${hostOpts.length ? `<div class="mdsec"><h4>Φιλοξενία <span class="req">απαραίτητη</span></h4><div class="opts">${hostOpts.map(id => { const h = byId(cat, id); if (!h) return ''; return `<button type="button" class="opt${hostSel === id ? ' on' : ''}" data-hsel="${esc(id)}"><span class="rd"></span><span class="ot">${esc(h.name)}${h.badge ? ` <span class="badge s">${esc(h.badge)}</span>` : ''}<small>${esc(h.short)}</small></span><b>${euro(h.price)}<small>/ έτος</small></b></button>`; }).join('')}</div></div>` : ''}
-    ${isBundle ? `<div class="mdsec"><h4>Περιλαμβάνει</h4>${bullets((p.includes || []).map(r => includesTxt(cat, r)).join('\n'))}</div>` : `<div class="mdsec"><h4>Τι περιλαμβάνει</h4>${bullets(p.desc)}</div>`}
-    ${steps.length ? `<div class="mdsec"><h4>Πώς δουλεύει</h4><ol class="steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol></div>` : ''}
-    <div class="mdbuy"><div><div class="price">${priceTxt(cat, p, (p.variants || []).length > 1 ? vId : undefined)}</div>${p.priceNote ? `<div class="pnote">${esc(p.priceNote)}</div>` : ''}${hostOpts.length ? `<div class="pnote">+ ${esc((byId(cat, hostSel) || {}).name || '')} ${euro((byId(cat, hostSel) || {}).price || 0)} / έτος + ΦΠΑ</div>` : ''}</div>
-     ${p.quote ? `<a class="add big" href="https://advonmedia.com/#contact">Ζητήστε προσφορά ${icon('arrow')}</a>` : `<button type="button" class="add big${inCart && !isB ? ' on' : ''}" data-buy="${esc(p.id)}">${inCart && !isB ? icon('check') + ' Στο καλάθι' : icon('cart') + ' Προσθήκη στο καλάθι'}</button>`}</div>
-    ${ups.length ? `<div class="mdsec"><h4>Συχνά μαζί</h4><div class="upl">${ups.map(u => upRow(cat, u, st)).join('')}</div></div>` : ''}
+  const vOf = st.vOf || {}, ids = st.ids || [], inCart = ids.includes(p.id);
+  const vId = p.variants && p.variants.length ? (vOf[p.id] || p.variants[0].id) : null;
+  const opts = vId ? `<div class="mdsec"><h4>Διαλέξτε</h4><div class="opts">${p.variants.map(v => { const u = unitPrice(cat, p, v.id); return `<button type="button" class="opt${v.id === vId ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}"><span class="rd"></span><span class="ot">${esc(v.name)}${v.note ? `<small>${esc(v.note)}</small>` : ''}</span><b>${euro(u ? u.price : v.price)}<small>${esc(unitShort(p.unit))}</small></b></button>`; }).join('')}</div></div>` : '';
+  const inc = p.kind === 'bundle' && p.includes && p.includes.length ? `<div class="mdsec"><h4>Περιλαμβάνει</h4>${bullets(p.includes.map(r => includesTxt(cat, r)).join('\n'))}</div>` : '';
+  const what = p.desc ? `<div class="mdsec"><h4>Τι περιλαμβάνει</h4>${bullets(p.desc)}</div>` : '';
+  const steps = p.steps ? `<div class="mdsec"><h4>Πώς δουλεύει</h4><ol class="steps">${lines(p.steps).map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : '';
+  const ups = (st.ups || []).map(id => byId(cat, id)).filter(q => q && q.listed !== false && !ids.includes(q.id));
+  const btn = p.link ? `<a class="add big" href="${esc(p.link)}">Συνέχεια στην ανανέωση ${icon('arrow')}</a>`
+    : inCart ? `<button type="button" class="add big on" data-buy="${esc(p.id)}">${icon('check')} Στο καλάθι — δείτε το καλάθι</button>`
+    : `<button type="button" class="add big" data-buy="${esc(p.id)}">${icon('cart')} Προσθήκη στο καλάθι</button>`;
+  return `<div class="md"><div class="mdimg">${p.img ? `<img src="${esc(imgOf(p, true))}" width="900" height="900" alt="${esc(p.name)}">` : ''}</div>
+   <div class="mdb">${p.badge ? `<span class="badge s">${esc(p.badge)}</span>` : ''}<h2 id="mdTitle">${esc(p.name)}</h2>
+    ${priceBlock(cat, p, vId, { big: true })}
+    <p class="lead2">${esc(p.long || p.short || '')}</p>
+    ${opts}<div class="mdbuy">${btn}</div>${inc}${what}${steps}
+    ${ups.length ? `<div class="mdsec"><h4>Ταιριάζει μαζί</h4><div class="upl">${ups.slice(0, 3).map(q => upRow(cat, q, st)).join('')}</div></div>` : ''}
    </div></div>`;
 }
+/* a small row used in the cart and the window */
 export function upRow(cat, p, st = {}) {
-  const inCart = (st.ids || []).includes(p.id);
-  return `<div class="up">${p.img ? `<img src="${esc(imgOf(p))}" width="96" height="72" alt="" loading="lazy">` : `<span class="pic sm">${icon(p.icon)}</span>`}<div class="upt"><b>${esc(p.name)}</b><div class="price">${priceTxt(cat, p)}</div></div><button type="button" class="add sm${inCart ? ' on' : ''}" ${p.kind === 'build' ? `data-open="${esc(p.id)}" data-step="buy"` : `data-add="${esc(p.id)}"`} aria-label="Προσθήκη: ${esc(p.name)}">${inCart ? icon('check') : icon('plus')}</button></div>`;
-}
-
-/* hero category tiles */
-export function catTiles(cat) {
-  const T = [['site', 'Ιστοσελίδα', 'Δωρεάν κατασκευή', '#istoselides'], ['eshop', 'E-shop', 'Δικό σας κατάστημα', '#eshop'], ['social', 'Social Media', 'από 49 € / μήνα', '#social'],
-    ['meta', 'Meta Ads', 'Facebook & Instagram', '#diafimiseis'], ['ads', 'Google Ads', '1ος μήνας 0 €', '#diafimiseis'], ['b-grow', 'Πακέτα', 'σε καλύτερη τιμή', '#paketa']];
-  return `<div class="tiles">${T.map(([id, n, s, href]) => { const p = byId(cat, id); return `<a class="ctile" href="${href}">${p && p.img ? `<img src="${esc(imgOf(p))}" width="600" height="450" alt="" loading="eager" decoding="async">` : ''}<span class="ct"><b>${esc(n)}</b><small>${esc(s)}</small></span></a>`; }).join('')}</div>`;
+  const img = imgOf(p);
+  return `<div class="up">${img ? `<img src="${esc(img)}" width="72" height="72" alt="" loading="lazy">` : ''}<div class="upt"><b>${esc(p.name)}</b>${priceBlock(cat, p, null)}</div>
+   <button type="button" class="add sm" data-add="${esc(p.id)}" aria-label="Προσθήκη: ${esc(p.name)}">${icon('plus')}</button></div>`;
 }

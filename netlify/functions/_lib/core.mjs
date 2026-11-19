@@ -28,9 +28,20 @@ export function store() {
   return getStore({ name: 'advon-shop', consistency: 'strong' });
 }
 
+/* the shop's layout version: a saved catalogue from an older layout is replaced by the new starting
+   catalogue (its settings and coupons are kept; the old one stays in history on the next save) */
+export const SCHEMA = seed.schema || 1;
+export function upgrade(c) {
+  if (!c || !c.products) return JSON.parse(JSON.stringify(seed));
+  if ((c.schema || 1) === SCHEMA) return c;
+  const n = JSON.parse(JSON.stringify(seed));
+  n.settings = { ...n.settings, ...(c.settings || {}), payments: { ...n.settings.payments, ...((c.settings || {}).payments || {}) } };
+  n.coupons = c.coupons || n.coupons; n.version = c.version || 0;
+  return n;
+}
 export async function readCatalog(s = store()) {
   const c = await s.get('catalog.json', { type: 'json' }).catch(() => null);
-  return c && c.products ? c : JSON.parse(JSON.stringify(seed));
+  return upgrade(c);
 }
 
 export async function writeCatalog(cat, s = store()) {

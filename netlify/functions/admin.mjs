@@ -1,6 +1,6 @@
 /* POST /api/admin — everything the owner's panel does. Every action except «login» needs the panel token. */
 import { purgeCache } from '@netlify/functions';
-import { readCatalog, writeCatalog, store, json, bad, checkPass, makeToken, checkToken, getOrder, putOrder, markPaid, payMethods, rand, loadKeys, env, PANEL_KEYS } from './_lib/core.mjs';
+import { readCatalog, writeCatalog, store, json, bad, checkPass, makeToken, checkToken, getOrder, putOrder, markPaid, payMethods, rand, loadKeys, env, PANEL_KEYS, SCHEMA } from './_lib/core.mjs';
 
 const STATUSES = ['pending', 'awaiting_transfer', 'paid', 'done', 'cancelled', 'failed', 'refunded'];
 const isInt = (n, max = 1e8) => Number.isInteger(n) && n >= 0 && n <= max;
@@ -28,6 +28,8 @@ function cleanCatalog(c, prev) {
       let vid = str(v.id, 30).toLowerCase().replace(/[^a-z0-9-]/g, '') || 'v' + j; while (vids.has(vid)) vid += 'x'; vids.add(vid);
       const vp = Math.round(Number(v.price)); if (!isInt(vp)) errs.push('Λάθος τιμή επιλογής: ' + p.name + ' / ' + v.name);
       const out = { id: vid, name: str(v.name, 120) || 'Επιλογή', price: vp };
+      if (v.note) out.note = str(v.note, 200);
+      if (v.example) out.example = true;
       const vr = ids(v.requires); if (vr.length) out.requires = vr;
       if (v.salePrice != null && v.salePrice !== '') out.salePrice = Math.round(Number(v.salePrice));
       return out;
@@ -53,6 +55,8 @@ function cleanCatalog(c, prev) {
       icon: str(p.icon, 20).replace(/[^a-z]/g, '') || null,
       group: str(p.group, 60) || null, long: str(p.long, 2000) || null, steps: str(p.steps, 1000) || null,
       includes: (Array.isArray(p.includes) ? p.includes : []).map(x => String(x).toLowerCase().replace(/[^a-z0-9:-]/g, '').slice(0, 60)).filter(Boolean).slice(0, 10),
+      listPrice: p.listPrice === '' || p.listPrice == null || !isInt(Math.round(Number(p.listPrice))) ? null : Math.round(Number(p.listPrice)),
+      later: str(p.later, 200) || null, link: /^[a-z0-9-]+\.html$/.test(String(p.link || '')) ? p.link : null,
       compareAt: p.compareAt === '' || p.compareAt == null || !isInt(Math.round(Number(p.compareAt))) ? null : Math.round(Number(p.compareAt))
     };
   }).filter(Boolean);
@@ -82,7 +86,7 @@ function cleanCatalog(c, prev) {
     shipping: { enabled: !!sh.enabled, flat: Math.max(0, Math.round(Number(sh.flat) || 0)), freeOver: Math.max(0, Math.round(Number(sh.freeOver) || 0)) },
     notice: str(s.notice, 300)
   };
-  return { errs, cat: { version: (prev && prev.version || 0) + 1, updatedAt: new Date().toISOString(), vatDefault: 24, categories: cats, products, coupons, catSales, settings } };
+  return { errs, cat: { schema: SCHEMA, version: (prev && prev.version || 0) + 1, updatedAt: new Date().toISOString(), vatDefault: 24, categories: cats, products, coupons, catSales, settings } };
 }
 
 async function listOrders(s, limit = 200) {

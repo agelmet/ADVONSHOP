@@ -1,7 +1,7 @@
 /* node tools/build.mjs — bakes the catalogue into the pages (so Google sees the real services)
    and into the server's starting copy (netlify/functions/_lib/seed.mjs). */
 import fs from 'node:fs';
-import { grid, hostingStrip, bundles, extras, clientsBlock, moreBlock, catTiles, fromPrice, esc, icon } from '../assets/js/render.mjs';
+import { grid, fromPrice, esc, icon } from '../assets/js/render.mjs';
 
 const cat = JSON.parse(fs.readFileSync('data/catalog.json', 'utf8'));
 /* safety: nothing personal goes into a public file */
@@ -29,9 +29,8 @@ const jsonld = {
 };
 const seed = JSON.stringify(pub).replace(/</g, '\\u003c');
 const html = fs.readFileSync('tools/index.src.html', 'utf8')
-  .replace('{{TILES}}', catTiles(pub)).replace('{{G_SITE}}', grid(pub, 'site', {})).replace('{{HOSTING}}', hostingStrip(pub))
-  .replace('{{G_ESHOP}}', grid(pub, 'eshop', {})).replace('{{G_SOCIAL}}', grid(pub, 'social', {})).replace('{{G_ADS}}', grid(pub, 'ads', {}))
-  .replace('{{G_BUNDLES}}', bundles(pub, {})).replace('{{G_EXTRAS}}', extras(pub, {})).replace('{{CLIENTS}}', clientsBlock(pub)).replace('{{MORE}}', moreBlock(pub, {}))
+  .replace('{{G_SITE}}', grid(pub, 'site', {})).replace('{{G_SOCIAL}}', grid(pub, 'social', {})).replace('{{G_BUNDLES}}', grid(pub, 'bundles', {}))
+  .replace('{{G_EXTRAS}}', grid(pub, 'extras', {})).replace('{{G_MORE}}', grid(pub, 'more', {}))
   .replace(/{{ICON_([A-Z]+)}}/g, (m, n) => icon(n.toLowerCase()))
   .replace('{{SEED}}', seed).replace(/{{LEGAL}}/g, legal)
   .replace('{{JSONLD}}', '<script type="application/ld+json">' + JSON.stringify(jsonld).replace(/</g, '\\u003c') + '</script>');
