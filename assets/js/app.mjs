@@ -117,9 +117,9 @@ function sumBody(pr, { drawer = false } = {}) {
    ${drawer ? '' : `<button class="btn primary lg block" type="button" data-go${pr.errors.length ? ' disabled' : ''}>Ολοκλήρωση ${icon('arrow')}</button><p class="secure">${icon('lock')} Πληρωμή με κάρτα, Apple Pay ή IRIS</p>`}`;
 }
 function paintSum() {
-  $('#sumIn').innerHTML = `<h2>Το πακέτο σας</h2>${sumBody(priced)}`;
   const mb = $('#mbar'), n = cart.items().length;
-  mb.hidden = !n; $('#mbarT').textContent = priced ? euro(priced.total, { always2: true }) : '0 €';
+  mb.hidden = !n; $('#mbarT').textContent = priced ? euro(priced.total, { always2: true }) : '0 €'; $('#mbarN').textContent = n;
+  $('#mbarE').textContent = priced && priced.errors.length ? priced.errors[0] : '';
   if (drawerOpen) paintDrawer(true);
 }
 
@@ -177,7 +177,7 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && drawerOpen) closeDrawer();
   if (e.key === 'Enter' && e.target.matches('[data-coupon]')) { e.preventDefault(); e.target.parentElement.querySelector('[data-capply]').click(); }
 });
-$('#cartBtn').onclick = openDrawer; $('#mbarGo').onclick = openDrawer; $('#drX').onclick = closeDrawer; $('#scrim').onclick = closeDrawer;
+$('#cartBtn').onclick = openDrawer; $('#mbarGo').onclick = openDrawer; $('#mbarOpen').onclick = openDrawer; $('#drX').onclick = closeDrawer; $('#scrim').onclick = closeDrawer;
 addEventListener('cart', () => { $('#cartN').textContent = cart.items().length; });
 addEventListener('storage', (e) => { if (e.key && e.key.startsWith('advon-shop:')) { mode = LS.get(MODE, mode); draw(); } });
 

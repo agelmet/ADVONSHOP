@@ -74,6 +74,7 @@ export function buildStep(cat, st = {}) {
       </button>
       ${vs ? `<div class="segs"${on ? '' : ' hidden'}>${vs}</div>` : ''}
       <details class="more"><summary>Τι περιλαμβάνει</summary>${bullets(p.desc)}</details>
+      <button type="button" class="cardbtn${on ? ' on' : ''}" data-pick="${esc(p.id)}">${on ? icon('check') + ' Επιλέχθηκε' : 'Επιλογή'}</button>
     </article>`;
   }).join('');
   return `<div class="tiles">${tiles}</div>
@@ -91,8 +92,8 @@ export function hostingStep(cat, st = {}) {
     const p = (cat.products || []).find(x => x.id === id); if (!p) return '';
     const on = st.hosting === id;
     return `<button type="button" class="host${on ? ' on' : ''}" data-host="${esc(id)}" aria-pressed="${on}">
-      <span class="radio"></span><div class="hb"><div class="hh"><h3>${esc(p.name)}</h3>${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ''}</div>
-      <p>${esc(p.short)}</p>${bullets(p.desc)}</div><div class="price">${priceTxt(cat, p)}</div></button>`;
+      <span class="tick">${icon('check')}</span><div class="hb"><div class="hh"><h3>${esc(p.name)}</h3>${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ''}</div>
+      <p>${esc(p.short)}</p>${bullets(p.desc)}</div><div class="hfoot"><div class="price">${priceTxt(cat, p)}</div><span class="cardbtn${on ? ' on' : ''}">${on ? icon('check') + ' Επιλέχθηκε' : 'Επιλογή'}</span></div></button>`;
   }).join('')}</div>${opts.length === 1 ? '<p class="small">Για αυτή την επιλογή υπάρχει ένα πακέτο φιλοξενίας.</p>' : ''}`;
 }
 
@@ -103,8 +104,9 @@ export function extrasStep(cat, st = {}) {
   const rows = inCat(cat, 'extras').map((p, i) => {
     const on = has(p.id), b = blocked(p);
     return `<button type="button" class="xrow${on ? ' on' : ''}" data-x="${esc(p.id)}" ${b.length ? 'disabled' : ''} aria-pressed="${on}" style="--i:${i}">
-      <span class="xic">${icon(p.icon)}</span><span class="xt"><b>${esc(p.name)}</b><small>${b.length ? 'Περιλαμβάνεται στο Growth' : esc(p.short)}</small></span>
-      <span class="price">${priceTxt(cat, p)}</span><span class="box">${icon('check')}</span></button>`;
+      <span class="xmedia"><span class="xic">${icon(p.icon)}</span>${p.badge ? `<span class="badge">${esc(p.badge)}</span>` : ''}<span class="tick">${icon('check')}</span></span>
+      <span class="xt"><b>${esc(p.name)}</b><small>${b.length ? 'Περιλαμβάνεται στο Growth' : esc(p.short)}</small></span>
+      <span class="xfoot"><span class="price">${priceTxt(cat, p)}</span><span class="cardbtn${on ? ' on' : ''}">${b.length ? 'Περιλαμβάνεται' : on ? icon('check') + ' Στο πακέτο' : icon('plus') + ' Προσθήκη'}</span></span></button>`;
   }).join('');
   const monthly = inCat(cat, 'grow').map(p => {
     const on = has(p.id), cur = (st.vOf || {})[p.id] || (p.variants && p.variants[0] && p.variants[0].id);
@@ -113,7 +115,7 @@ export function extrasStep(cat, st = {}) {
       ${p.variants && p.variants.length ? `<div class="msegs">${p.variants.map(v => `<button type="button" class="mseg${cur === v.id ? ' on' : ''}" data-mv="${esc(p.id)}" data-v="${esc(v.id)}">${esc(v.name)}<b>${euro(unitPrice(cat, p, v.id).price)}</b></button>`).join('')}</div>` : ''}
       ${bullets(p.desc)}
       <div class="mfoot"><div><div class="price">${priceTxt(cat, p, p.variants && p.variants.length ? cur : null)}</div>${p.priceNote ? `<div class="pnote">${esc(p.priceNote)}</div>` : ''}</div>
-      <button type="button" class="btn ${on ? 'on' : 'outline'} sm" data-mt="${esc(p.id)}">${on ? icon('check') + ' Στο πακέτο' : icon('plus') + ' Προσθήκη'}</button></div></article>`;
+      </div><button type="button" class="cardbtn${on ? ' on' : ''}" data-mt="${esc(p.id)}">${on ? icon('check') + ' Στο πακέτο' : icon('plus') + ' Προσθήκη'}</button></article>`;
   }).join('');
   return `<h3 class="subh">Με μία πληρωμή</h3><div class="xrows">${rows}</div>
    <h3 class="subh">${esc(catOf(cat, 'grow').name)}</h3><p class="small" style="margin-top:-6px">${esc(catOf(cat, 'grow').desc)}</p><div class="mcards">${monthly}</div>`;
@@ -132,7 +134,7 @@ export function clientsBlock(cat) {
   </div>`;
 }
 export function moreBlock(cat) {
-  return `<div class="mlist">${inCat(cat, 'more').map((p, i) => `<div class="mrow" style="--i:${i}"><span class="num">${String(i + 1).padStart(2, '0')}</span><span class="xic">${icon(p.icon)}</span>
+  return `<div class="mlist">${inCat(cat, 'more').map((p, i) => `<div class="mrow" style="--i:${i}"><span class="xmedia"><span class="xic">${icon(p.icon)}</span></span>
     <div class="mt"><h3>${esc(p.name)}</h3><p>${esc(p.short)}</p></div>
-    ${p.quote ? `<a class="btn outline sm" href="https://advonmedia.com/#contact">Ζητήστε προσφορά ${icon('arrow')}</a>` : `<div class="price">${priceTxt(cat, p)}</div><button type="button" class="btn outline sm" data-solo="${esc(p.id)}">${icon('plus')} Στο πακέτο</button>`}</div>`).join('')}</div>`;
+    <div class="xfoot">${p.quote ? `<span class="price"><b class="pr sm">Κατά παραγγελία</b></span><a class="cardbtn" href="https://advonmedia.com/#contact">Προσφορά ${icon('arrow')}</a>` : `<span class="price">${priceTxt(cat, p)}</span><button type="button" class="cardbtn" data-solo="${esc(p.id)}">${icon('plus')} Προσθήκη</button>`}</div></div>`).join('')}</div>`;
 }
