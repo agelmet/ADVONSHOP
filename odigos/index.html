@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Οδηγός: το κατάστημα της Advon</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="stylesheet" href="../assets/css/fonts.css"><link rel="stylesheet" href="../assets/css/shop.css">
+<style>
+body{background:#fff}
+.g{max-width:860px;margin:auto;padding:36px 20px 90px}
+.g h1{font-size:clamp(30px,4.4vw,44px);font-weight:800;margin:10px 0 12px}
+.g h2{font-size:26px;font-weight:800;margin:56px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+.g h3{font-size:19px;font-weight:800;margin:26px 0 8px}
+.g p,.g li{font-size:17px;line-height:1.65;color:var(--ink2)}
+.g li{margin:6px 0}
+.lead{font-size:19px!important;color:var(--muted)!important}
+.toc{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px 22px;margin:22px 0}
+.toc ol{margin:0;padding-left:20px}.toc a{text-decoration:none;font-weight:700}
+.box{border-radius:16px;padding:16px 18px;margin:16px 0;font-size:16px;line-height:1.6}
+.box.blue{background:#EEF5FF;border:1px solid #CFE0FA}.box.green{background:#EAF7F0;border:1px solid #C4E8D3}.box.amber{background:#FFF6E3;border:1px solid #F2DDAA}
+.box b{color:var(--ink)}
+.flow{display:grid;gap:10px;margin:18px 0}
+.fstep{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--sh1)}
+.fstep .n{width:44px;height:44px;border-radius:12px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px}
+.fstep b{display:block;font-size:17px;margin-bottom:2px}.fstep span{color:var(--muted);font-size:15px;line-height:1.55}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:15.5px;font-variant-numeric:tabular-nums}
+th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);vertical-align:top}th{font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+td b{color:var(--ink)}
+.wrapt{overflow-x:auto;border:1px solid var(--line);border-radius:14px;padding:0 6px}
+code,.k{font-family:ui-monospace,Menlo,monospace;font-size:14px;background:#F1F4F9;border-radius:6px;padding:2px 6px;word-break:break-all}
+.click{display:inline-block;background:#fff;border:1px solid #CFD8E6;border-radius:8px;padding:1px 8px;font-weight:700;font-size:15px;white-space:nowrap}
+.steps2{counter-reset:s;list-style:none;padding:0}.steps2>li{counter-increment:s;position:relative;padding:4px 0 10px 44px}
+.steps2>li:before{content:counter(s);position:absolute;left:0;top:4px;width:30px;height:30px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}
+</style>
+</head>
+<body>
+<header class="hd"><div class="wrap"><a class="brand" href="../index.html"><img src="../assets/img/advon-mark-64.png" width="43" height="64" alt="">Advon Media<span class="pill">Οδηγός</span></a></div></header>
+<main class="g">
+<div class="eyebrow">Για τον Άγγελο · 19 Νοεμβρίου 2026</div>
+<h1>Το κατάστημα της Advon — όλα όσα χρειάζεσαι, απλά</h1>
+<p class="lead">Ένα κανονικό ηλεκτρονικό κατάστημα για τις υπηρεσίες σου, στο ύφος του advonmedia.com: ο πελάτης φτιάχνει το πακέτο του σε 3 βήματα (τι θα φτιάξουμε → φιλοξενία, που μπαίνει πάντα → προσθήκες) και πληρώνει με Stripe ή Viva. Η ανανέωση φιλοξενίας έχει δική της σελίδα. Είναι το ίδιο «κουτί» που θα δίνουμε και στους πελάτες που ζητούν e-shop.</p>
+<div class="btns"><a class="btn primary" href="../index.html">Άνοιξε το κατάστημα</a><a class="btn ghost" href="../admin.html">Άνοιξε τον πίνακα</a></div>
+<div class="box amber"><b>Γιατί οι αλλαγές σου «δεν πέρασαν».</b> Στο drafts.advonmedia.com το κατάστημα είναι <b>δοκιμαστικό</b>: δεν έχει server, οπότε ό,τι αλλάζεις στον πίνακα το κρατάει <b>μόνο ο browser της συσκευής όπου το άλλαξες</b>. Άλλη συσκευή ή άλλος browser = βλέπει τις αρχικές τιμές. Στο <b>κανονικό</b> κατάστημα (Netlify) οι αλλαγές του πίνακα αποθηκεύονται στον server και φαίνονται σε όλους αμέσως — <b>με 0 credits</b>.</div>
+
+<nav class="toc"><ol>
+ <li><a href="#pos">Πώς δουλεύει, με απλά λόγια</a></li>
+ <li><a href="#logariasmoi">Ποιους λογαριασμούς ανοίγεις και πού πάνε τα χρήματα</a></li>
+ <li><a href="#promitheies">Πόσα κρατάνε Stripe και Viva (ακριβώς)</a></li>
+ <li><a href="#panel">Ο πίνακας διαχείρισης</a></li>
+ <li><a href="#netlify">Τι κοστίζει στο Netlify (credits)</a></li>
+ <li><a href="#xrewsh">Πόσο να χρεώνεις τους πελάτες</a></li>
+ <li><a href="#syndesi">Η σύνδεση, κλικ-κλικ</a></li>
+ <li><a href="#prosoxi">Τι άλλο πρέπει να ξέρεις</a></li>
+</ol></nav>
+
+<h2 id="pos">1. Πώς δουλεύει, με απλά λόγια</h2>
+<p>Φαντάσου ένα μαγαζί με ταμία. Ο πελάτης φέρνει στο ταμείο τα πράγματα που διάλεξε. Ο ταμίας <b>δεν κοιτάει την τιμή που έγραψε ο πελάτης</b> σε ένα χαρτάκι — περνάει κάθε προϊόν από το δικό του μηχάνημα. Έτσι ακριβώς δουλεύει και το κατάστημα:</p>
+<div class="flow">
+ <div class="fstep"><div class="n">1</div><div><b>Ο πελάτης γεμίζει το καλάθι</b><span>Στον browser του κρατάμε μόνο «ποιο προϊόν, ποια επιλογή, πόσα». Καμία τιμή.</span></div></div>
+ <div class="fstep"><div class="n">2</div><div><b>Πατάει «Πληρωμή» — ο server ξαναμετράει τα πάντα</b><span>Ένα μικρό πρόγραμμα στο hosting (Netlify Functions — τα ίδια που ήδη έχουμε στο advonmedia.com) παίρνει τον δικό του κατάλογο, υπολογίζει τιμές, έκπτωση, ΦΠΑ και σύνολο, και αποθηκεύει την παραγγελία ως «εκκρεμεί».</span></div></div>
+ <div class="fstep"><div class="n">3</div><div><b>Τον στέλνει στη σελίδα της Stripe ή της Viva</b><span>Ο πελάτης γράφει την κάρτα του εκεί, όχι σε εμάς. Εμείς δεν βλέπουμε ποτέ αριθμό κάρτας — άρα δεν έχουμε και καμία ευθύνη γι' αυτόν.</span></div></div>
+ <div class="fstep"><div class="n">4</div><div><b>Η Stripe/Viva μας λέει «πληρώθηκε»</b><span>Στέλνει ένα μήνυμα στη διεύθυνση <code>/api/webhooks/…</code>. Δεν το πιστεύουμε τυφλά: της Stripe έχει ψηφιακή υπογραφή που ελέγχουμε, για τη Viva ρωτάμε εμείς τη Viva «αλήθεια πληρώθηκε αυτό;».</span></div></div>
+ <div class="fstep"><div class="n">5</div><div><b>Η παραγγελία γίνεται «Πληρώθηκε»</b><span>Ελέγχουμε ότι το ποσό που πληρώθηκε είναι ακριβώς το σωστό, μετράμε το κουπόνι, και φεύγουν δύο e-mail: ένα σε σένα και ένα στον πελάτη.</span></div></div>
+ <div class="fstep"><div class="n">6</div><div><b>Τη βλέπεις στον πίνακα</b><span>Με όνομα, τηλέφωνο, στοιχεία τιμολογίου, τι αγόρασε και πόσα πλήρωσε. Από εκεί και πέρα είναι δική σου δουλειά — όπως είπες.</span></div></div>
+</div>
+
+<h3>Οι 4 προστασίες που ρώτησες, μία-μία</h3>
+<p><b>Α. Πώς παίρνει τα χρήματα.</b> Τα αρχεία <code>netlify/functions/checkout.mjs</code> (ξεκινά την πληρωμή) και <code>stripe-webhook.mjs</code> / <code>viva-webhook.mjs</code> (επιβεβαιώνουν ότι πληρώθηκε). Τρέχουν μόνο όταν κάποιος πατάει κουμπί, γι' αυτό κοστίζουν σχεδόν μηδέν.</p>
+<p><b>Β. Οι τιμές ελέγχονται στον server.</b> Όλοι οι υπολογισμοί είναι σε ένα μόνο αρχείο, <code>pricing.mjs</code>, που το χρησιμοποιεί και η σελίδα (για να δείξει το καλάθι) και ο server (για να χρεώσει). Το δοκίμασα: έστειλα στον server «Ιστοσελίδα, τιμή 1 €» και απάντησε <b>161,20 €</b>, την πραγματική. Αν η σελίδα δείχνει άλλο σύνολο από αυτό που θα χρεωθεί (π.χ. άλλαξες τιμή εκείνη τη στιγμή), η πληρωμή σταματά και ο πελάτης βλέπει το σωστό ποσό.</p>
+<p><b>Γ. Η παραγγελία αποθηκεύεται.</b> Σε έναν ιδιωτικό «σκληρό δίσκο» του Netlify (Netlify Blobs) — όχι στο GitHub, όχι δημόσια. Ο πελάτης βλέπει τη δική του μόνο με ένα μυστικό link.</p>
+<p><b>Δ. Ο πίνακας.</b> Ο κωδικός ελέγχεται στον server. Μετά τη σωστή είσοδο παίρνεις ένα «κλειδί» υπογεγραμμένο, που λήγει σε 30 ημέρες. Χωρίς αυτό δεν αλλάζει τίποτα.</p>
+<div class="box blue"><b>Κι αν…</b><br>
+• <b>…το μήνυμα «πληρώθηκε» αργήσει;</b> Η σελίδα «Ευχαριστούμε» ρωτάει μόνη της τη Stripe/Viva και ενημερώνει την παραγγελία.<br>
+• <b>…έρθει το ίδιο μήνυμα δύο φορές;</b> Τίποτα δεν γίνεται διπλό — ούτε e-mail, ούτε χρήση κουπονιού.<br>
+• <b>…πληρωθεί λάθος ποσό;</b> Η παραγγελία ΔΕΝ γίνεται «Πληρώθηκε» και στον πίνακα βγαίνει κόκκινο «Έλεγχος ποσού!».<br>
+• <b>…κάποιος στείλει ψεύτικο «πληρώθηκε»;</b> Απορρίπτεται, γιατί δεν έχει τη σωστή υπογραφή.</div>
+<p style="font-size:15px;color:var(--muted)">Όλα αυτά τα έλεγξα με 36 αυτόματα τεστ (ψεύτικες πληρωμές, πειραγμένες τιμές, λάθος ποσά, ψεύτικοι κωδικοί) — πέρασαν όλα.</p>
+
+<h2 id="logariasmoi">2. Ποιους λογαριασμούς ανοίγεις και πού πάνε τα χρήματα</h2>
+<p>Δεν χρειάζεσαι κάτι από την Alpha Bank για το κατάστημα. Ανοίγεις λογαριασμούς στη Stripe και/ή στη Viva, και αυτές στέλνουν τα χρήματα στην τράπεζά σου.</p>
+<div class="wrapt"><table>
+<tr><th></th><th>Stripe</th><th>Viva</th></tr>
+<tr><td><b>Τι είναι</b></td><td>Διεθνής εταιρεία πληρωμών. Η πιο εύκολη στη σύνδεση.</td><td>Ελληνική — είναι και τράπεζα (Vivabank). Σου ανοίγει δικό της λογαριασμό με ελληνικό IBAN.</td></tr>
+<tr><td><b>Τι πληρώνει ο πελάτης</b></td><td>Κάρτα, Apple Pay, Google Pay (και άλλα που ανοίγεις στις ρυθμίσεις της)</td><td>Κάρτα, IRIS (από το e-banking του), Apple Pay, Google Pay, δόσεις</td></tr>
+<tr><td><b>Τι χρειάζεσαι</b></td><td>Ταυτότητα, ΑΦΜ, το IBAN της επιχείρησής σου, κινητό</td><td>Ταυτότητα, ΑΦΜ, στοιχεία επιχείρησης· ηλεκτρονική ταυτοποίηση</td></tr>
+<tr><td><b>Πού πάνε τα χρήματα</b></td><td>Στο IBAN σου στην Alpha (το δηλώνεις μία φορά)</td><td>Αμέσως στον λογαριασμό Viva· από εκεί τα μεταφέρεις στην Alpha όποτε θες</td></tr>
+<tr><td><b>Πότε τα βλέπεις</b></td><td>Η πρώτη πληρωμή ~7–14 ημέρες μετά την πρώτη πώληση· μετά, συνήθως σε λίγες εργάσιμες</td><td>Αμέσως στον λογαριασμό Viva</td></tr>
+<tr><td><b>Μηνιαία συνδρομή</b></td><td>Καμία</td><td>Καμία για τον λογαριασμό</td></tr>
+</table></div>
+<div class="box green"><b>Η πρότασή μου:</b> ξεκίνα με <b>Stripe</b> — η φθηνότερη για ελληνικές κάρτες, στήνεται σε μισή ώρα και έχει δοκιμαστική λειτουργία. Πρόσθεσε τη <b>Viva</b> για IRIS και όταν ένας πελάτης θέλει «ελληνική τράπεζα» — ο κώδικας είναι ήδη έτοιμος και για τις δύο.</div>
+<div class="box blue"><b>Για τον myfocus.gr</b> (θέλει ελληνική τράπεζα): η Viva <i>είναι</i> ελληνική τράπεζα, και τη συνδέσαμε ήδη. Αν θέλει συγκεκριμένα Alpha, Eurobank, Πειραιώς ή Εθνική, κάθε τράπεζα έχει δικό της σύστημα — θέλει ξεχωριστή σύνδεση και ξεχωριστή σύμβαση του πελάτη με την τράπεζα (μέρες ή εβδομάδες έγκριση). Αυτό το χρεώνεις έξτρα.</div>
+<div class="box amber"><b>Τραπεζική κατάθεση: κλειστή.</b> Όπως ζήτησες, το IBAN σου και το όνομά σου δεν εμφανίζονται πουθενά στο κατάστημα (ούτε στον κώδικα). Ο πελάτης πληρώνει μόνο με κάρτα, Apple/Google Pay ή IRIS. Αν κάποτε τη θέλεις, ανοίγει από τον πίνακα.</div>
+
+<h2 id="promitheies">3. Πόσα κρατάνε Stripe και Viva (ακριβώς)</h2>
+<p>Τιμοκατάλογοι Νοεμβρίου 2026. Παράδειγμα: ο πελάτης αγοράζει «Ιστοσελίδα» = <b>161,20 €</b> με ΦΠΑ.</p>
+<div class="wrapt"><table>
+<tr><th>Πώς πληρώνει</th><th>Προμήθεια</th><th>Στα 161,20 € κρατάνε</th><th>Παίρνεις</th></tr>
+<tr><td>Stripe — κανονική κάρτα ΕΟΧ (οι περισσότερες ελληνικές)</td><td>1,5% + 0,25 €</td><td><b>2,67 €</b></td><td>158,53 €</td></tr>
+<tr><td>Stripe — premium / εταιρική κάρτα ΕΟΧ</td><td>1,9% + 0,25 €</td><td>3,31 €</td><td>157,89 €</td></tr>
+<tr><td>Stripe — κάρτα εκτός Ευρώπης</td><td>3,25% + 0,25 € (+2% αν αλλάζει νόμισμα)</td><td>5,49 €</td><td>155,71 €</td></tr>
+<tr><td>Viva — κάρτα (online)</td><td>2,19% + 0,24 €</td><td><b>3,77 €</b></td><td>157,43 €</td></tr>
+<tr><td>Viva — IRIS (από λογαριασμό σε λογαριασμό)</td><td>χαμηλότερη από κάρτα — δες τον τιμοκατάλογο του λογαριασμού σου</td><td>—</td><td>—</td></tr>
+</table></div>
+<p style="font-size:15px;color:var(--muted)">Οι προμήθειες είναι έξοδο της επιχείρησης — δώσε τις μηνιαίες αναφορές της Stripe/Viva στον λογιστή. Η Viva δίνει και ειδικά πακέτα/εκπτώσεις αν χρησιμοποιείς την κάρτα της· ζήτα προσφορά αν πουλάς πολύ.</p>
+
+<h2 id="panel">4. Ο πίνακας διαχείρισης</h2>
+<p>Είναι στα ελληνικά, δουλεύει και από το κινητό, και τίποτα δεν βγαίνει στο κατάστημα πριν πατήσεις <span class="click">Αποθήκευση</span> (εμφανίζεται κάτω-κάτω μόλις αλλάξεις κάτι). Μετά την αποθήκευση, το κατάστημα αλλάζει <b>αμέσως</b> και <b>χωρίς κανένα Netlify deploy</b> (0 credits).</p>
+<ul>
+ <li><b>Παραγγελίες:</b> σημερινά & μηνιαία έσοδα, φίλτρα, στοιχεία τιμολογίου με «Αντιγραφή», «Ήρθαν τα χρήματα ✓» για τις καταθέσεις, Ολοκληρώθηκε / Ακύρωση / Επιστροφή, δική σου σημείωση, και λίστα Excel για τον λογιστή.</li>
+ <li><b>Προϊόντα & τιμές:</b> πατάς ένα προϊόν και αλλάζεις όνομα, περιγραφή, τιμή (σε προϊόντα με επιλογές, π.χ. e-shop Βασικό/Πλήρες ή Social 8/12/16 posts, η τιμή αλλάζει <b>στις επιλογές</b> — εκεί ήταν μάλλον το «δεν άλλαξε»), ΦΠΑ, επιλογές (πακέτα/μεγέθη), απόθεμα, φωτογραφία από το κινητό. Διακόπτης εμφανίζεται/κρυφό. Σύρεις για σειρά. Διπλότυπο, διαγραφή.</li>
+ <li><b>Μαζικές αλλαγές & Excel:</b> «όλες οι τιμές +10%» με ένα κλικ, ή κατεβάζεις τη λίστα στο Excel, αλλάζεις, την ανεβάζεις — σου δείχνει πρώτα τι θα αλλάξει. (Αυτό είναι το κλειδί για τον πελάτη με τους 1.000 κωδικούς.)</li>
+ <li><b>Εκπτώσεις:</b> κωδικοί (ποσοστό ή ποσό, ελάχιστη αγορά, ημερομηνίες, μέγιστες χρήσεις), προσφορά σε ολόκληρη κατηγορία, προσφορά σε ένα προϊόν με ημερομηνίες.</li>
+ <li><b>Ρυθμίσεις:</b> ποιοι τρόποι πληρωμής είναι ανοιχτοί (και αν είναι συνδεδεμένοι ✓), <b>Σύνδεση Stripe & Viva</b> (επικολλάς τα κλειδιά εκεί), πού έρχονται τα e-mail, ανακοίνωση στην κορυφή, τιμές με ή χωρίς ΦΠΑ, μεταφορικά, στοιχεία επιχείρησης, <b>Αναίρεση</b> (κρατάμε τις 30 τελευταίες εκδόσεις).</li>
+</ul>
+<div class="box amber"><b>Βάλε τιμές εκεί που δεν είχες.</b> Όσα προϊόντα έχουν κίτρινο σήμα «προτεινόμενη τιμή» στον πίνακα, τα τιμολόγησα εγώ ενδεικτικά: Φιλοξενία e-shop 290 €/χρόνο, Φιλοξενία + channel manager (καταλύματα) 390 €/χρόνο, Υπολογιστής κόστους 120 €, AI βοηθός 29 €/μήνα, Ψηφιακό μενού QR 90 €, Ιστοσελίδα γάμου/βάπτισης 90 €. (Social media 49/79/99 €: οι τιμές σου, ο αριθμός αναρτήσεων 8/12/16 είναι δικός μου.) Άλλαξέ τες ή πάτα «Η τιμή είναι σωστή ✓».</div>
+
+<h2 id="netlify">5. Τι κοστίζει στο Netlify (credits)</h2>
+<p>Το Netlify Pro είναι 20 $ τον μήνα με 3.000 credits· έξτρα πακέτο 1.500 credits = 10 $. Άρα <b>1 credit ≈ 0,0067 $</b>.</p>
+<div class="wrapt"><table>
+<tr><th>Τι</th><th>Credits</th><th>Πότε γίνεται</th></tr>
+<tr><td>Πρώτο ανέβασμα στο Netlify (νέο project)</td><td>15</td><td>Μία φορά</td></tr>
+<tr><td>Νέα έκδοση του κώδικα στο live (deploy)</td><td>15</td><td>Μόνο όταν αλλάζω εγώ κώδικα/σχέδιο — πάντα σε ρωτάω πρώτα. <b>Όχι</b> όταν αλλάζεις κάτι στον πίνακα.</td></tr>
+<tr><td>Αλλαγή στον πίνακα (τιμή, προϊόν, κουπόνι, ρυθμίσεις)</td><td><b>0</b></td><td>Όσες θέλεις, φαίνονται αμέσως</td></tr>
+<tr><td>Κλειδιά Stripe/Viva από τον πίνακα</td><td><b>0</b></td><td>Αν τα έβαζες στο Netlify (Environment variables) θα ήθελε deploy = 15 — γι' αυτό τα βάζεις στον πίνακα</td></tr>
+<tr><td>Δοκιμαστική έκδοση στο drafts.advonmedia.com</td><td><b>0</b></td><td>Πάντα δωρεάν</td></tr>
+<tr><td>Επισκέψεις (κίνηση δεδομένων)</td><td>20 ανά GB</td><td>Η σελίδα είναι ~0,2 MB → 1 GB ≈ 5.000 επισκέψεις</td></tr>
+<tr><td>Αιτήματα</td><td>2 ανά 10.000</td><td>Σχεδόν τίποτα</td></tr>
+<tr><td>Οι «μικροί server» (καλάθι, πληρωμή, πίνακας)</td><td>10 ανά GB-ώρα</td><td>Τρέχουν δέκατα του δευτερολέπτου — λίγες εκατοντάδες παραγγελίες τον μήνα κοστίζουν κάτω από 1 credit</td></tr>
+</table></div>
+<div class="box green"><b>Στην πράξη:</b><br>
+• Το δικό σου κατάστημα, ~2.000 επισκέψεις/μήνα: <b>≈ 10–15 credits τον μήνα</b> (κάτω από 0,10 $).<br>
+• E-shop πελάτη με 1.000 προϊόντα και φωτογραφίες, ~10.000 επισκέψεις/μήνα: <b>≈ 300–350 credits τον μήνα</b> (≈ 2–2,5 $). Οι φωτογραφίες είναι το μεγαλύτερο κόστος — γι' αυτό ο πίνακας τις μικραίνει πριν τις ανεβάσει.<br>
+• Μία φορά στην αρχή: <b>15 credits</b> για να ανέβει το κατάστημα. Μετά, μόνο όταν αλλάζω κώδικα (15, με το «ναι» σου).</div>
+
+<h2 id="xrewsh">6. Πόσο να χρεώνεις τους πελάτες</h2>
+<p>Το κόστος σου ανά e-shop είναι 1–3 € τον μήνα στο Netlify + ο χρόνος σου. Οι προμήθειες Stripe/Viva τις πληρώνει ο πελάτης από τον δικό του λογαριασμό. Η πρότασή μου:</p>
+<div class="wrapt"><table>
+<tr><th>Πακέτο</th><th>Κατασκευή (εφάπαξ)</th><th>Μηνιαίο</th><th>Τι περιλαμβάνει</th></tr>
+<tr><td><b>Μικρό</b><br>έως 50 προϊόντα</td><td>390 € + ΦΠΑ</td><td><b>19 €</b> + ΦΠΑ<br><small>ή 190 €/έτος</small></td><td>Stripe + κατάθεση, πίνακας, ανεβάζουμε τα προϊόντα</td></tr>
+<tr><td><b>Κανονικό</b><br>έως 500 προϊόντα</td><td>590 € + ΦΠΑ</td><td><b>29 €</b> + ΦΠΑ<br><small>ή 290 €/έτος</small></td><td>+ Viva / IRIS, κουπόνια, μεταφορικά, Excel</td></tr>
+<tr><td><b>Μεγάλο</b><br>1.000+ κωδικοί</td><td>900–1.200 € + ΦΠΑ</td><td><b>49 €</b> + ΦΠΑ</td><td>+ σύνδεση με συγκεκριμένη τράπεζα αν τη θέλει, εισαγωγή από το Excel/ERP του</td></tr>
+</table></div>
+<p>Γιατί μηνιαίο και όχι 130 €/χρόνο όπως στις ιστοσελίδες: ένα κατάστημα παίρνει χρήματα κάθε μέρα — αν σταματήσει, χάνει πωλήσεις. Πληρώνει για «να δουλεύει πάντα»: φιλοξενία, domain, ασφάλεια, αντίγραφα, να μένουν σωστές οι συνδέσεις πληρωμών όταν αλλάζουν οι εταιρείες τα συστήματά τους. Και για σένα είναι ακόμα περισσότερα επαναλαμβανόμενα έσοδα.</p>
+<div class="box blue"><b>Ο myfocus.gr</b> (1.000 κωδικοί, ελληνική τράπεζα, budget «μερικές εκατοντάδες ως 1.000»): το «Μεγάλο» πακέτο κάθεται ακριβώς εκεί. Με Viva μπαίνει στο κάτω όριο· αν επιμείνει σε Alpha/Eurobank κ.λπ., στο πάνω.</div>
+
+<h2 id="syndesi">7. Η σύνδεση, κλικ-κλικ</h2>
+<p>Τα κλειδιά (κωδικοί της Stripe/Viva) τα επικολλάς <b>εσύ</b> στον πίνακα → <span class="click">Ρυθμίσεις</span> → <span class="click">Σύνδεση Stripe & Viva</span> → <span class="click">Αποθήκευση κλειδιών</span> — ποτέ στο chat, ποτέ σε e-mail. Ισχύουν αμέσως, 0 credits. Εγώ μπορώ να κάνω όλα τα υπόλοιπα στον Chrome σου.</p>
+
+<h3>Βήμα Α — Το κατάστημα στο Netlify (15 credits, μία φορά)</h3>
+<ol class="steps2">
+ <li>app.netlify.com → <span class="click">Add new project</span> → <span class="click">Import an existing project</span> → GitHub → <code>agelmet/ADVONSHOP</code>.</li>
+ <li>Δεν χρειάζεται να βάλεις κλειδιά εδώ — μπαίνουν από τον πίνακα, χωρίς deploy.</li>
+ <li>Domain: <span class="click">Domain management</span> → <span class="click">Add a domain</span> → <code>shop.advonmedia.com</code>. Στο Squarespace (DNS του advonmedia.com) μία εγγραφή <b>CNAME</b>: <code>shop</code> → <code>&lt;το-όνομα-του-project&gt;.netlify.app</code>. (Θέλει να μπεις με Google εκεί· μετά το κάνω εγώ.)</li>
+ <li>E-mail: το <code>RESEND_API_KEY</code> (το ίδιο με του advonmedia.com) μπαίνει κι αυτό στον πίνακα → Σύνδεση. Οι επιβεβαιώσεις φεύγουν από <code>forms@advonmedia.com</code> και έρχονται στο advonmd@gmail.com (αλλάζει στις Ρυθμίσεις του πίνακα).</li>
+</ol>
+
+<h3>Βήμα Β — Stripe</h3>
+<ol class="steps2">
+ <li>stripe.com → <span class="click">Start now</span> → χώρα <b>Ελλάδα</b>, τύπος επιχείρησης <b>Ατομική επιχείρηση</b>. Συμπλήρωσε ΑΦΜ, ταυτότητα και το IBAN της επιχείρησης (εκεί έρχονται τα χρήματα).</li>
+ <li>Πάνω δεξιά άναψε το <span class="click">Test mode</span> (δοκιμαστικά — κανένα αληθινό χρήμα).</li>
+ <li><span class="click">Developers</span> → <span class="click">API keys</span> → «Secret key» (ξεκινά με <code>sk_test_</code>) → στον πίνακα, πεδίο «Secret key».</li>
+ <li><span class="click">Developers</span> → <span class="click">Webhooks</span> → <span class="click">Add endpoint</span> → διεύθυνση <code>https://shop.advonmedia.com/api/webhooks/stripe</code> → διάλεξε τα γεγονότα <code>checkout.session.completed</code>, <code>checkout.session.async_payment_succeeded</code>, <code>checkout.session.async_payment_failed</code>, <code>checkout.session.expired</code> → αποθήκευση → «Signing secret» (<code>whsec_…</code>) → στον πίνακα, πεδίο «Webhook signing secret».</li>
+ <li><span class="click">Settings</span> → <span class="click">Payment methods</span> → άναψε Apple Pay, Google Pay (και ό,τι άλλο προσφέρει για Ελλάδα).</li>
+ <li>Δοκιμαστική αγορά με την κάρτα <code>4242 4242 4242 4242</code>, οποιαδήποτε μελλοντική ημερομηνία, οποιοδήποτε CVC. Πρέπει να δεις την παραγγελία «Πληρώθηκε» στον πίνακα και να σου έρθει e-mail.</li>
+ <li>Όταν όλα δουλεύουν: σβήσε το Test mode και βάλε τα κανονικά κλειδιά (<code>sk_live_…</code> και νέο webhook) στη θέση των δοκιμαστικών.</li>
+</ol>
+
+<h3>Βήμα Γ — Viva (δοκιμαστικά πρώτα)</h3>
+<ol class="steps2">
+ <li>Φτιάξε δοκιμαστικό λογαριασμό στο <code>demo.vivapayments.com</code> (ο κανονικός είναι στο viva.com, με ταυτοποίηση).</li>
+ <li><span class="click">Settings</span> → <span class="click">API Access</span>: σημείωσε <b>Merchant ID</b> και <b>API Key</b>, και στα <b>Smart Checkout Credentials</b> πάρε <b>Client ID</b> και <b>Client Secret</b>.</li>
+ <li>Πηγή πληρωμών: <span class="click">Sales</span> → <span class="click">Online Payments</span> → <span class="click">Websites / Apps</span> → <span class="click">Add website/app</span>. Success URL: <code>https://shop.advonmedia.com/order.html</code> · Failure URL: <code>https://shop.advonmedia.com/order.html?fail=1</code>. Σημείωσε τον 4ψήφιο <b>κωδικό πηγής</b>.</li>
+ <li>Στον πίνακα → Σύνδεση: Περιβάλλον = <code>demo</code>, <code>VIVA_CLIENT_ID</code>, <code>VIVA_CLIENT_SECRET</code>, <code>VIVA_SOURCE_CODE</code>, <code>VIVA_MERCHANT_ID</code>, <code>VIVA_API_KEY</code>.</li>
+ <li><span class="click">Settings</span> → <span class="click">API Access</span> → <span class="click">Webhooks</span> → <span class="click">Create webhook</span> → <code>https://shop.advonmedia.com/api/webhooks/viva</code>, γεγονός «Transaction Payment Created» → <span class="click">Verify</span>.</li>
+ <li>Όταν δουλεύει: τα ίδια στον κανονικό λογαριασμό και <code>VIVA_ENV</code> = <code>live</code>.</li>
+</ol>
+<p style="font-size:15px;color:var(--muted)">Τα ονόματα των μενού της Viva μπορεί να διαφέρουν λίγο από λογαριασμό σε λογαριασμό· αν κάτι δεν το βρίσκεις, ανοίγω εγώ τον Chrome και σου δείχνω.</p>
+
+<h3>Βήμα Δ — Ο κωδικός του πίνακα</h3>
+<p>Σου έδωσα στο chat έναν αρχικό κωδικό. Για να τον αλλάξεις, βάλε στο Netlify <code>ADMIN_PASS</code> = ό,τι θέλεις — αυτό είναι το μόνο που θέλει deploy (15 credits)· μετά ο παλιός σταματά να δουλεύει.</p>
+
+<div class="box blue"><b>Όλα μαζί (στον πίνακα → Σύνδεση Stripe & Viva· αν τα βάλεις στο Netlify, εκείνα κερδίζουν αλλά θέλουν deploy):</b><br>
+<code>STRIPE_SECRET_KEY</code> · <code>STRIPE_WEBHOOK_SECRET</code> · <code>VIVA_ENV</code> · <code>VIVA_CLIENT_ID</code> · <code>VIVA_CLIENT_SECRET</code> · <code>VIVA_SOURCE_CODE</code> · <code>VIVA_MERCHANT_ID</code> · <code>VIVA_API_KEY</code> · <code>RESEND_API_KEY</code> · προαιρετικά <code>ADMIN_PASS</code>, <code>SITE_URL</code> (=https://shop.advonmedia.com), <code>SHOP_NOTIFY_TO</code>.<br>
+Όποιο λείπει, ο αντίστοιχος τρόπος πληρωμής απλώς δεν εμφανίζεται — το κατάστημα δεν «σπάει».</div>
+
+<h2 id="prosoxi">8. Τι άλλο πρέπει να ξέρεις</h2>
+<ul>
+ <li><b>Τιμολόγια:</b> το κατάστημα δεν βγάζει απόδειξη/τιμολόγιο στο myDATA. Για κάθε πληρωμή τα βγάζεις εσύ ή ο λογιστής, όπως και τώρα — ο πίνακας σου δίνει έτοιμα τα στοιχεία και λίστα Excel.</li>
+ <li><b>Στοιχεία επιχείρησης:</b> ένα e-shop πρέπει να δείχνει ΑΦΜ, ΔΟΥ και διεύθυνση. Συμπλήρωσέ τα στον πίνακα → Ρυθμίσεις → «Στοιχεία επιχείρησης».</li>
+ <li><b>Όροι αγοράς:</b> έγραψα όρους με απλά λόγια (υπαναχώρηση 14 ημερών, και «αν δεν ξεκινήσαμε, επιστρέφουμε όλο το ποσό»). Καλό είναι να τους δει ο λογιστής ή ένας δικηγόρος πριν βγει live.</li>
+ <li><b>Μηνιαία προϊόντα</b> (social, συντήρηση e-shop): τώρα χρεώνονται ως μία πληρωμή για έναν μήνα. Η αυτόματη χρέωση κάθε μήνα (συνδρομή) είναι το επόμενο βήμα, αν τη θέλεις.</li>
+ <li><b>Κουπόνια:</b> τα ADVON10 / WELCOME20 είναι παραδείγματα. Ο κώδικας του καταστήματος είναι σε δημόσιο repo, οπότε φτιάξε τους πραγματικούς κωδικούς από τον πίνακα (εκεί δεν τους βλέπει κανείς).</li>
+ <li><b>Τα μηνύματα στους πελάτες</b> (Viber, e-mail, πρότυπα) δεν άλλαξαν: εκεί συνεχίζεις μόνο με κατάθεση, όπως έχεις ορίσει. Αν θέλεις να στέλνεις και link του καταστήματος, πες μου.</li>
+ <li><b>Για πελάτες:</b> το ίδιο κατάστημα αλλάζει χρώματα, λογότυπο και κατάλογο. Ο πελάτης ανοίγει <b>δικό του</b> λογαριασμό Stripe/Viva, ώστε τα χρήματα να πηγαίνουν κατευθείαν σε εκείνον. Στον πίνακα ανοίγεις «τιμές με ΦΠΑ» και «μεταφορικά».</li>
+</ul>
+</main>
+</body>
+</html>
