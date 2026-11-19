@@ -34,8 +34,4 @@ $('#rdom').addEventListener('input', e => { st.domain = e.target.value; LS.set(K
   $('#rdom').value = st.domain;
   try { cat = await loadCatalog(); } catch (e) { cat = JSON.parse($('#seed').textContent); cat.pay = {}; }
   refresh();
-  /* quiet starfield like the shop */
-  const c = $('#stars'), x = c.getContext('2d'), d = Math.min(2, devicePixelRatio || 1);
-  const draw = () => { c.width = innerWidth * d; c.height = innerHeight * d; x.scale(d, d); for (let i = 0; i < innerWidth * innerHeight / 4200; i++) { x.fillStyle = `rgba(255,255,255,${(.2 + Math.random() * .6).toFixed(2)})`; x.fillRect(Math.random() * innerWidth, Math.random() * innerHeight, Math.random() < .1 ? 1.8 : 1, Math.random() < .1 ? 1.8 : 1); } };
-  draw(); addEventListener('resize', () => { clearTimeout(draw._t); draw._t = setTimeout(draw, 200); });
 })();

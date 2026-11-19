@@ -7,13 +7,13 @@
 <meta name="description" content="Φτιάξτε το πακέτο σας online: ιστοσελίδα με δωρεάν κατασκευή, e-shop, ιστοσελίδα καταλύματος, social media, Google Ads. Πληρωμή με κάρτα, IRIS ή Apple Pay, με τιμολόγιο.">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <script id="advon-draft-guard">(function(){var h=location.hostname;if(/github\.io$|^drafts\.advonmedia\.com$|netlify\.app$/.test(h)){var m=document.createElement('meta');m.name='robots';m.content='noindex,nofollow';document.head.appendChild(m);}})();</script>
-<meta name="theme-color" content="#050608">
+<meta name="theme-color" content="#ffffff"><meta name="color-scheme" content="light only">
 <meta property="og:type" content="website"><meta property="og:locale" content="el_GR">
 <meta property="og:title" content="Κατάστημα — Advon Media">
-<meta property="og:description" content="Η επιχείρησή σας online. Σε τρία βήματα.">
+<meta property="og:description" content="Ιστοσελίδα, e-shop, social media, Meta Ads και Google Ads — online, με κάρτα ή IRIS.">
 <meta property="og:image" content="assets/img/advon-icon-512.png">
 <link rel="icon" href="favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="32x32" href="assets/img/advon-icon-32.png"><link rel="apple-touch-icon" href="assets/img/advon-icon-180.png">
-<link rel="preload" href="assets/fonts/noto-serif-display-greek-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/manrope-greek-800-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/inter-greek-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/css/fonts-shop.css">
 <link rel="stylesheet" href="assets/css/store.css">
@@ -21,61 +21,87 @@
 {{JSONLD}}
 </head>
 <body>
-<canvas id="stars" aria-hidden="true"></canvas>
 <div class="demobar" id="demobar" hidden><b>Δοκιμαστική έκδοση</b> — καμία χρέωση· ό,τι κάνετε μένει μόνο σε αυτή τη συσκευή. <a href="admin.html">Πίνακας διαχείρισης →</a></div>
 <div class="notice" id="notice" hidden></div>
-<header class="hd"><div class="wrap">
- <a class="logo" href="#top" aria-label="Advon Media — αρχή"><img src="assets/img/advon-logo-ink-200.png" width="200" height="101" alt="Advon Media"></a>
- <nav aria-label="Κύριο μενού"><a href="#paketo">Το πακέτο σας</a><a href="#pelates">Για πελάτες μας</a><a href="ananeosi.html">Ανανέωση</a><a href="#faq">FAQ</a><a href="https://advonmedia.com">advonmedia.com</a></nav>
- <button class="cartbtn" id="cartBtn" type="button"><span class="cl">Το πακέτο σας</span><span class="n" id="cartN">0</span></button>
-</div></header>
+<header class="hd"><div class="wrap hdw">
+ <a class="logo" href="#top" aria-label="Advon Media — αρχή"><img src="assets/img/advon-logo-ink-200.png" width="200" height="101" alt="Advon Media"><span class="lt">Κατάστημα</span></a>
+ <div class="hdr">
+  <a class="hl" href="ananeosi.html">Ανανέωση φιλοξενίας</a><a class="hl" href="https://advonmedia.com">advonmedia.com</a>
+  <button class="cartbtn" id="cartBtn" type="button" aria-label="Καλάθι">{{ICON_CART}}<span class="cl">Καλάθι</span><span class="n" id="cartN">0</span></button>
+ </div></div>
+ <nav class="cnav" aria-label="Κατηγορίες"><div class="wrap cnw">
+  <a href="#istoselides" data-nav="istoselides">Ιστοσελίδες</a><a href="#eshop" data-nav="eshop">E-shop</a><a href="#social" data-nav="social">Social Media</a><a href="#diafimiseis" data-nav="diafimiseis">Διαφημίσεις</a><a href="#paketa" data-nav="paketa">Πακέτα</a><a href="#prosthikes" data-nav="prosthikes">Προσθήκες</a><a href="#pelates" data-nav="pelates">Για πελάτες μας</a><a href="#faq" data-nav="faq">Ερωτήσεις</a>
+ </div></nav>
+</header>
 
 <main id="top">
 <section class="hero"><div class="wrap">
- <div class="pill"><i></i><b>ADVON MEDIA</b><span>— ΚΑΤΑΣΤΗΜΑ</span></div>
- <h1><span class="w">Η επιχείρησή σας online.</span><span class="w glow">Σε τρία βήματα.</span></h1>
- <p class="lead">Διαλέγετε τι θα φτιάξουμε, προσθέτετε ό,τι χρειάζεστε και πληρώνετε με κάρτα, IRIS ή Apple Pay — με τιμολόγιο. Η κατασκευή της ιστοσελίδας είναι δωρεάν· πληρώνετε μόνο τη φιλοξενία.</p>
- <div class="stats"><span class="st1">250+ ιστοσελίδες</span><span class="dot">·</span><a class="st2" href="https://advonmedia.com/#reviews">★ 135+ κριτικές 5★ στο Google</a></div>
- <div class="ctas"><a class="btn primary lg" href="#vima-1">Ξεκινήστε <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn outline lg" href="#pelates">Έχω ήδη ιστοσελίδα</a><a class="btn dark lg" href="ananeosi.html">Ανανέωση</a></div>
- <div class="marquee" aria-hidden="true"><div class="mq">{{MARQUEE}}</div></div>
-</div></section>
-
-<section class="builder" id="paketo"><div class="wrap bgrid">
- <div class="steps">
-  <div class="step" id="vima-1"><header class="sh"><span class="sn">01</span><div><h2>Τι θα φτιάξουμε;</h2><p>Διαλέξτε ένα — ή πείτε μας ότι έχετε ήδη ιστοσελίδα μαζί μας.</p></div></header><div id="s1">{{S1}}</div></div>
-  <div class="step" id="vima-2"><header class="sh"><span class="sn">02</span><div><h2>Φιλοξενία <span class="req">Απαραίτητη</span></h2><p>Για να είναι η σελίδα σας online. Το domain name είναι δώρο.</p></div></header><div id="s2">{{S2}}</div></div>
-  <div class="step" id="vima-3"><header class="sh"><span class="sn">03</span><div><h2>Προσθήκες</h2><p>Προαιρετικά — ό,τι θα κάνει τη σελίδα σας να φέρνει περισσότερους πελάτες.</p></div></header><div id="s3">{{S3}}</div></div>
+ <div class="htxt">
+  <span class="eyebrow">Το κατάστημα της Advon Media</span>
+  <h1>Ό,τι χρειάζεται η επιχείρησή σας online.</h1>
+  <p class="lead">Ιστοσελίδα, e-shop, social media και διαφημίσεις — διαλέγετε, βλέπετε την τιμή και πληρώνετε online με κάρτα, Apple Pay ή IRIS, με τιμολόγιο.</p>
+  <ul class="trust"><li>{{ICON_STAR}}<span><b>135+ κριτικές</b> 5★ στο Google</span></li><li>{{ICON_SITE}}<span><b>250+ ιστοσελίδες</b> online</span></li><li>{{ICON_SHIELD}}<span><b>Ασφαλής πληρωμή</b> με τιμολόγιο</span></li></ul>
  </div>
+ {{TILES}}
 </div></section>
 
-<section class="sec" id="pelates"><div class="wrap">
- <div class="sech"><span class="kick">Για πελάτες μας</span><h2>Έχετε ήδη ιστοσελίδα μαζί μας;</h2><p>Αλλαγές, ανανέωση και προσθήκες — χωρίς τηλέφωνα, χωρίς αναμονή.</p></div>
- <div id="clients">{{CLIENTS}}</div>
+<section class="sec" id="istoselides"><div class="wrap">
+ <header class="sech"><div><span class="kick">Ιστοσελίδες</span><h2>Ιστοσελίδα με δωρεάν κατασκευή</h2><p>Πληρώνετε μόνο τη φιλοξενία — το domain name είναι δώρο. Τη βλέπετε έτοιμη σε 1–5 ημέρες.</p></div></header>
+ <div id="g-site">{{G_SITE}}</div>
+ {{HOSTING}}
 </div></section>
 
-<section class="sec" id="lyseis"><div class="wrap">
- <div class="sech"><span class="kick">Ακόμα</span><h2>Περισσότερες λύσεις</h2><p>Στήνουμε και αυτά — στα μέτρα της επιχείρησής σας.</p></div>
- <div id="more">{{MORE}}</div>
+<section class="sec alt" id="eshop"><div class="wrap">
+ <header class="sech"><div><span class="kick">E-shop</span><h2>Το δικό σας ηλεκτρονικό κατάστημα</h2><p>Χωρίς μηνιαίες συνδρομές σε πλατφόρμες και χωρίς προμήθεια σε κάθε πώληση.</p></div></header>
+ <div id="g-eshop">{{G_ESHOP}}</div>
+</div></section>
+
+<section class="sec" id="social"><div class="wrap">
+ <header class="sech"><div><span class="kick">Social Media</span><h2>Instagram & Facebook, κάθε μήνα</h2><p>Αναλαμβάνουμε ιδέες, κείμενα, σχέδια, reels και δημοσίευση. Χωρίς δέσμευση.</p></div></header>
+ <div id="g-social">{{G_SOCIAL}}</div>
+</div></section>
+
+<section class="sec alt" id="diafimiseis"><div class="wrap">
+ <header class="sech"><div><span class="kick">Διαφημίσεις</span><h2>Meta Ads & Google Ads</h2><p>Διαφημίσεις που φέρνουν κλήσεις, μηνύματα και ραντεβού — και μετράμε κάθε ένα.</p></div></header>
+ <div id="g-ads">{{G_ADS}}</div>
+</div></section>
+
+<section class="sec band" id="paketa"><div class="wrap">
+ <header class="sech"><div><span class="kick">Πακέτα</span><h2>Social media + διαφημίσεις, μαζί</h2><p>Όλα όσα χρειάζεστε για να σας βρίσκουν, σε καλύτερη τιμή από ό,τι χωριστά.</p></div></header>
+ <div id="g-bundles">{{G_BUNDLES}}</div>
+</div></section>
+
+<section class="sec" id="prosthikes"><div class="wrap">
+ <header class="sech"><div><span class="kick">Προσθήκες</span><h2>Προσθήκες για την ιστοσελίδα σας</h2><p>Για νέα ιστοσελίδα ή για αυτή που ήδη έχετε μαζί μας — θα σας ρωτήσουμε για ποια είναι.</p></div></header>
+ <div id="g-extras">{{G_EXTRAS}}</div>
+</div></section>
+
+<section class="sec alt" id="pelates"><div class="wrap">
+ <header class="sech"><div><span class="kick">Για πελάτες μας</span><h2>Έχετε ήδη ιστοσελίδα μαζί μας;</h2><p>Αλλαγές και ανανέωση — χωρίς τηλέφωνα, χωρίς αναμονή.</p></div></header>
+ <div id="g-clients">{{CLIENTS}}</div>
+ <h3 class="xgh" style="margin-top:44px">Άλλες λύσεις</h3>
+ <div id="g-more">{{MORE}}</div>
 </div></section>
 
 <section class="sec" id="pos"><div class="wrap">
- <div class="sech"><span class="kick">Πληρωμή</span><h2>Ασφαλής, απλή, με τιμολόγιο.</h2></div>
+ <header class="sech c"><div><span class="kick">Πώς αγοράζετε</span><h2>Τρία απλά βήματα</h2></div></header>
  <div class="how">
-  <div class="hw"><span class="hn">1</span><h3>Φτιάχνετε το πακέτο</h3><p>Βλέπετε από την αρχή τι πληρώνετε σήμερα και τι αργότερα. Καμία κρυφή χρέωση.</p></div>
-  <div class="hw"><span class="hn">2</span><h3>Πληρώνετε</h3><p>Με κάρτα, Apple Pay, Google Pay ή IRIS, στη σελίδα της Stripe ή της Viva. Τα στοιχεία της κάρτας δεν περνούν ποτέ από εμάς.</p></div>
-  <div class="hw"><span class="hn">3</span><h3>Ξεκινάμε</h3><p>Σας έρχεται αμέσως e-mail επιβεβαίωσης και επικοινωνούμε μαζί σας για τα επόμενα βήματα.</p></div>
+  <div class="hw"><span class="hn">1</span><div><h3>Διαλέγετε</h3><p>Προσθέτετε στο καλάθι ό,τι χρειάζεστε. Βλέπετε από την αρχή τι πληρώνετε σήμερα και τι αργότερα.</p></div></div>
+  <div class="hw"><span class="hn">2</span><div><h3>Πληρώνετε με ασφάλεια</h3><p>Κάρτα, Apple Pay, Google Pay ή IRIS, στη σελίδα της Stripe ή της Viva. Τα στοιχεία της κάρτας δεν περνούν από εμάς.</p></div></div>
+  <div class="hw"><span class="hn">3</span><div><h3>Ξεκινάμε</h3><p>Σας έρχεται αμέσως e-mail επιβεβαίωσης και επικοινωνούμε μαζί σας για τα επόμενα βήματα.</p></div></div>
  </div>
  <div class="paylogos" aria-label="Τρόποι πληρωμής"><span>VISA</span><span>Mastercard</span><span>Apple Pay</span><span>Google Pay</span><span>IRIS</span></div>
 </div></section>
 
-<section class="sec" id="faq"><div class="wrap narrow">
- <div class="sech"><span class="kick">FAQ</span><h2>Συχνές ερωτήσεις</h2></div>
- <details><summary>Γιατί η φιλοξενία είναι απαραίτητη;</summary><p>Η φιλοξενία είναι αυτό που κρατά τη σελίδα σας online: ο χώρος στο διαδίκτυο, το domain name, η ασφάλεια (SSL), τα backups και η υποστήριξη. Η κατασκευή είναι δωρεάν· η φιλοξενία πληρώνεται μία φορά τον χρόνο.</p></details>
- <details><summary>Πότε θα δω την ιστοσελίδα μου;</summary><p>Μόλις λάβουμε το υλικό σας, σας δείχνουμε το πρώτο δείγμα σε 1–5 ημέρες. Μετά κάνουμε όσες αλλαγές θέλετε, μέχρι να είναι όπως την ονειρεύεστε.</p></details>
+<section class="sec alt" id="faq"><div class="wrap narrow">
+ <header class="sech c"><div><span class="kick">Ερωτήσεις</span><h2>Συχνές ερωτήσεις</h2></div></header>
+ <details><summary>Γιατί η φιλοξενία μπαίνει μαζί με την ιστοσελίδα;</summary><p>Η φιλοξενία είναι αυτό που κρατά τη σελίδα σας online: ο χώρος στο διαδίκτυο, το domain name, η ασφάλεια (SSL), τα backups και η υποστήριξη. Η κατασκευή είναι δωρεάν· η φιλοξενία πληρώνεται μία φορά τον χρόνο.</p></details>
+ <details><summary>Πότε θα δω την ιστοσελίδα μου;</summary><p>Σε 1–5 ημέρες σας δείχνουμε την ιστοσελίδα έτοιμη. Μετά κάνουμε όσες αλλαγές θέλετε, μέχρι να βγει online.</p></details>
+ <details><summary>Τα μηνιαία έχουν δέσμευση;</summary><p>Όχι. Σήμερα πληρώνετε τον πρώτο μήνα και σταματάτε με ένα μήνυμα, όποτε θέλετε.</p></details>
+ <details><summary>Το ποσό της διαφήμισης περιλαμβάνεται;</summary><p>Όχι. Το ποσό που πάει στη Meta ή στη Google το πληρώνετε απευθείας εκείνες, με τη δική σας κάρτα (από 5 € την ημέρα). Εμείς χρεώνουμε μόνο τη διαχείριση.</p></details>
  <details><summary>Είναι ασφαλής η πληρωμή;</summary><p>Ναι. Πληρώνετε στη σελίδα της Stripe ή της Viva, που είναι αδειοδοτημένοι πάροχοι πληρωμών. Η σελίδα μας δεν βλέπει ποτέ τον αριθμό της κάρτας σας.</p></details>
  <details><summary>Θα πάρω τιμολόγιο;</summary><p>Ναι. Συμπληρώνετε ΑΦΜ στην ολοκλήρωση της αγοράς και σας στέλνουμε τιμολόγιο· αλλιώς απόδειξη.</p></details>
- <details><summary>Οι τιμές έχουν ΦΠΑ;</summary><p>Οι τιμές γράφονται χωρίς ΦΠΑ 24%. Στο πακέτο σας βλέπετε ξεχωριστά τον ΦΠΑ και το τελικό ποσό.</p></details>
- <details><summary>Οι μηνιαίες υπηρεσίες έχουν δέσμευση;</summary><p>Όχι. Σήμερα πληρώνετε τον πρώτο μήνα και σταματάτε με ένα μήνυμα, όποτε θέλετε.</p></details>
+ <details><summary>Οι τιμές έχουν ΦΠΑ;</summary><p>Οι τιμές γράφονται χωρίς ΦΠΑ 24%. Στο καλάθι βλέπετε ξεχωριστά τον ΦΠΑ και το τελικό ποσό.</p></details>
  <details><summary>Κι αν αλλάξω γνώμη;</summary><p>Αν δεν έχουμε ξεκινήσει τη δουλειά, σας επιστρέφουμε όλο το ποσό. Δείτε τους <a href="oroi.html">όρους αγοράς</a>.</p></details>
 </div></section>
 </main>
@@ -86,9 +112,10 @@
  <div class="links"><a href="oroi.html">Όροι αγοράς</a><a href="privacy.html">Απόρρητο</a><a href="ananeosi.html">Ανανέωση</a><a href="https://advonmedia.com">advonmedia.com</a></div>
 </div></footer>
 
-<div class="mbar" id="mbar" hidden><button class="mbl" type="button" id="mbarOpen"><span class="mbn" id="mbarN">0</span><span><small>Σήμερα πληρώνετε</small><b id="mbarT">0 €</b></span></button><span class="mbe" id="mbarE"></span><button class="btn primary" type="button" id="mbarGo">Ολοκλήρωση <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+<div class="mbar" id="mbar" hidden><button class="mbl" type="button" id="mbarOpen"><span class="mbn" id="mbarN">0</span><span><small>Σήμερα πληρώνετε</small><b id="mbarT">0 €</b></span></button><span class="mbe" id="mbarE"></span><button class="btn primary" type="button" id="mbarGo">Καλάθι {{ICON_ARROW}}</button></div>
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer" aria-label="Ολοκλήρωση"><div class="dh"><h2 id="drT">Το πακέτο σας</h2><button class="x" type="button" id="drX" aria-label="Κλείσιμο">×</button></div><div class="dbody" id="drB"></div></aside>
+<aside class="drawer" id="drawer" aria-label="Καλάθι"><div class="dh"><h2 id="drT">Το καλάθι σας</h2><button class="x" type="button" id="drX" aria-label="Κλείσιμο">×</button></div><div class="dbody" id="drB"></div></aside>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mdT" hidden><div class="mbox"><button class="x mx" type="button" id="mdX" aria-label="Κλείσιμο">×</button><div id="mdB"></div></div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script type="application/json" id="seed">{{SEED}}</script>
 <script type="module" src="assets/js/app.mjs"></script>

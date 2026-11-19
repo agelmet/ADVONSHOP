@@ -5,53 +5,74 @@ export default {
  "vatDefault": 24,
  "categories": [
   {
-   "id": "build",
-   "name": "Τι θα φτιάξουμε",
-   "desc": "Διαλέξτε ένα — ή πείτε μας ότι έχετε ήδη ιστοσελίδα μαζί μας.",
+   "id": "site",
+   "name": "Ιστοσελίδες",
+   "desc": "Δωρεάν κατασκευή — πληρώνετε μόνο τη φιλοξενία, με το domain name δώρο.",
    "order": 0
   },
   {
-   "id": "hosting",
-   "name": "Φιλοξενία",
-   "desc": "Απαραίτητη για να είναι η σελίδα σας online. Το domain name είναι δώρο.",
+   "id": "eshop",
+   "name": "E-shop",
+   "desc": "Δικό σας ηλεκτρονικό κατάστημα, χωρίς προμήθειες σε πλατφόρμες.",
    "order": 1
+  },
+  {
+   "id": "social",
+   "name": "Social Media",
+   "desc": "Instagram & Facebook που δουλεύουν για την επιχείρησή σας, κάθε μήνα.",
+   "order": 2
+  },
+  {
+   "id": "ads",
+   "name": "Διαφημίσεις",
+   "desc": "Meta Ads και Google Ads που φέρνουν κλήσεις, μηνύματα και ραντεβού.",
+   "order": 3
+  },
+  {
+   "id": "bundles",
+   "name": "Πακέτα",
+   "desc": "Social media και διαφημίσεις μαζί — σε καλύτερη τιμή.",
+   "order": 4
   },
   {
    "id": "extras",
    "name": "Προσθήκες",
-   "desc": "Ό,τι χρειάζεται ακόμα η σελίδα σας, με μία πληρωμή.",
-   "order": 2
+   "desc": "Ό,τι χρειάζεται ακόμα η ιστοσελίδα σας.",
+   "order": 5
   },
   {
-   "id": "grow",
-   "name": "Προβολή κάθε μήνα",
-   "desc": "Να σας βρίσκουν, να σας εμπιστεύονται — και να σας καλούν.",
-   "order": 3
+   "id": "hosting",
+   "name": "Φιλοξενία",
+   "desc": "Μπαίνει μαζί με κάθε ιστοσελίδα — το domain name είναι δώρο.",
+   "order": 6
   },
   {
    "id": "clients",
    "name": "Για πελάτες μας",
    "desc": "Για ιστοσελίδες που έχουμε ήδη φτιάξει.",
-   "order": 4
+   "order": 7
   },
   {
    "id": "more",
-   "name": "Περισσότερες λύσεις",
+   "name": "Άλλες λύσεις",
    "desc": "Λύσεις που στήνουμε στα μέτρα σας.",
-   "order": 5
+   "order": 8
   }
  ],
  "products": [
   {
    "id": "site",
-   "cat": "build",
+   "cat": "site",
    "kind": "build",
    "name": "Ιστοσελίδα επαγγελματία",
    "price": 0,
    "icon": "site",
    "featured": true,
+   "badge": "Δημοφιλές",
    "short": "Δωρεάν κατασκευή. Πληρώνετε μόνο τη φιλοξενία — δώρο το domain name.",
-   "desc": "• Τη βλέπετε πρώτα έτοιμη, σε 1–5 ημέρες\n• Απεριόριστες αλλαγές μέχρι να βγει online\n• Ελληνικά & Αγγλικά, πρώτα για κινητό\n• SEO για το Google και τις αναζητήσεις μέσω AI",
+   "desc": "• Τη βλέπετε πρώτα έτοιμη, σε 1–5 ημέρες\n• Απεριόριστες αλλαγές μέχρι να βγει online\n• Ελληνικά & Αγγλικά, πρώτα για κινητό\n• SEO για το Google και τις αναζητήσεις μέσω AI\n• Κριτικές Google, χάρτης, κουμπί κλήσης",
+   "long": "Μια σύγχρονη ιστοσελίδα, σχεδιασμένη μόνο για εσάς — όχι από έτοιμο πρότυπο. Τη φτιάχνουμε με τα στοιχεία που ήδη έχετε (π.χ. το προφίλ σας στο Google ή στο doctoranytime) και τη βλέπετε έτοιμη πριν πληρώσετε οτιδήποτε άλλο.",
+   "steps": "Μας λέτε για την επιχείρησή σας ή μας στέλνετε ένα link\nΣε 1–5 ημέρες βλέπετε την ιστοσελίδα έτοιμη\nΚάνουμε όσες αλλαγές θέλετε\nΒγαίνει online στο δικό σας domain",
    "priceNote": "αξία κατασκευής 700 € – 5.000 €",
    "requires": [
     "hosting",
@@ -62,49 +83,20 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "SITE",
+   "img": "assets/img/p/site.webp",
    "order": 0
   },
   {
-   "id": "eshop",
-   "cat": "build",
-   "kind": "build",
-   "name": "E-shop",
-   "price": 39000,
-   "icon": "shop",
-   "badge": "Νέο",
-   "short": "Δικό σας κατάστημα με πληρωμές με κάρτα, IRIS, Apple Pay — και εύκολο πίνακα διαχείρισης.",
-   "desc": "• Τα χρήματα πάνε κατευθείαν στον δικό σας λογαριασμό\n• Προϊόντα, τιμές, εκπτώσεις και κουπόνια από το κινητό\n• Ανεβάζουμε εμείς όλα τα προϊόντα σας\n• Φτιαγμένο πρώτα για κινητό, με SEO",
-   "variants": [
-    {
-     "id": "half",
-     "name": "Προκαταβολή 50% — ξεκινάμε αμέσως",
-     "price": 19500
-    },
-    {
-     "id": "full",
-     "name": "Ολόκληρο το ποσό",
-     "price": 39000
-    }
-   ],
-   "requires": [
-    "eshop-hosting"
-   ],
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "ESHOP",
-   "order": 1
-  },
-  {
    "id": "stay",
-   "cat": "build",
+   "cat": "site",
    "kind": "build",
    "name": "Ιστοσελίδα καταλύματος",
    "price": 0,
    "icon": "stay",
    "short": "Για βίλες, δωμάτια και διαμερίσματα — με κρατήσεις χωρίς προμήθειες.",
-   "desc": "• Χώροι, φωτογραφίες, περιοχή, κριτικές επισκεπτών\n• Ελληνικά & Αγγλικά\n• Το Α.Μ.Α. του καταλύματος, όπως ζητά ο νόμος",
+   "desc": "• Χώροι, φωτογραφίες, περιοχή, κριτικές επισκεπτών\n• Ελληνικά & Αγγλικά\n• Αίτημα κράτησης σε WhatsApp ή e-mail\n• Το Α.Μ.Α. του καταλύματος, όπως ζητά ο νόμος",
+   "long": "Για ιδιοκτήτες που θέλουν κρατήσεις κατευθείαν από τη δική τους σελίδα, χωρίς να δίνουν προμήθεια σε κάθε κράτηση. Ξεκινάτε απλά και προσθέτετε ημερολόγιο ή channel manager όποτε θέλετε.",
+   "steps": "Μας στέλνετε το link από Booking ή Airbnb\nΠαίρνουμε φωτογραφίες, κείμενα και κριτικές από εκεί\nΣε 1–5 ημέρες βλέπετε την ιστοσελίδα έτοιμη\nΒγαίνει online στο δικό σας domain",
    "variants": [
     {
      "id": "p1",
@@ -134,6 +126,42 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "STAY",
+   "img": "assets/img/p/stay.webp",
+   "order": 1
+  },
+  {
+   "id": "eshop",
+   "cat": "eshop",
+   "kind": "build",
+   "name": "E-shop",
+   "price": 39000,
+   "icon": "shop",
+   "badge": "Νέο",
+   "short": "Δικό σας κατάστημα με πληρωμές με κάρτα, IRIS, Apple Pay — και εύκολο πίνακα διαχείρισης.",
+   "desc": "• Τα χρήματα πάνε κατευθείαν στον δικό σας λογαριασμό\n• Κάρτα, Apple Pay, Google Pay, IRIS\n• Προϊόντα, τιμές, εκπτώσεις και κουπόνια από το κινητό\n• Ανεβάζουμε εμείς όλα τα προϊόντα σας\n• Φτιαγμένο πρώτα για κινητό, με SEO",
+   "long": "Ένα κατάστημα που είναι δικό σας: χωρίς μηνιαίες συνδρομές σε πλατφόρμες και χωρίς προμήθειες σε κάθε πώληση. Εμείς το στήνουμε, ανεβάζουμε τα προϊόντα και συνδέουμε τις πληρωμές· εσείς αλλάζετε τιμές και προϊόντα από τον πίνακα, όποτε θέλετε.",
+   "steps": "Μας λέτε πόσα και ποια προϊόντα έχετε\nΣτήνουμε το κατάστημα και ανεβάζουμε τα προϊόντα\nΣυνδέουμε τις πληρωμές στον δικό σας λογαριασμό\nΣας δείχνουμε τον πίνακα διαχείρισης σε μια σύντομη κλήση",
+   "variants": [
+    {
+     "id": "half",
+     "name": "Προκαταβολή 50% — ξεκινάμε αμέσως",
+     "price": 19500
+    },
+    {
+     "id": "full",
+     "name": "Ολόκληρο το ποσό",
+     "price": 39000
+    }
+   ],
+   "requires": [
+    "eshop-hosting"
+   ],
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "ESHOP",
+   "img": "assets/img/p/eshop.webp",
    "order": 2
   },
   {
@@ -144,6 +172,7 @@ export default {
    "price": 13000,
    "unit": "year",
    "featured": true,
+   "img": null,
    "short": "10,83 €/μήνα — τιμολογείται ως 130 € τον χρόνο.",
    "desc": "• Domain name δωρεάν — περιλαμβάνεται\n• Φιλοξενία σε παγκόσμιο δίκτυο (CDN)\n• Πιστοποιητικό ασφαλείας SSL\n• Αυτόματα backups και τακτικός έλεγχος\n• Τεχνική υποστήριξη",
    "vat": 24,
@@ -159,7 +188,8 @@ export default {
    "name": "Growth",
    "price": 47500,
    "unit": "year",
-   "badge": "Νέο",
+   "badge": "Προτείνεται",
+   "img": null,
    "short": "39,58 €/μήνα — όλα της Φιλοξενίας, και η σελίδα σας μεγαλώνει κάθε μήνα.",
    "desc": "• Όλα όσα περιλαμβάνει η Φιλοξενία\n• 3 άρθρα κάθε μήνα, γραμμένα για το Google\n• Ενότητα άρθρων χωρίς επιπλέον χρέωση\n• 1 αίτημα αλλαγών κάθε μήνα χωρίς χρέωση\n• Μέτρηση κλικ στο τηλέφωνο, μηνιαία αναφορά\n• Προτεραιότητα στις αλλαγές",
    "vat": 24,
@@ -176,6 +206,7 @@ export default {
    "price": 29000,
    "unit": "year",
    "example": true,
+   "img": null,
    "short": "24,17 €/μήνα — τιμολογείται ως 290 € τον χρόνο.",
    "desc": "• Domain name δωρεάν\n• Οι πληρωμές να δουλεύουν πάντα σωστά\n• Ασφάλεια, backups, τεχνική υποστήριξη\n• Ο πίνακας διαχείρισης χωρίς όριο αλλαγών",
    "vat": 24,
@@ -192,6 +223,7 @@ export default {
    "price": 39000,
    "unit": "year",
    "example": true,
+   "img": null,
    "short": "Ιστοσελίδα, φιλοξενία και συγχρονισμός με Booking, Airbnb, Expedia.",
    "desc": "• Ένα ημερολόγιο, καμία διπλοκράτηση\n• Κρατήσεις στη σελίδα σας χωρίς προμήθειες\n• Φιλοξενία και domain name μέσα",
    "vat": 24,
@@ -201,122 +233,31 @@ export default {
    "order": 6
   },
   {
-   "id": "form",
-   "cat": "extras",
-   "name": "Φόρμα επικοινωνίας",
-   "price": 5000,
-   "icon": "mail",
-   "needsSite": true,
-   "short": "Οι επισκέπτες σάς γράφουν και το λαμβάνετε στο e-mail σας.",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "FORM",
-   "order": 7
-  },
-  {
-   "id": "articles",
-   "cat": "extras",
-   "name": "Ενότητα άρθρων / σεμιναρίων",
-   "price": 7000,
-   "icon": "pen",
-   "needsSite": true,
-   "notWith": [
-    "growth"
-   ],
-   "short": "Γράφετε και δημοσιεύετε άρθρα μόνοι σας.",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "ARTICLES",
-   "order": 8
-  },
-  {
-   "id": "panel",
-   "cat": "extras",
-   "name": "Πίνακας διαχείρισης",
-   "price": 18000,
-   "icon": "sliders",
-   "needsSite": true,
-   "short": "Αλλάζετε μόνοι σας κείμενα και φωτογραφίες.",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "PANEL",
-   "order": 9
-  },
-  {
-   "id": "gbp",
-   "cat": "extras",
-   "name": "Παρουσία στο Google + NFC stand",
-   "price": 9000,
-   "icon": "pin",
-   "needsSite": false,
-   "short": "Πλήρες προφίλ στο Google Maps και stand για κριτικές με ένα άγγιγμα.",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "GBP",
-   "order": 10
-  },
-  {
-   "id": "quiz",
-   "cat": "extras",
-   "name": "Διαδραστικό τεστ / ερωτηματολόγιο",
-   "price": 18000,
-   "icon": "quiz",
-   "needsSite": true,
-   "short": "Ο επισκέπτης απαντά σε λίγες ερωτήσεις — εσείς παίρνετε τις απαντήσεις.",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "QUIZ",
-   "order": 11
-  },
-  {
-   "id": "calc",
-   "cat": "extras",
-   "name": "Υπολογιστής κόστους",
-   "price": 12000,
-   "icon": "calc",
-   "needsSite": true,
-   "example": true,
-   "short": "Ο επισκέπτης βλέπει μια εκτίμηση τιμής — κι εσείς παίρνετε το τηλέφωνό του.",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "CALC",
-   "order": 12
-  },
-  {
    "id": "social",
-   "cat": "grow",
-   "name": "Social media",
+   "cat": "social",
+   "name": "Διαχείριση Social Media",
    "price": 4900,
    "unit": "month",
    "icon": "social",
+   "featured": true,
    "short": "Instagram & Facebook με την ταυτότητά σας — χωρίς να μας δώσετε κωδικούς.",
-   "desc": "• Reels με υπότιτλους, posts & carousels\n• Δεν χρειάζεται να μας στείλετε τίποτα\n• Πρόσβαση συνεργάτη που αφαιρείτε με ένα κλικ\n• Μηνιαία γραπτή αναφορά",
+   "desc": "• Reels με υπότιτλους, posts & carousels\n• Σχέδιο αναρτήσεων κάθε μήνα\n• Δεν χρειάζεται να μας στείλετε τίποτα\n• Πρόσβαση συνεργάτη που αφαιρείτε με ένα κλικ\n• Μηνιαία γραπτή αναφορά",
+   "long": "Αναλαμβάνουμε το Instagram και το Facebook σας ολόκληρα: ιδέες, κείμενα, σχέδια, reels και δημοσίευση. Κάθε ανάρτηση βγαίνει στο ύφος της επιχείρησής σας και ξέρετε από πριν τι θα δημοσιευτεί.",
+   "steps": "Μια σύντομη κλήση για να γνωρίσουμε την επιχείρησή σας\nΣας στέλνουμε το σχέδιο του μήνα\nΔημοσιεύουμε εμείς, στις καλύτερες ώρες\nΚάθε μήνα σας στέλνουμε γραπτή αναφορά",
    "variants": [
     {
      "id": "basic",
-     "name": "Βασικό · 8 posts",
+     "name": "Βασικό · 8 αναρτήσεις",
      "price": 4900
     },
     {
      "id": "growth",
-     "name": "Ανάπτυξη · 12 posts",
+     "name": "Ανάπτυξη · 12 αναρτήσεις",
      "price": 7900
     },
     {
      "id": "pro",
-     "name": "Pro · 16 posts",
+     "name": "Pro · 16 αναρτήσεις",
      "price": 9900
     }
    ],
@@ -325,34 +266,288 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "SOCIAL",
-   "order": 13
+   "img": "assets/img/p/social.webp",
+   "order": 7
+  },
+  {
+   "id": "meta",
+   "cat": "ads",
+   "name": "Meta Ads (Facebook & Instagram)",
+   "price": 7900,
+   "unit": "month",
+   "icon": "ads",
+   "example": true,
+   "badge": "Νέο",
+   "short": "Διαφημίσεις που φέρνουν μηνύματα, κλήσεις και ραντεβού από ανθρώπους της περιοχής σας.",
+   "desc": "• Στήσιμο καμπάνιας και διαφημίσεων\n• Στόχευση στην περιοχή και στο κοινό σας\n• Βίντεο και εικόνες με φωνή στα ελληνικά\n• Μηνιαία αναφορά: τι κοστίζει κάθε επαφή\n• Το ποσό διαφήμισης πηγαίνει απευθείας στη Meta (από 5 €/ημέρα)",
+   "long": "Στήνουμε και διαχειριζόμαστε τις διαφημίσεις σας στο Facebook και στο Instagram. Ξεκινάμε με μικρό ποσό, μετράμε τι φέρνει πραγματικές επαφές και βάζουμε τα χρήματα εκεί που αποδίδουν.",
+   "steps": "Μια κλήση για τον στόχο σας\nΦτιάχνουμε διαφημίσεις και καμπάνια\nΤις παρακολουθούμε και τις βελτιώνουμε κάθε εβδομάδα\nΚάθε μήνα σας στέλνουμε αναφορά",
+   "priceNote": "χρεώνεται ο 1ος μήνας · χωρίς δέσμευση",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "META",
+   "img": "assets/img/p/meta.webp",
+   "order": 8
   },
   {
    "id": "ads",
-   "cat": "grow",
+   "cat": "ads",
    "name": "Google Ads",
    "price": 0,
    "unit": "month",
-   "icon": "ads",
+   "icon": "search",
    "needsSite": true,
-   "short": "Στήσιμο 0 € και 1ος μήνας διαχείρισης 0 €. Εγγύηση 60 ημερών.",
-   "desc": "• Μέτρηση κάθε κλήσης και ραντεβού από διαφήμιση\n• Αν δεν φέρει επαφές, δεν πληρώνετε εμάς\n• Το ποσό διαφήμισης πηγαίνει απευθείας στη Google (από 5 €/ημέρα)",
+   "short": "Εμφανίζεστε πρώτοι όταν σας ψάχνουν στο Google. Στήσιμο 0 € και 1ος μήνας 0 €.",
+   "desc": "• Μέτρηση κάθε κλήσης και ραντεβού από διαφήμιση\n• Λέξεις που ψάχνουν οι πελάτες στην περιοχή σας\n• Εγγύηση 60 ημερών: αν δεν φέρει επαφές, δεν πληρώνετε εμάς\n• Το ποσό διαφήμισης πηγαίνει απευθείας στη Google (από 5 €/ημέρα)",
+   "long": "Όταν κάποιος γράφει στο Google αυτό που κάνετε, στην περιοχή σας, βλέπει πρώτα εσάς. Μετράμε κάθε κλήση και κάθε ραντεβού, ώστε να ξέρετε ακριβώς τι σας φέρνει η διαφήμιση.",
+   "steps": "Βρίσκουμε τι ψάχνουν οι πελάτες σας\nΣτήνουμε την καμπάνια και τη μέτρηση κλήσεων\nΤη βελτιώνουμε κάθε εβδομάδα\nΚάθε μήνα σας στέλνουμε αναφορά",
    "priceNote": "μετά 59 €/μήνα + ΦΠΑ",
    "vat": 24,
    "active": true,
    "maxQty": 1,
    "sku": "ADS",
+   "img": "assets/img/p/ads.webp",
+   "order": 9
+  },
+  {
+   "id": "b-start",
+   "cat": "bundles",
+   "kind": "bundle",
+   "name": "Ξεκίνημα",
+   "price": 10900,
+   "unit": "month",
+   "icon": "bundle",
+   "example": true,
+   "includes": [
+    "social:basic",
+    "meta"
+   ],
+   "badge": null,
+   "needsSite": false,
+   "notWith": [
+    "social",
+    "meta",
+    "ads",
+    "b-grow",
+    "b-full"
+   ],
+   "short": "Social Βασικό (8 αναρτήσεις) + Meta Ads.",
+   "compareAt": 12800,
+   "priceNote": "χρεώνεται ο 1ος μήνας · χωρίς δέσμευση",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "B-START",
+   "img": "assets/img/p/b-start.webp",
+   "order": 10
+  },
+  {
+   "id": "b-grow",
+   "cat": "bundles",
+   "kind": "bundle",
+   "name": "Ανάπτυξη",
+   "price": 13900,
+   "unit": "month",
+   "icon": "bundle",
+   "example": true,
+   "includes": [
+    "social:growth",
+    "meta"
+   ],
+   "badge": "Δημοφιλές",
+   "needsSite": false,
+   "notWith": [
+    "social",
+    "meta",
+    "ads",
+    "b-start",
+    "b-full"
+   ],
+   "short": "Social Ανάπτυξη (12 αναρτήσεις) + Meta Ads.",
+   "compareAt": 15800,
+   "priceNote": "χρεώνεται ο 1ος μήνας · χωρίς δέσμευση",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "B-GROW",
+   "img": "assets/img/p/b-grow.webp",
+   "order": 11
+  },
+  {
+   "id": "b-full",
+   "cat": "bundles",
+   "kind": "bundle",
+   "name": "Πλήρης προβολή",
+   "price": 17900,
+   "unit": "month",
+   "icon": "bundle",
+   "example": true,
+   "includes": [
+    "social:growth",
+    "meta",
+    "ads"
+   ],
+   "badge": null,
+   "needsSite": true,
+   "notWith": [
+    "social",
+    "meta",
+    "ads",
+    "b-start",
+    "b-grow"
+   ],
+   "short": "Social Ανάπτυξη + Meta Ads + Google Ads.",
+   "compareAt": 21700,
+   "priceNote": "χρεώνεται ο 1ος μήνας · χωρίς δέσμευση",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "B-FULL",
+   "img": "assets/img/p/b-full.webp",
+   "order": 12
+  },
+  {
+   "id": "form",
+   "cat": "extras",
+   "group": "Για την ιστοσελίδα",
+   "name": "Φόρμα επικοινωνίας",
+   "price": 5000,
+   "icon": "mail",
+   "needsSite": true,
+   "short": "Οι επισκέπτες σάς γράφουν και το λαμβάνετε στο e-mail σας.",
+   "desc": "• Με προστασία από spam\n• Έρχεται στο e-mail σας\n• Σύμφωνη με τον GDPR",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "FORM",
+   "img": "assets/img/p/form.webp",
+   "order": 13
+  },
+  {
+   "id": "articles",
+   "cat": "extras",
+   "group": "Για την ιστοσελίδα",
+   "name": "Ενότητα άρθρων",
+   "price": 7000,
+   "icon": "pen",
+   "needsSite": true,
+   "notWith": [
+    "growth"
+   ],
+   "short": "Γράφετε και δημοσιεύετε άρθρα μόνοι σας.",
+   "desc": "• Από το κινητό ή τον υπολογιστή\n• Κάθε άρθρο σε δική του σελίδα για το Google",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "ARTICLES",
+   "img": "assets/img/p/articles.webp",
    "order": 14
   },
   {
+   "id": "panel",
+   "cat": "extras",
+   "group": "Για την ιστοσελίδα",
+   "name": "Πίνακας διαχείρισης",
+   "price": 18000,
+   "icon": "sliders",
+   "needsSite": true,
+   "short": "Αλλάζετε μόνοι σας κείμενα και φωτογραφίες.",
+   "desc": "• Χωρίς τεχνικές γνώσεις\n• Οι αλλαγές φαίνονται αμέσως",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "PANEL",
+   "img": "assets/img/p/panel.webp",
+   "order": 15
+  },
+  {
+   "id": "quiz",
+   "cat": "extras",
+   "group": "Για την ιστοσελίδα",
+   "name": "Διαδραστικό τεστ",
+   "price": 18000,
+   "icon": "quiz",
+   "needsSite": true,
+   "short": "Ο επισκέπτης απαντά σε λίγες ερωτήσεις — εσείς παίρνετε τις απαντήσεις.",
+   "desc": "• Οι απαντήσεις έρχονται στο e-mail σας\n• Ιδανικό για να φέρνει ραντεβού",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "QUIZ",
+   "img": "assets/img/p/quiz.webp",
+   "order": 16
+  },
+  {
+   "id": "calc",
+   "cat": "extras",
+   "group": "Για την ιστοσελίδα",
+   "name": "Υπολογιστής κόστους",
+   "price": 12000,
+   "icon": "calc",
+   "needsSite": true,
+   "example": true,
+   "short": "Ο επισκέπτης βλέπει μια εκτίμηση τιμής — κι εσείς παίρνετε το τηλέφωνό του.",
+   "desc": "• Με τις δικές σας τιμές\n• Κάθε εκτίμηση έρχεται στο e-mail σας",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "CALC",
+   "img": "assets/img/p/calc.webp",
+   "order": 17
+  },
+  {
+   "id": "ai",
+   "cat": "extras",
+   "group": "Για την ιστοσελίδα",
+   "name": "AI βοηθός",
+   "price": 2900,
+   "unit": "month",
+   "icon": "ai",
+   "needsSite": true,
+   "example": true,
+   "short": "Απαντά στη στιγμή, σε ελληνικά και αγγλικά — και σας στέλνει όσους ενδιαφέρονται.",
+   "desc": "• Μαθαίνει τις δικές σας υπηρεσίες\n• Σας στέλνει τα στοιχεία όσων ενδιαφέρονται",
+   "priceNote": "χρεώνεται ο 1ος μήνας",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "AI",
+   "img": "assets/img/p/ai.webp",
+   "order": 18
+  },
+  {
+   "id": "gbp",
+   "cat": "extras",
+   "group": "Google & ραντεβού",
+   "name": "Google Business Profile + NFC stand",
+   "price": 9000,
+   "icon": "pin",
+   "short": "Πλήρες προφίλ στο Google Maps και stand για κριτικές με ένα άγγιγμα.",
+   "desc": "• Κατηγορίες, ώρες, φωτογραφίες, υπηρεσίες\n• Stand στο γραφείο σας: κριτική με ένα άγγιγμα του κινητού",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "GBP",
+   "img": "assets/img/p/gbp.webp",
+   "order": 19
+  },
+  {
    "id": "booking",
-   "cat": "grow",
+   "cat": "extras",
+   "group": "Google & ραντεβού",
    "name": "Online ραντεβού",
    "price": 500,
    "unit": "month",
    "icon": "cal",
-   "needsSite": false,
    "short": "Δική σας σελίδα κρατήσεων και αυτόματες υπενθυμίσεις.",
+   "desc": "• Οι πελάτες κλείνουν μόνοι τους ώρα\n• Υπενθυμίσεις με e-mail",
    "variants": [
     {
      "id": "one",
@@ -370,24 +565,8 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "BOOKING",
-   "order": 15
-  },
-  {
-   "id": "ai",
-   "cat": "grow",
-   "name": "AI βοηθός ιστοσελίδας",
-   "price": 2900,
-   "unit": "month",
-   "icon": "ai",
-   "needsSite": true,
-   "example": true,
-   "short": "Απαντά στη στιγμή, στα ελληνικά και στα αγγλικά — και σας στέλνει τα στοιχεία όσων ενδιαφέρονται.",
-   "priceNote": "χρεώνεται ο 1ος μήνας",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "AI",
-   "order": 16
+   "img": "assets/img/p/booking.webp",
+   "order": 20
   },
   {
    "id": "changes",
@@ -402,7 +581,8 @@ export default {
    "vat": 24,
    "active": true,
    "sku": "CHANGES",
-   "order": 17
+   "img": "assets/img/p/changes.webp",
+   "order": 21
   },
   {
    "id": "renew",
@@ -412,6 +592,7 @@ export default {
    "unit": "year",
    "listed": false,
    "needsSite": true,
+   "img": null,
    "short": "Ένας ακόμα χρόνος για την ιστοσελίδα σας, με το domain μαζί.",
    "variants": [
     {
@@ -429,7 +610,7 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "RENEW",
-   "order": 18
+   "order": 22
   },
   {
    "id": "qr",
@@ -444,7 +625,8 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "QR",
-   "order": 19
+   "img": "assets/img/p/qr.webp",
+   "order": 23
   },
   {
    "id": "wedding",
@@ -459,12 +641,13 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "WEDDING",
-   "order": 20
+   "img": "assets/img/p/wedding.webp",
+   "order": 24
   },
   {
    "id": "custom",
    "cat": "more",
-   "name": "Custom μικρό λογισμικό",
+   "name": "Custom λογισμικό",
    "price": 0,
    "icon": "code",
    "quote": true,
@@ -474,7 +657,8 @@ export default {
    "active": true,
    "maxQty": 1,
    "sku": "CUSTOM",
-   "order": 21
+   "img": "assets/img/p/custom.webp",
+   "order": 25
   }
  ],
  "coupons": [
@@ -494,7 +678,7 @@ export default {
  "catSales": [],
  "settings": {
   "shopName": "Advon Media",
-  "tagline": "Η επιχείρησή σας online. Σε τρία βήματα.",
+  "tagline": "Ό,τι χρειάζεται η επιχείρησή σας online.",
   "notifyEmail": "advonmd@gmail.com",
   "phone": "",
   "email": "advonmd@gmail.com",

@@ -1,7 +1,7 @@
 /* node tools/build.mjs — bakes the catalogue into the pages (so Google sees the real services)
    and into the server's starting copy (netlify/functions/_lib/seed.mjs). */
 import fs from 'node:fs';
-import { buildStep, hostingStep, extrasStep, clientsBlock, moreBlock, fromPrice, esc } from '../assets/js/render.mjs';
+import { grid, hostingStrip, bundles, extras, clientsBlock, moreBlock, catTiles, fromPrice, esc, icon } from '../assets/js/render.mjs';
 
 const cat = JSON.parse(fs.readFileSync('data/catalog.json', 'utf8'));
 /* safety: nothing personal goes into a public file */
@@ -27,13 +27,12 @@ const jsonld = {
     }) }
   ]
 };
-const marquee = ['Ιστοσελίδα', 'E-shop', 'Ιστοσελίδα καταλύματος', 'Φιλοξενία', 'Growth', 'Social media', 'Google Ads', 'Online ραντεβού', 'Google Business Profile', 'Φόρμα επικοινωνίας', 'Άρθρα', 'AI βοηθός'];
-const mq = [...marquee, ...marquee].map(x => `<span>${esc(x)}</span>`).join('');
 const seed = JSON.stringify(pub).replace(/</g, '\\u003c');
-
 const html = fs.readFileSync('tools/index.src.html', 'utf8')
-  .replace('{{S1}}', buildStep(pub, {})).replace('{{S2}}', hostingStep(pub, {})).replace('{{S3}}', extrasStep(pub, {}))
-  .replace('{{CLIENTS}}', clientsBlock(pub)).replace('{{MORE}}', moreBlock(pub)).replace('{{MARQUEE}}', mq)
+  .replace('{{TILES}}', catTiles(pub)).replace('{{G_SITE}}', grid(pub, 'site', {})).replace('{{HOSTING}}', hostingStrip(pub))
+  .replace('{{G_ESHOP}}', grid(pub, 'eshop', {})).replace('{{G_SOCIAL}}', grid(pub, 'social', {})).replace('{{G_ADS}}', grid(pub, 'ads', {}))
+  .replace('{{G_BUNDLES}}', bundles(pub, {})).replace('{{G_EXTRAS}}', extras(pub, {})).replace('{{CLIENTS}}', clientsBlock(pub)).replace('{{MORE}}', moreBlock(pub, {}))
+  .replace(/{{ICON_([A-Z]+)}}/g, (m, n) => icon(n.toLowerCase()))
   .replace('{{SEED}}', seed).replace(/{{LEGAL}}/g, legal)
   .replace('{{JSONLD}}', '<script type="application/ld+json">' + JSON.stringify(jsonld).replace(/</g, '\\u003c') + '</script>');
 fs.writeFileSync('index.html', html);

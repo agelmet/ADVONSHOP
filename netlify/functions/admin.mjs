@@ -48,9 +48,12 @@ function cleanCatalog(c, prev) {
       img: p.img && /^(\/api\/img\/|assets\/)[\w./-]+$/.test(p.img) ? p.img : null,
       ask: str(p.ask, 160) || null, askRequired: !!p.askRequired, example: !!p.example, order: i,
       /* how the shop puts things together — kept exactly as they are */
-      kind: ['build', 'hosting'].includes(p.kind) ? p.kind : null, requires: ids(p.requires), notWith: ids(p.notWith),
+      kind: ['build', 'hosting', 'bundle'].includes(p.kind) ? p.kind : null, requires: ids(p.requires), notWith: ids(p.notWith),
       needsSite: !!p.needsSite, listed: p.listed !== false, quote: !!p.quote, priceNote: str(p.priceNote, 160) || null,
-      icon: str(p.icon, 20).replace(/[^a-z]/g, '') || null
+      icon: str(p.icon, 20).replace(/[^a-z]/g, '') || null,
+      group: str(p.group, 60) || null, long: str(p.long, 2000) || null, steps: str(p.steps, 1000) || null,
+      includes: (Array.isArray(p.includes) ? p.includes : []).map(x => String(x).toLowerCase().replace(/[^a-z0-9:-]/g, '').slice(0, 60)).filter(Boolean).slice(0, 10),
+      compareAt: p.compareAt === '' || p.compareAt == null || !isInt(Math.round(Number(p.compareAt))) ? null : Math.round(Number(p.compareAt))
     };
   }).filter(Boolean);
   const codes = new Set();
