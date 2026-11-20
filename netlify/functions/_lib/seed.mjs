@@ -369,23 +369,6 @@ export default {
    "order": 12
   },
   {
-   "id": "calc",
-   "cat": "extras",
-   "name": "Υπολογιστής κόστους",
-   "price": 12000,
-   "needsSite": true,
-   "example": true,
-   "short": "Ο επισκέπτης βλέπει εκτίμηση τιμής — εσείς παίρνετε το τηλέφωνό του.",
-   "desc": "• Με τις δικές σας τιμές\n• Κάθε εκτίμηση έρχεται στο e-mail σας",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "CALC",
-   "img": "assets/img/p/calc.webp",
-   "order": 13
-  },
-  {
    "id": "ai",
    "cat": "extras",
    "name": "AI βοηθός",
@@ -401,7 +384,7 @@ export default {
    "maxQty": 1,
    "sku": "AI",
    "img": "assets/img/p/ai.webp",
-   "order": 14
+   "order": 13
   },
   {
    "id": "gbp",
@@ -416,7 +399,7 @@ export default {
    "maxQty": 1,
    "sku": "GBP",
    "img": "assets/img/p/gbp.webp",
-   "order": 15
+   "order": 14
   },
   {
    "id": "booking",
@@ -444,7 +427,7 @@ export default {
    "maxQty": 1,
    "sku": "BOOKING",
    "img": "assets/img/p/booking.webp",
-   "order": 16
+   "order": 15
   },
   {
    "id": "changes",
@@ -460,7 +443,7 @@ export default {
    "active": true,
    "sku": "CHANGES",
    "img": "assets/img/p/changes.webp",
-   "order": 17
+   "order": 16
   },
   {
    "id": "renew",
@@ -488,11 +471,11 @@ export default {
    "maxQty": 1,
    "sku": "RENEW",
    "img": "assets/img/p/renew.webp",
-   "order": 18
+   "order": 17
   },
   {
    "id": "qr",
-   "cat": "more",
+   "cat": "extras",
    "name": "Ψηφιακό μενού QR",
    "price": 9000,
    "example": true,
@@ -504,7 +487,7 @@ export default {
    "maxQty": 1,
    "sku": "QR",
    "img": "assets/img/p/qr.webp",
-   "order": 19
+   "order": 18
   },
   {
    "id": "wedding",
@@ -520,7 +503,7 @@ export default {
    "maxQty": 1,
    "sku": "WEDDING",
    "img": "assets/img/p/wedding.webp",
-   "order": 20
+   "order": 19
   }
  ],
  "coupons": [

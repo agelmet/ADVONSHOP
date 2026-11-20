@@ -78,8 +78,6 @@ add(id='panel', cat='extras', name='Πίνακας διαχείρισης', pric
     short='Αλλάζετε μόνοι σας κείμενα και φωτογραφίες.', desc=B('Χωρίς τεχνικές γνώσεις', 'Οι αλλαγές φαίνονται αμέσως'))
 add(id='quiz', cat='extras', name='Διαδραστικό τεστ', price=18000, needsSite=True,
     short='Λίγες ερωτήσεις στον επισκέπτη — οι απαντήσεις έρχονται σε εσάς.', desc=B('Οι απαντήσεις στο e-mail σας', 'Φέρνει ραντεβού'))
-add(id='calc', cat='extras', name='Υπολογιστής κόστους', price=12000, needsSite=True, example=True,
-    short='Ο επισκέπτης βλέπει εκτίμηση τιμής — εσείς παίρνετε το τηλέφωνό του.', desc=B('Με τις δικές σας τιμές', 'Κάθε εκτίμηση έρχεται στο e-mail σας'))
 add(id='ai', cat='extras', name='AI βοηθός', price=2900, unit='month', needsSite=True, example=True,
     short='Απαντά στη στιγμή, σε ελληνικά και αγγλικά, 24 ώρες το 24ωρο.', desc=B('Μαθαίνει τις δικές σας υπηρεσίες', 'Σας στέλνει τα στοιχεία όσων ενδιαφέρονται'), priceNote=NM)
 add(id='gbp', cat='extras', name='Google Maps + NFC stand', price=9000,
@@ -93,7 +91,7 @@ add(id='changes', cat='more', name='Αλλαγές σε ιστοσελίδα', p
 add(id='renew', cat='more', name='Ανανέωση φιλοξενίας', price=13000, unit='year', needsSite=True, link='ananeosi.html',
     short='Ένας ακόμα χρόνος για την ιστοσελίδα σας, με το domain μαζί.',
     variants=[{"id": "hosting", "name": "Βασικό", "price": 13000}, {"id": "growth", "name": "Growth", "price": 47500}])
-add(id='qr', cat='more', name='Ψηφιακό μενού QR', price=9000, example=True,
+add(id='qr', cat='extras', name='Ψηφιακό μενού QR', price=9000, example=True,
     short='Δίγλωσσο μενού με φωτογραφίες — αλλάζετε τιμές όποτε θέλετε.', desc=B('Για καφέ, εστιατόρια, μπαρ', 'Ελληνικά & Αγγλικά'))
 add(id='wedding', cat='more', name='Ιστοσελίδα γάμου / βάπτισης', price=9000, example=True,
     short='Ένα link στο προσκλητήριο: εκκλησία, χάρτης, δήλωση παρουσίας.', desc=B('Δήλωση παρουσίας online', 'Χάρτης για εκκλησία και δεξίωση'))
