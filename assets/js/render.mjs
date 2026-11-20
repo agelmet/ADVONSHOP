@@ -1,5 +1,5 @@
 /* Advon Shop — HTML pieces of the store. Used by the page AND by the build (so Google sees the real services). */
-import { unitPrice, UNITS, euro, athensDay } from './pricing.mjs';
+import { unitPrice, UNITS, euro, athensDay, extrasOf } from './pricing.mjs';
 
 export const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -53,14 +53,27 @@ export function fromPrice(cat, p, day = athensDay()) {
 }
 const UNIT_SHORT = { year: '/ έτος', month: '/ μήνα', request: '/ αίτημα', page: '/ σελίδα', once: '', piece: '' };
 export const unitShort = u => UNIT_SHORT[u || 'once'] ?? '';
-/* THE price shown everywhere: one big number, its unit, and one short line under it */
+/* coloured unit tag: «/ μήνα», «/ έτος», «εφάπαξ», «/ αίτημα» — each in its own colour so it is clear at a glance */
+const UTAG = { month: '/ μήνα', year: '/ έτος', once: 'εφάπαξ', request: '/ αίτημα', page: '/ σελίδα' };
+export const utag = u => UTAG[u || 'once'] ? `<span class="uc u-${esc(u || 'once')}">${UTAG[u || 'once']}</span>` : '';
+/* THE price shown everywhere.
+   - «strike»: the build is free — the old value crossed out, a big «0 €» and the word «κατασκευή»
+   - «perMonth»: a yearly price shown as its monthly amount, with «πληρώνεται ετήσια» under it
+   - extras: one-off setup fees / extra monthly charges, each on its own short line */
 export function priceBlock(cat, p, vId, { big = false } = {}) {
   const u = vId ? unitPrice(cat, p, vId) : fromPrice(cat, p);
   if (!u) return '';
   const show = p.listPrice != null && u.price === 0 ? p.listPrice : u.price;
   const was = u.original > u.price ? u.original : (p.compareAt && p.compareAt > show ? p.compareAt : 0);
+  const perM = p.perMonth && p.unit === 'year';
+  const amount = perM ? Math.round(show / 12) : show, unit = perM ? 'month' : p.unit;
+  const zero = p.strike ? `<div class="p0"><span>Κατασκευή</span><div><s>${esc(p.strike)}</s><b>0 €</b></div></div>` : '';
+  const main = `<div class="pl${p.strike ? ' sm' : ''}">${was && !perM ? `<s>${euro(was)}</s>` : ''}<b class="pr">${u.from ? '<i>από</i> ' : ''}${euro(amount)}</b>${utag(unit)}<span class="pu">+ ΦΠΑ</span></div>`;
+  const yearly = perM ? `<span class="pnote">πληρώνεται ετήσια (${euro(show)} + ΦΠΑ)</span>` : '';
+  const v = vId && p.variants ? p.variants.find(x => x.id === vId) : null;
+  const ex = extrasOf(p, v).map(e => `<span class="pex">+ ${euro(e.price)} ${utag(e.unit || 'once')} <em>${esc(e.name)}</em></span>`).join('');
   const note = p.priceNote ? `<span class="pnote${/(^|[^0-9.,])0 €|δωρεάν|δώρο/i.test(p.priceNote) ? ' g' : ''}">${esc(p.priceNote)}</span>` : '';
-  return `<div class="price${big ? ' big' : ''}"><div class="pl">${was ? `<s>${euro(was)}</s>` : ''}<b class="pr">${euro(show)}</b><span class="pu">${esc(unitShort(p.unit))}${unitShort(p.unit) ? ' ' : ''}+ ΦΠΑ</span></div>${note}</div>`;
+  return `<div class="price${big ? ' big' : ''}${p.strike ? ' z' : ''}">${zero}${main}${yearly}${ex}${note}</div>`;
 }
 export function includesTxt(cat, ref) {
   const [id, v] = String(ref).split(':'), q = byId(cat, id); if (!q) return id;
@@ -90,15 +103,17 @@ export function card(cat, p, st = {}) {
 }
 export function grid(cat, catId, st) {
   const ps = inCat(cat, catId), n = ps.length;
-  const cols = n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n <= 2 ? 2 : 4;
-  return `<div class="pgrid c${cols}">${ps.map(p => card(cat, p, st)).join('')}</div>`;
+  /* full rows where possible; otherwise the short last row is centred (never one card stuck on the left) */
+  const cols = n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n <= 2 ? 2 : n === 5 ? 3 : 4;
+  const ctr = n > 2 && n % cols !== 0 ? ' ctr' : '';
+  return `<div class="pgrid c${cols}${ctr}">${ps.map(p => card(cat, p, st)).join('')}</div>`;
 }
 
 /* the product window */
 export function details(cat, p, st = {}) {
   const vOf = st.vOf || {}, ids = st.ids || [], inCart = ids.includes(p.id);
   const vId = p.variants && p.variants.length ? (vOf[p.id] || p.variants[0].id) : null;
-  const opts = vId ? `<div class="mdsec"><h4>Διαλέξτε</h4><div class="opts">${p.variants.map(v => { const u = unitPrice(cat, p, v.id); return `<button type="button" class="opt${v.id === vId ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}"><span class="rd"></span><span class="ot">${esc(v.name)}${v.note ? `<small>${esc(v.note)}</small>` : ''}</span><b>${euro(u ? u.price : v.price)}<small>${esc(unitShort(p.unit))}</small></b></button>`; }).join('')}</div></div>` : '';
+  const opts = vId ? `<div class="mdsec"><h4>Διαλέξτε</h4><div class="opts">${p.variants.map(v => { const u = unitPrice(cat, p, v.id); return `<button type="button" class="opt${v.id === vId ? ' on' : ''}" data-pv="${esc(p.id)}" data-v="${esc(v.id)}"><span class="rd"></span><span class="ot">${esc(v.name)}${v.note ? `<small>${esc(v.note)}</small>` : ''}</span><b>${p.perMonth && p.unit === 'year' ? euro(Math.round((u ? u.price : v.price) / 12)) + '<small>/ μήνα</small>' : euro(u ? u.price : v.price) + `<small>${esc(unitShort(p.unit))}</small>`}${extrasOf(p, v).map(e => `<small class="oex">+ ${euro(e.price)} ${e.unit === 'month' ? '/ μήνα' : 'εφάπαξ'}</small>`).join('')}</b></button>`; }).join('')}</div></div>` : '';
   const inc = p.kind === 'bundle' && p.includes && p.includes.length ? `<div class="mdsec"><h4>Περιλαμβάνει</h4>${bullets(p.includes.map(r => includesTxt(cat, r)).join('\n'))}</div>` : '';
   const what = p.desc ? `<div class="mdsec"><h4>Τι περιλαμβάνει</h4>${bullets(p.desc)}</div>` : '';
   const steps = p.steps ? `<div class="mdsec"><h4>Πώς δουλεύει</h4><ol class="steps">${lines(p.steps).map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : '';

@@ -1,6 +1,7 @@
 /* Advon Shop — talking to Stripe and Viva (plain fetch, no SDK, nothing loaded in the visitor's browser).
    The visitor is SENT to the payment company's own page; card numbers never touch our site. */
 import { env, hmacHex, safeEqual, euro, store } from './core.mjs';
+import { extrasOf } from '../../../assets/js/pricing.mjs';
 
 /* ================= STRIPE ================= */
 function form(obj, prefix = '', out = []) {
@@ -40,9 +41,20 @@ export function stripeCatalogItems(cat) {
     if (p.active === false) continue;
     const vat = Number.isFinite(p.vat) ? p.vat : (cat.vatDefault ?? 24);
     const opts = (p.variants && p.variants.length) ? p.variants.map(v => ({ v, price: v.price })) : [{ v: null, price: p.listPrice || p.price }];
+    const g = c => cat.settings && cat.settings.pricesIncludeVat ? c : c + Math.round(c * vat / 100);
+    const seenX = new Set();
     for (const { v, price } of opts) {
+      /* setup fees / extra monthly charges → their own products (advon_<id>[_<option>]_<extra>) */
+      for (const e of extrasOf(p, v)) {
+        const own = v && Array.isArray(v.extras) && v.extras.length;
+        const xid = stripePid(p.id, (own ? v.id + '_' : '') + e.id);
+        if (seenX.has(xid)) continue; seenX.add(xid);
+        out.push({ id: xid, shop: p.id, variant: (own ? v.id + ':' : '') + e.id, unit: e.unit || 'once', gross: g(e.price),
+          name: e.name + ' — ' + p.name + (own ? ' (' + v.name + ')' : ''), description: undefined,
+          img: p.img ? String(p.img).replace(/\.webp$/, '.jpg') : '' });
+      }
       if (!price || price <= 0) continue;
-      const gross = cat.settings && cat.settings.pricesIncludeVat ? price : price + Math.round(price * vat / 100);
+      const gross = g(price);
       out.push({
         id: stripePid(p.id, v && v.id), shop: p.id, variant: v ? v.id : '', unit: p.unit || 'once', gross,
         name: p.name + (v ? ' — ' + v.name : ''),
@@ -111,7 +123,7 @@ export async function stripeCheckout(order, base) {
   const line_items = {};
   const map = await stripeProductMap().catch(() => ({ ids: {} }));
   pr.lines.forEach((l, i) => {
-    const pid = stripePid(l.id, l.v);
+    const pid = l.extra ? stripePid(l.id, (l.xv ? l.v + '_' : '') + l.extra) : stripePid(l.id, l.v);
     const linked = map.ids[pid] && l.gross % l.qty === 0;   // product exists in the payment catalogue → reports per product
     line_items[i] = linked
       ? { quantity: l.qty, price_data: { currency: 'eur', unit_amount: l.gross / l.qty, product: pid } }

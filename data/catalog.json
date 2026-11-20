@@ -1,5 +1,5 @@
 {
- "schema": 6,
+ "schema": 7,
  "version": 1,
  "updatedAt": null,
  "vatDefault": 24,
@@ -41,25 +41,27 @@
    "cat": "site",
    "kind": "build",
    "name": "Ιστοσελίδα",
-   "price": 13300,
+   "price": 13200,
    "unit": "year",
+   "perMonth": true,
+   "strike": "500 – 5.000 €",
    "badge": "Δημοφιλές",
    "short": "Σχεδιασμένη μόνο για εσάς. Κατασκευή δωρεάν — πληρώνετε μόνο τη φιλοξενία.",
-   "desc": "• Κατασκευή δωρεάν (αξία 700 € – 5.000 €)\n• Domain name δώρο, φιλοξενία, SSL, backups\n• Έτοιμη σε 1–5 ημέρες — τη βλέπετε πρώτα\n• Απεριόριστες αλλαγές μέχρι να βγει online\n• Ελληνικά & Αγγλικά, SEO για Google και AI",
+   "desc": "• Κατασκευή δωρεάν (αξία 500 € – 5.000 €)\n• Domain name δώρο, φιλοξενία, SSL, backups\n• Έτοιμη σε 1–5 ημέρες — τη βλέπετε πρώτα\n• Απεριόριστες αλλαγές μέχρι να βγει online\n• Ελληνικά & Αγγλικά, SEO για Google και AI",
    "long": "Μια σύγχρονη ιστοσελίδα, σχεδιασμένη μόνο για εσάς — όχι από έτοιμο πρότυπο. Τη φτιάχνουμε με τα στοιχεία που ήδη έχετε (π.χ. το προφίλ σας στο Google) και τη βλέπετε έτοιμη μέσα σε 1–5 ημέρες.",
    "steps": "Πληρώνετε τον 1ο χρόνο φιλοξενίας\nΜας λέτε για την επιχείρησή σας ή μας στέλνετε ένα link\nΣε 1–5 ημέρες βλέπετε την ιστοσελίδα έτοιμη\nΚάνουμε όσες αλλαγές θέλετε και βγαίνει online",
-   "priceNote": "Κατασκευή 0 € · domain δώρο",
+   "priceNote": "Domain name δώρο",
    "variants": [
     {
      "id": "basic",
      "name": "Βασικό",
-     "price": 13300,
+     "price": 13200,
      "note": "Φιλοξενία, domain, SSL, backups, υποστήριξη"
     },
     {
      "id": "growth",
      "name": "Growth",
-     "price": 48500,
+     "price": 48000,
      "note": "+ 3 άρθρα τον μήνα για το Google, 1 αίτημα αλλαγών τον μήνα, μηνιαία αναφορά"
     }
    ],
@@ -75,33 +77,41 @@
    "cat": "site",
    "kind": "build",
    "name": "Ιστοσελίδα καταλύματος",
-   "price": 13300,
+   "price": 13200,
    "unit": "year",
-   "short": "Για βίλες, δωμάτια και διαμερίσματα — κρατήσεις χωρίς προμήθειες.",
-   "desc": "• Κατασκευή δωρεάν, domain δώρο\n• Χώροι, φωτογραφίες, περιοχή, κριτικές επισκεπτών\n• Ελληνικά & Αγγλικά\n• Αίτημα κράτησης σε WhatsApp ή e-mail\n• Το Α.Μ.Α. του καταλύματος, όπως ζητά ο νόμος",
+   "perMonth": true,
+   "strike": "500 – 5.000 €",
+   "short": "Για βίλες, δωμάτια και διαμερίσματα — κρατήσεις απευθείας, χωρίς προμήθειες.",
+   "desc": "• Κατασκευή δωρεάν, domain δώρο\n• Χώροι, φωτογραφίες, περιοχή, κριτικές επισκεπτών\n• Ελληνικά & Αγγλικά\n• Κουμπιά κράτησης σε φόρμα, e-mail και τηλέφωνο — ο επισκέπτης κλείνει απευθείας με εσάς\n• Το Α.Μ.Α. του καταλύματος, όπως ζητά ο νόμος",
    "long": "Για ιδιοκτήτες που θέλουν κρατήσεις κατευθείαν από τη δική τους σελίδα, χωρίς να δίνουν προμήθεια σε κάθε κράτηση.",
    "steps": "Μας στέλνετε το link από Booking ή Airbnb\nΠαίρνουμε φωτογραφίες, κείμενα και κριτικές από εκεί\nΣε 1–5 ημέρες βλέπετε την ιστοσελίδα έτοιμη\nΒγαίνει online στο δικό σας domain",
-   "priceNote": "Κατασκευή 0 € · domain δώρο",
+   "priceNote": "Domain name δώρο",
    "variants": [
     {
-     "id": "b1",
-     "name": "Βασικό",
-     "price": 13300,
-     "note": "Κουμπιά κράτησης σε Booking / Airbnb"
+     "id": "direct",
+     "name": "Απευθείας κρατήσεις",
+     "price": 13200,
+     "note": "Κράτηση με φόρμα, e-mail ή τηλέφωνο — χωρίς προμήθειες"
     },
     {
-     "id": "b2",
-     "name": "Με ημερολόγιο",
-     "price": 23500,
-     "note": "+ ημερολόγιο διαθεσιμότητας & αίτημα κράτησης",
-     "example": true
-    },
-    {
-     "id": "b3",
+     "id": "cm",
      "name": "Με channel manager",
-     "price": 39800,
-     "note": "+ δικές σας κρατήσεις, συγχρονισμός με Booking & Airbnb",
-     "example": true
+     "price": 13200,
+     "note": "+ κρατήσεις online στη σελίδα σας, συγχρονισμός με Booking & Airbnb",
+     "extras": [
+      {
+       "id": "setup",
+       "name": "Στήσιμο channel manager",
+       "price": 15000,
+       "unit": "once"
+      },
+      {
+       "id": "cm",
+       "name": "Channel manager",
+       "price": 2500,
+       "unit": "month"
+      }
+     ]
     }
    ],
    "vat": 24,
@@ -132,6 +142,49 @@
    "sku": "ESHOP",
    "img": "assets/img/p/eshop.webp",
    "order": 2
+  },
+  {
+   "id": "qr",
+   "cat": "site",
+   "kind": "build",
+   "name": "Ψηφιακό μενού QR",
+   "price": 13200,
+   "unit": "year",
+   "perMonth": true,
+   "example": true,
+   "short": "Δίγλωσσο μενού με φωτογραφίες — αλλάζετε μόνοι σας πιάτα και τιμές.",
+   "desc": "• Για καφέ, εστιατόρια, μπαρ\n• Ελληνικά & Αγγλικά, με φωτογραφίες\n• Πίνακας για να αλλάζετε μενού και τιμές όποτε θέλετε\n• QR για τα τραπέζια",
+   "priceNote": "Ιστοσελίδα-μενού · domain δώρο",
+   "extras": [
+    {
+     "id": "setup",
+     "name": "Πίνακας αλλαγών μενού & τιμών",
+     "price": 7000,
+     "unit": "once"
+    }
+   ],
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "QR",
+   "img": "assets/img/p/qr.webp",
+   "order": 3
+  },
+  {
+   "id": "wedding",
+   "cat": "site",
+   "name": "Ιστοσελίδα γάμου / βάπτισης",
+   "price": 10000,
+   "example": true,
+   "short": "Ένα link στο προσκλητήριο: εκκλησία, χάρτης, δήλωση παρουσίας.",
+   "desc": "• Δήλωση παρουσίας online\n• Χάρτης για εκκλησία και δεξίωση",
+   "unit": "once",
+   "vat": 24,
+   "active": true,
+   "maxQty": 1,
+   "sku": "WEDDING",
+   "img": "assets/img/p/wedding.webp",
+   "order": 4
   },
   {
    "id": "social",
@@ -166,7 +219,7 @@
    "maxQty": 1,
    "sku": "SOCIAL",
    "img": "assets/img/p/social.webp",
-   "order": 3
+   "order": 5
   },
   {
    "id": "meta",
@@ -176,38 +229,52 @@
    "unit": "month",
    "example": true,
    "short": "Διαφημίσεις σε Facebook & Instagram που φέρνουν μηνύματα και κλήσεις.",
-   "desc": "• Στήσιμο καμπάνιας και διαφημίσεων\n• Στόχευση στην περιοχή σας\n• Μηνιαία αναφορά αποτελεσμάτων\n• Το ποσό διαφήμισης πάει απευθείας στη Meta (από 5 €/ημέρα)",
+   "desc": "• Στήσιμο καμπάνιας, κοινού και διαφημίσεων\n• Στόχευση στην περιοχή σας\n• Μηνιαία αναφορά αποτελεσμάτων\n• Το ποσό των διαφημίσεων δεν περιλαμβάνεται — πάει απευθείας στη Meta, από 5 € / ημέρα",
    "long": "Στήνουμε και διαχειριζόμαστε τις διαφημίσεις σας στο Facebook και στο Instagram, μετράμε τι φέρνει πραγματικές επαφές και βάζουμε τα χρήματα εκεί που αποδίδουν.",
    "steps": "Μια κλήση για τον στόχο σας\nΦτιάχνουμε διαφημίσεις και καμπάνια\nΤις βελτιώνουμε κάθε εβδομάδα\nΚάθε μήνα σας στέλνουμε αναφορά",
-   "priceNote": "Χωρίς δέσμευση",
+   "priceNote": "Χωρίς το ποσό των διαφημίσεων (από 5 € / ημέρα)",
+   "extras": [
+    {
+     "id": "setup",
+     "name": "Στήσιμο καμπάνιας",
+     "price": 10000,
+     "unit": "once"
+    }
+   ],
    "vat": 24,
    "active": true,
    "maxQty": 1,
    "sku": "META",
    "img": "assets/img/p/meta.webp",
-   "order": 4
+   "order": 6
   },
   {
    "id": "ads",
    "cat": "social",
    "name": "Google Ads",
-   "price": 0,
-   "listPrice": 6100,
+   "price": 6100,
    "unit": "month",
    "needsSite": true,
-   "badge": "1ος μήνας δωρεάν",
-   "short": "Εμφανίζεστε πρώτοι όταν σας ψάχνουν στο Google.",
-   "desc": "• Στήσιμο δωρεάν και 1ος μήνας δωρεάν\n• Μέτρηση κάθε κλήσης και ραντεβού\n• Εγγύηση 60 ημερών: αν δεν φέρει επαφές, δεν πληρώνετε εμάς\n• Το ποσό διαφήμισης πάει απευθείας στη Google (από 5 €/ημέρα)",
-   "long": "Όταν κάποιος γράφει στο Google αυτό που κάνετε, στην περιοχή σας, βλέπει πρώτα εσάς. Μετράμε κάθε κλήση και κάθε ραντεβού.",
+   "ourSite": true,
+   "short": "Εμφανίζεστε πρώτοι όταν σας ψάχνουν στο Google. Για ιστοσελίδες που φτιάξαμε εμείς.",
+   "desc": "• Έρευνα λέξεων-κλειδιών και στήσιμο καμπάνιας\n• Μέτρηση κάθε κλήσης και ραντεβού\n• Προϋπόθεση: η ιστοσελίδα σας να είναι από εμάς\n• Το ποσό των διαφημίσεων δεν περιλαμβάνεται — πάει απευθείας στη Google, από 5 € / ημέρα",
+   "long": "Όταν κάποιος γράφει στο Google αυτό που κάνετε, στην περιοχή σας, βλέπει πρώτα εσάς. Μετράμε κάθε κλήση και κάθε ραντεβού. Για ιστοσελίδες που έχουμε φτιάξει εμείς (ή που φτιάχνουμε τώρα).",
    "steps": "Βρίσκουμε τι ψάχνουν οι πελάτες σας\nΣτήνουμε την καμπάνια και τη μέτρηση κλήσεων\nΤη βελτιώνουμε κάθε εβδομάδα\nΚάθε μήνα σας στέλνουμε αναφορά",
-   "priceNote": "Ο 1ος μήνας δωρεάν",
-   "later": "Google Ads από τον 2ο μήνα: 61 € / μήνα",
+   "priceNote": "Χωρίς το ποσό των διαφημίσεων (από 5 € / ημέρα)",
+   "extras": [
+    {
+     "id": "setup",
+     "name": "Έρευνα & στήσιμο",
+     "price": 5000,
+     "unit": "once"
+    }
+   ],
    "vat": 24,
    "active": true,
    "maxQty": 1,
    "sku": "ADS",
    "img": "assets/img/p/ads.webp",
-   "order": 5
+   "order": 7
   },
   {
    "id": "b-start",
@@ -223,6 +290,7 @@
    ],
    "badge": null,
    "needsSite": false,
+   "ourSite": false,
    "notWith": [
     "social",
     "meta",
@@ -231,14 +299,22 @@
     "b-full"
    ],
    "short": "Social Media (8 αναρτήσεις) + Meta Ads.",
-   "compareAt": 13200,
-   "priceNote": "Χωρίς δέσμευση",
+   "priceNote": "Χωρίς το ποσό των διαφημίσεων (από 5 € / ημέρα)",
+   "extras": [
+    {
+     "id": "setup",
+     "name": "Στήσιμο καμπανιών",
+     "price": 10000,
+     "unit": "once"
+    }
+   ],
    "vat": 24,
    "active": true,
    "maxQty": 1,
    "sku": "B-START",
    "img": "assets/img/p/b-start.webp",
-   "order": 6
+   "compareAt": 13200,
+   "order": 8
   },
   {
    "id": "b-grow",
@@ -254,6 +330,7 @@
    ],
    "badge": "Δημοφιλές",
    "needsSite": false,
+   "ourSite": false,
    "notWith": [
     "social",
     "meta",
@@ -262,14 +339,22 @@
     "b-full"
    ],
    "short": "Social Media (12 αναρτήσεις) + Meta Ads.",
-   "compareAt": 16200,
-   "priceNote": "Χωρίς δέσμευση",
+   "priceNote": "Χωρίς το ποσό των διαφημίσεων (από 5 € / ημέρα)",
+   "extras": [
+    {
+     "id": "setup",
+     "name": "Στήσιμο καμπανιών",
+     "price": 10000,
+     "unit": "once"
+    }
+   ],
    "vat": 24,
    "active": true,
    "maxQty": 1,
    "sku": "B-GROW",
    "img": "assets/img/p/b-grow.webp",
-   "order": 7
+   "compareAt": 16200,
+   "order": 9
   },
   {
    "id": "b-full",
@@ -286,6 +371,7 @@
    ],
    "badge": null,
    "needsSite": true,
+   "ourSite": true,
    "notWith": [
     "social",
     "meta",
@@ -294,20 +380,28 @@
     "b-grow"
    ],
    "short": "Social Media (12 αναρτήσεις) + Meta Ads + Google Ads.",
-   "compareAt": 22300,
-   "priceNote": "Χωρίς δέσμευση",
+   "priceNote": "Χωρίς το ποσό των διαφημίσεων (από 5 € / ημέρα)",
+   "extras": [
+    {
+     "id": "setup",
+     "name": "Στήσιμο καμπανιών",
+     "price": 15000,
+     "unit": "once"
+    }
+   ],
    "vat": 24,
    "active": true,
    "maxQty": 1,
    "sku": "B-FULL",
    "img": "assets/img/p/b-full.webp",
-   "order": 8
+   "compareAt": 22300,
+   "order": 10
   },
   {
    "id": "form",
    "cat": "extras",
    "name": "Φόρμα επικοινωνίας",
-   "price": 5200,
+   "price": 5000,
    "needsSite": true,
    "short": "Οι επισκέπτες σάς γράφουν — το λαμβάνετε στο e-mail σας.",
    "desc": "• Με προστασία από spam\n• Έρχεται στο e-mail σας\n• Σύμφωνη με τον GDPR",
@@ -317,7 +411,7 @@
    "maxQty": 1,
    "sku": "FORM",
    "img": "assets/img/p/form.webp",
-   "order": 9
+   "order": 11
   },
   {
    "id": "articles",
@@ -333,7 +427,7 @@
    "maxQty": 1,
    "sku": "ARTICLES",
    "img": "assets/img/p/articles.webp",
-   "order": 10
+   "order": 12
   },
   {
    "id": "panel",
@@ -349,13 +443,13 @@
    "maxQty": 1,
    "sku": "PANEL",
    "img": "assets/img/p/panel.webp",
-   "order": 11
+   "order": 13
   },
   {
    "id": "quiz",
    "cat": "extras",
    "name": "Διαδραστικό τεστ",
-   "price": 18400,
+   "price": 5000,
    "needsSite": true,
    "short": "Λίγες ερωτήσεις στον επισκέπτη — οι απαντήσεις έρχονται σε εσάς.",
    "desc": "• Οι απαντήσεις στο e-mail σας\n• Φέρνει ραντεβού",
@@ -365,13 +459,13 @@
    "maxQty": 1,
    "sku": "QUIZ",
    "img": "assets/img/p/quiz.webp",
-   "order": 12
+   "order": 14
   },
   {
    "id": "ai",
    "cat": "extras",
    "name": "AI βοηθός",
-   "price": 3000,
+   "price": 2500,
    "unit": "month",
    "needsSite": true,
    "example": true,
@@ -383,7 +477,7 @@
    "maxQty": 1,
    "sku": "AI",
    "img": "assets/img/p/ai.webp",
-   "order": 13
+   "order": 15
   },
   {
    "id": "gbp",
@@ -398,7 +492,7 @@
    "maxQty": 1,
    "sku": "GBP",
    "img": "assets/img/p/gbp.webp",
-   "order": 14
+   "order": 16
   },
   {
    "id": "booking",
@@ -426,7 +520,7 @@
    "maxQty": 1,
    "sku": "BOOKING",
    "img": "assets/img/p/booking.webp",
-   "order": 15
+   "order": 17
   },
   {
    "id": "changes",
@@ -442,14 +536,15 @@
    "active": true,
    "sku": "CHANGES",
    "img": "assets/img/p/changes.webp",
-   "order": 16
+   "order": 18
   },
   {
    "id": "renew",
    "cat": "more",
    "name": "Ανανέωση φιλοξενίας",
-   "price": 13300,
+   "price": 13200,
    "unit": "year",
+   "perMonth": true,
    "needsSite": true,
    "link": "ananeosi.html",
    "short": "Ένας ακόμα χρόνος για την ιστοσελίδα σας, με το domain μαζί.",
@@ -457,12 +552,12 @@
     {
      "id": "hosting",
      "name": "Βασικό",
-     "price": 13300
+     "price": 13200
     },
     {
      "id": "growth",
      "name": "Growth",
-     "price": 48500
+     "price": 48000
     }
    ],
    "vat": 24,
@@ -470,38 +565,6 @@
    "maxQty": 1,
    "sku": "RENEW",
    "img": "assets/img/p/renew.webp",
-   "order": 17
-  },
-  {
-   "id": "qr",
-   "cat": "extras",
-   "name": "Ψηφιακό μενού QR",
-   "price": 9200,
-   "example": true,
-   "short": "Δίγλωσσο μενού με φωτογραφίες — αλλάζετε τιμές όποτε θέλετε.",
-   "desc": "• Για καφέ, εστιατόρια, μπαρ\n• Ελληνικά & Αγγλικά",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "QR",
-   "img": "assets/img/p/qr.webp",
-   "order": 18
-  },
-  {
-   "id": "wedding",
-   "cat": "more",
-   "name": "Ιστοσελίδα γάμου / βάπτισης",
-   "price": 9200,
-   "example": true,
-   "short": "Ένα link στο προσκλητήριο: εκκλησία, χάρτης, δήλωση παρουσίας.",
-   "desc": "• Δήλωση παρουσίας online\n• Χάρτης για εκκλησία και δεξίωση",
-   "unit": "once",
-   "vat": 24,
-   "active": true,
-   "maxQty": 1,
-   "sku": "WEDDING",
-   "img": "assets/img/p/wedding.webp",
    "order": 19
   }
  ],

@@ -63,6 +63,11 @@ h1,h2,h3,h4{margin:0;line-height:1.15;color:var(--ink);font-family:var(--head);f
 
 /* product cards — one shape for every product */
 .pgrid{display:grid;gap:20px}
+.pgrid.ctr{display:flex;flex-wrap:wrap;justify-content:center}
+.pgrid.c3.ctr>.pc{flex:0 0 calc((100% - 40px)/3);max-width:calc((100% - 40px)/3)}.pgrid.c4.ctr>.pc{flex:0 0 calc((100% - 60px)/4);max-width:calc((100% - 60px)/4)}
+@media (max-width:1100px){.pgrid.c4.ctr>.pc{flex-basis:calc((100% - 40px)/3);max-width:calc((100% - 40px)/3)}}
+@media (max-width:900px){.pgrid.ctr>.pc,.pgrid.c3.ctr>.pc,.pgrid.c4.ctr>.pc{flex-basis:calc((100% - 20px)/2);max-width:calc((100% - 20px)/2)}}
+@media (max-width:540px){.pgrid.ctr>.pc,.pgrid.c3.ctr>.pc,.pgrid.c4.ctr>.pc{flex-basis:calc((100% - 12px)/2);max-width:calc((100% - 12px)/2)}}
 .pgrid.c4{grid-template-columns:repeat(4,minmax(0,1fr))}.pgrid.c3{grid-template-columns:repeat(3,minmax(0,1fr));max-width:940px;margin-inline:auto}.pgrid.c2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:620px;margin-inline:auto}
 @media (max-width:1100px){.pgrid.c4{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media (max-width:900px){.pgrid.c4,.pgrid.c3{grid-template-columns:repeat(2,minmax(0,1fr))}.pgrid.c3>.pc:last-child:nth-child(odd){grid-column:1/-1;max-width:calc(50% - 6px);justify-self:center;width:100%}}
@@ -89,6 +94,21 @@ h1,h2,h3,h4{margin:0;line-height:1.15;color:var(--ink);font-family:var(--head);f
 .price .pl{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
 .price .pr{font-family:var(--head);font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
 .price .pu{color:var(--mu);font-size:14px;font-weight:600}.price s{color:var(--mu2);font-size:16px;font-weight:600}
+.price .pr i{font-style:normal;font-size:.55em;font-weight:700;color:var(--mu);margin-right:2px}
+/* coloured unit tags — / μήνα (blue), / έτος (violet), εφάπαξ (amber), / αίτημα (teal) */
+.uc{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12.5px;font-weight:800;letter-spacing:.01em;line-height:1.5;white-space:nowrap;vertical-align:middle}
+.uc.u-month{background:#E3F1FF;color:#0B5FC2}.uc.u-year{background:#EFE9FF;color:#5B34C8}.uc.u-once{background:#FFF1D6;color:#9A5B00}.uc.u-request{background:#DDF6F1;color:#0B7A68}.uc.u-page{background:#EEF1F5;color:#3B4556}
+/* «500 – 5.000 €» crossed out → big 0 € κατασκευή, then the small monthly line */
+.p0{margin-bottom:4px}.p0>div{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.p0 s{font-size:17px;color:var(--mu2);font-weight:700;text-decoration-thickness:2px;text-decoration-color:#E0464B}
+.p0 b{font-family:var(--head);font-size:34px;font-weight:800;color:var(--green,#0E9F6E);letter-spacing:-.02em;line-height:1.05}
+.p0>span{display:block;font-size:12px;font-weight:800;color:var(--green,#0E9F6E);letter-spacing:.04em;margin-bottom:1px}
+.price .pl.sm .pr{font-size:20px}
+.pex{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-size:13.5px;font-weight:700;color:var(--tx);margin-top:4px}.pex em{font-style:normal;font-weight:600;color:var(--mu)}
+.price.big .p0 b{font-size:46px}.price.big .p0 s{font-size:20px}.price.big .pl.sm .pr{font-size:26px}
+.opt b .oex{display:block;font-size:11.5px;color:#9A5B00;font-weight:700}
+.cl2.sub{padding:6px 0 10px;border-bottom:1px dashed var(--line)}.cl2.sub .clt span:first-child{font-size:14px;color:var(--tx);font-weight:600}
+.clm .uc{font-size:11.5px;padding:1px 7px}
 .pnote{display:block;font-size:13.5px;color:var(--mu);margin-top:3px;font-weight:600}.pnote.g{color:var(--green)}
 .price.big .pr{font-size:40px}.price.big .pu{font-size:16px}.price.big .pnote{font-size:15px}
 .pa{display:flex;gap:6px;align-items:center;margin-top:14px}
@@ -267,3 +287,9 @@ input::placeholder,textarea::placeholder{color:var(--mu2)}
 .page-hd>.wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px}.page-hd .logo img{height:44px;width:auto}
 .pnav{display:flex;gap:4px;margin-left:auto}@media (max-width:860px){.pnav{display:none}}
 .ticks{list-style:none;padding:0;margin:0;display:grid;gap:8px}.ticks li{display:flex;gap:10px;font-size:15px;color:var(--tx);line-height:1.45}.ticks .ic{width:18px;height:18px;color:var(--green);margin-top:2px;flex:none}
+/* phone: keep «11 € / μήνα + ΦΠΑ» and «~~500 – 5.000 €~~ 0 €» on one line each in the two-column cards */
+@media (max-width:540px){
+ .p0 s{font-size:13px}.p0 b{font-size:26px}.p0>div{gap:6px}.p0>span{font-size:11px}
+ .price .pl{gap:4px}.price .pl.sm .pr{font-size:18px}.uc{font-size:11px;padding:1px 6px}.price .pu{font-size:11.5px}
+ .pex{font-size:12px;gap:4px}
+}

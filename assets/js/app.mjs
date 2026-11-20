@@ -100,21 +100,25 @@ function suggestions() {
   c.push('gbp', 'booking', 'form');
   return [...new Set(c)].filter(id => P(id).id && !has(id) && !blockerOf(id)).slice(0, 3);
 }
+const UCHIP = { once: 'εφάπαξ', year: 'τον χρόνο', month: 'τον μήνα', request: 'ανά αίτημα' };
 function lineHtml(l, hasBuild) {
+  if (l.extra) return `<div class="cl2 sub"><div class="clb"><div class="clt"><span>+ ${esc(l.name)}</span><span class="am">${euro(l.amount)}</span></div>
+   <div class="clm"><small><span class="uc u-${esc(l.unit)}">${l.unit === 'month' ? '1ος μήνας' : UCHIP[l.unit] || 'εφάπαξ'}</span> + ΦΠΑ</small></div></div></div>`;
   const p = P(l.id), k = p.kind, img = p.img ? p.img.replace(/\.webp$/, '-450.webp') : '';
   const thumb = img ? `<img src="${esc(img)}" width="72" height="72" alt="" loading="lazy">` : '';
   let extra = '';
-  if (p.needsSite && !hasBuild && l.id !== 'renew') extra += `<label class="nfield"><span>Για ποια ιστοσελίδα;</span><input data-note="${esc(l.id)}" value="${esc(l.note || '')}" placeholder="π.χ. onoma.gr" inputmode="url" autocomplete="url"></label>`;
+  if (p.needsSite && !hasBuild && l.id !== 'renew') extra += `<label class="nfield"><span>${p.ourSite ? 'Ποια ιστοσελίδα σας φτιάξαμε;' : 'Για ποια ιστοσελίδα;'}</span><input data-note="${esc(l.id)}" value="${esc(l.note || '')}" placeholder="π.χ. onoma.gr" inputmode="url" autocomplete="url"></label>`;
   const ctl = `${(p.maxQty || 1) > 1 ? `<span class="qty"><button data-q="${esc(l.id)}" data-d="-1" aria-label="Λιγότερα">−</button><span>${l.qty}</span><button data-q="${esc(l.id)}" data-d="1" aria-label="Περισσότερα">+</button></span>` : ''}<button class="rm" data-rm="${esc(l.id)}">Αφαίρεση</button>`;
-  const unit = l.unit === 'year' ? '1ος χρόνος' : l.unit === 'month' ? (p.listPrice != null && !l.unitPrice ? '1ος μήνας δωρεάν' : '1ος μήνας') : l.unit === 'request' ? 'ανά αίτημα' : 'εφάπαξ';
+  const unit = `<span class="uc u-${esc(l.unit)}">${l.unit === 'year' ? '1ος χρόνος' : l.unit === 'month' ? (p.listPrice != null && !l.unitPrice ? '1ος μήνας δωρεάν' : '1ος μήνας') : l.unit === 'request' ? 'ανά αίτημα' : 'εφάπαξ'}</span>`;
   return `<div class="cl2">${thumb}<div class="clb"><div class="clt"><b>${esc(l.name)}</b><span class="am">${euro(l.amount)}</span></div>
    ${l.vname ? `<div class="vn">${esc(l.vname)}</div>` : ''}${k === 'bundle' ? `<div class="vn">${esc((p.includes || []).map(r => includesTxt(cat, r)).join(' + '))}</div>` : ''}
-   <div class="clm"><small>${unit} · + ΦΠΑ</small>${ctl}</div>${extra}</div></div>`;
+   <div class="clm"><small>${unit} + ΦΠΑ</small>${ctl}</div>${extra}</div></div>`;
 }
 function laterHtml(pr) {
   const rows = [];
   for (const l of pr.lines) {
     const p = P(l.id);
+    if (l.extra) { if (l.unit === 'month') rows.push(`<div><b>${esc(l.name)}:</b> ${euro(l.unitPrice)} + ΦΠΑ τον μήνα</div>`); continue; }
     if (p.later) rows.push(`<div>${esc(p.later)} + ΦΠΑ</div>`);
     else if (l.unit === 'year') rows.push(`<div><b>${esc(l.name)}:</b> ${euro(l.unitPrice)} + ΦΠΑ τον χρόνο, από του χρόνου</div>`);
     else if (l.unit === 'month' && l.unitPrice) rows.push(`<div><b>${esc(l.name)}:</b> ${euro(l.unitPrice)} + ΦΠΑ τον μήνα · χωρίς δέσμευση</div>`);

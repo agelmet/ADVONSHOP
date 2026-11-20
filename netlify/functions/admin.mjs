@@ -11,6 +11,15 @@ const day = v => (v && DAY.test(v)) ? v : null;
 
 /* the panel can send anything — keep only what makes sense, with safe limits */
 const ids = a => (Array.isArray(a) ? a : []).map(x => String(x).toLowerCase().replace(/[^a-z0-9-]/g, '').slice(0, 40)).filter(Boolean).slice(0, 10);
+/* setup fees / extra monthly charges of a product or option */
+const UNITS_OK = ['once', 'year', 'month', 'request'];
+function cleanExtras(list) {
+  return (Array.isArray(list) ? list : []).slice(0, 5).map((e, i) => ({
+    id: str(e && e.id, 20).toLowerCase().replace(/[^a-z0-9-]/g, '') || 'x' + i,
+    name: str(e && e.name, 80) || 'Στήσιμο', price: Math.max(0, Math.round(Number(e && e.price) || 0)),
+    unit: UNITS_OK.includes(e && e.unit) ? e.unit : 'once'
+  })).filter(e => e.price > 0);
+}
 function cleanCatalog(c, prev) {
   const errs = [];
   const cats = (Array.isArray(c.categories) ? c.categories : []).slice(0, 200).map((x, i) => ({
@@ -33,6 +42,7 @@ function cleanCatalog(c, prev) {
       if (v.example) out.example = true;
       const vr = ids(v.requires); if (vr.length) out.requires = vr;
       if (v.salePrice != null && v.salePrice !== '') out.salePrice = Math.round(Number(v.salePrice));
+      const vx = cleanExtras(v.extras); if (vx.length) out.extras = vx;
       return out;
     });
     const sale = p.sale && (p.sale.pct || p.sale.price != null) ? {
@@ -57,7 +67,7 @@ function cleanCatalog(c, prev) {
       group: str(p.group, 60) || null, long: str(p.long, 2000) || null, steps: str(p.steps, 1000) || null,
       includes: (Array.isArray(p.includes) ? p.includes : []).map(x => String(x).toLowerCase().replace(/[^a-z0-9:-]/g, '').slice(0, 60)).filter(Boolean).slice(0, 10),
       listPrice: p.listPrice === '' || p.listPrice == null || !isInt(Math.round(Number(p.listPrice))) ? null : Math.round(Number(p.listPrice)),
-      later: str(p.later, 200) || null, link: /^[a-z0-9-]+\.html$/.test(String(p.link || '')) ? p.link : null,
+      later: str(p.later, 200) || null, perMonth: !!p.perMonth, strike: str(p.strike, 40) || null, ourSite: !!p.ourSite, extras: cleanExtras(p.extras), link: /^[a-z0-9-]+\.html$/.test(String(p.link || '')) ? p.link : null,
       compareAt: p.compareAt === '' || p.compareAt == null || !isInt(Math.round(Number(p.compareAt))) ? null : Math.round(Number(p.compareAt))
     };
   }).filter(Boolean);

@@ -15,6 +15,12 @@ export const UNITS = {
   piece: { el: '', en: '' }
 };
 
+/* setup fees / extra charges of a product: the chosen option's own list wins over the product's */
+export function extrasOf(product, variant) {
+  const list = variant && Array.isArray(variant.extras) && variant.extras.length ? variant.extras : product.extras;
+  return (Array.isArray(list) ? list : []).filter(e => e && e.id && Number.isInteger(e.price) && e.price > 0);
+}
+
 /* «YYYY-MM-DD» in Athens time, so a sale «until 30/11» ends at midnight in Greece */
 export function athensDay(now = new Date()) {
   try {
@@ -99,17 +105,31 @@ export function priceCart(catalog, items, couponCode, opts = {}) {
       unitPrice: u.price, unitOriginal: u.original, saleReason: u.reason,
       vatRate: Number.isFinite(p.vat) ? p.vat : (catalog.vatDefault ?? 24),
       amount: u.price * qty, cat: p.cat, note, ask: p.ask || null, priceNote: p.priceNote || null,
-      _req: (u.variant && u.variant.requires && u.variant.requires.length ? u.variant.requires : p.requires) || null, _site: !!p.needsSite, _kind: p.kind || null, _not: p.notWith || null
+      _req: (u.variant && u.variant.requires && u.variant.requires.length ? u.variant.requires : p.requires) || null, _site: p.needsSite ? (p.ourSite ? 'our' : true) : false, _kind: p.kind || null, _not: p.notWith || null
     });
+    /* one-off setup fees and extra monthly charges that come with the product (or the chosen option):
+       each is its own line, so the customer sees exactly what is εφάπαξ and what is / μήνα */
+    for (const e of extrasOf(p, u.variant)) {
+      lines.push({
+        id: p.id, extra: e.id, xv: !!(u.variant && Array.isArray(u.variant.extras) && u.variant.extras.length), sku: (p.sku || p.id) + '-' + e.id.toUpperCase(), name: e.name, parent: p.name,
+        v: u.variant ? u.variant.id : null, vname: p.name, qty: 1, unit: e.unit || 'once',
+        unitPrice: e.price, unitOriginal: e.price, saleReason: null,
+        vatRate: Number.isFinite(p.vat) ? p.vat : (catalog.vatDefault ?? 24),
+        amount: e.price, cat: p.cat, note: '', ask: null, priceNote: null,
+        _req: null, _site: false, _kind: null, _not: null
+      });
+    }
   }
 
   /* what goes together: a website needs its hosting, add-ons need a website (new or existing) */
-  const ids = new Set(lines.map(l => l.id));
+  const ids = new Set(lines.filter(l => !l.extra).map(l => l.id));
   const name = id => (byId.get(id) || {}).name || id;
   const hasBuild = lines.some(l => l._kind === 'build');
   for (const l of lines) {
     if (l._req && l._req.length && !l._req.some(id => ids.has(id))) errors.push('Για «' + l.name + '» χρειάζεται επίσης: ' + l._req.map(name).join(' ή ') + '.');
-    if (l._site && !hasBuild && !l.note) errors.push('«' + l.name + '»: γράψτε για ποια ιστοσελίδα είναι (π.χ. onoma.gr).');
+    if (l._site && !hasBuild && !l.note) errors.push(l._site === 'our'
+      ? '«' + l.name + '»: μόνο για ιστοσελίδες που φτιάξαμε εμείς — γράψτε ποια είναι (π.χ. onoma.gr) ή προσθέστε μια ιστοσελίδα στο καλάθι.'
+      : '«' + l.name + '»: γράψτε για ποια ιστοσελίδα είναι (π.χ. onoma.gr).');
     if (l._not && l._not.some(id => ids.has(id))) errors.push('«' + l.name + '»: περιλαμβάνεται ήδη στο ' + l._not.filter(id => ids.has(id)).map(name).join(', ') + '.');
     if (l._kind === 'hosting' && !lines.some(b => b._kind === 'build')) errors.push('Η φιλοξενία μπαίνει μαζί με μια ιστοσελίδα. Για ανανέωση, δείτε τη σελίδα «Ανανέωση».');
   }

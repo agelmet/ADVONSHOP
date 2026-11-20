@@ -137,6 +137,7 @@ export async function markPaid(o, info, s = store()) {
     const cat = await readCatalog(s);
     let touched = false;
     for (const l of o.priced.lines) {
+      if (l.extra) continue;
       const p = cat.products.find(x => x.id === l.id);
       if (p && Number.isFinite(p.stock)) { p.stock = Math.max(0, p.stock - l.qty); touched = true; }
     }
