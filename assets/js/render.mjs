@@ -59,7 +59,7 @@ export function priceBlock(cat, p, vId, { big = false } = {}) {
   if (!u) return '';
   const show = p.listPrice != null && u.price === 0 ? p.listPrice : u.price;
   const was = u.original > u.price ? u.original : (p.compareAt && p.compareAt > show ? p.compareAt : 0);
-  const note = p.priceNote ? `<span class="pnote${/0 €|δωρεάν|δώρο/i.test(p.priceNote) ? ' g' : ''}">${esc(p.priceNote)}</span>` : '';
+  const note = p.priceNote ? `<span class="pnote${/(^|[^0-9.,])0 €|δωρεάν|δώρο/i.test(p.priceNote) ? ' g' : ''}">${esc(p.priceNote)}</span>` : '';
   return `<div class="price${big ? ' big' : ''}"><div class="pl">${was ? `<s>${euro(was)}</s>` : ''}<b class="pr">${euro(show)}</b><span class="pu">${esc(unitShort(p.unit))}${unitShort(p.unit) ? ' ' : ''}+ ΦΠΑ</span></div>${note}</div>`;
 }
 export function includesTxt(cat, ref) {
