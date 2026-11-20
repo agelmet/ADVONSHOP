@@ -5,7 +5,7 @@ import { stripeSession, vivaTransaction } from './_lib/pay.mjs';
 
 const view = (o, cat) => ({
   bank: o.method === 'bank' && cat ? cat.settings.bank : null,
-  ok: true, id: o.id, status: o.status, method: o.method, createdAt: o.createdAt, paidAt: o.paidAt || null,
+  ok: true, id: o.id, status: o.status, mailed: !!o.mailed, method: o.method, createdAt: o.createdAt, paidAt: o.paidAt || null,
   priced: { lines: o.priced.lines.map(l => ({ name: l.name, vname: l.vname, qty: l.qty, gross: l.gross, note: l.note })), net: o.priced.net, vat: o.priced.vat, discount: o.priced.discount, coupon: o.priced.coupon, shipping: o.priced.shipping, total: o.priced.total },
   name: o.customer.name.split(' ')[0]
 });

@@ -17,6 +17,19 @@ def add(**k):
 L = lambda *xs: '\n'.join(xs)
 NM = 'Χωρίς δέσμευση'
 
+# Stripe keeps 1,5% + 0,25 € of every card payment (EEA cards, Nov 2026). The law does not allow a separate
+# «card fee» line, so the fee is built INTO every price: base prices below are what Advon wants to keep;
+# F() raises each one so that after Stripe's cut AND the 24% VAT on the higher price, Advon still keeps the base.
+# Rounded up to whole euros (to 0,50 € under 20 €).
+import math
+def F(c):
+    if not c or c <= 0: return c
+    step = 100 if c >= 2000 else 50
+    return int(math.ceil(((c + 25) / (1.24 * 0.985 - 0.24)) / step - 1e-9) * step)
+def E(c):
+    v = F(c) / 100
+    return (str(int(v)) if v == int(v) else ('%.2f' % v).replace('.', ',')).replace(',00', '')
+
 # ---------- websites & e-shop (one per order) ----------
 add(id='site', cat='site', kind='build', name='Ιστοσελίδα', price=13000, unit='year', badge='Δημοφιλές',
     short='Σχεδιασμένη μόνο για εσάς. Κατασκευή δωρεάν — πληρώνετε μόνο τη φιλοξενία.',
@@ -40,7 +53,7 @@ add(id='eshop', cat='site', kind='build', name='E-shop', price=68000, example=Tr
     desc=B('Κατασκευή + 1ος χρόνος φιλοξενίας', 'Κάρτα, Apple Pay, Google Pay, IRIS', 'Τα χρήματα πάνε κατευθείαν σε εσάς', 'Ανεβάζουμε εμείς τα προϊόντα σας', 'Πίνακας για προϊόντα, τιμές, εκπτώσεις'),
     long='Ένα κατάστημα που είναι δικό σας: χωρίς προμήθειες σε κάθε πώληση. Εμείς το στήνουμε, ανεβάζουμε τα προϊόντα και συνδέουμε τις πληρωμές· εσείς αλλάζετε τιμές και προϊόντα από τον πίνακα, όποτε θέλετε.',
     steps=L('Μας λέτε πόσα και ποια προϊόντα έχετε', 'Στήνουμε το κατάστημα και ανεβάζουμε τα προϊόντα', 'Συνδέουμε τις πληρωμές στον δικό σας λογαριασμό', 'Σας δείχνουμε τον πίνακα σε μια σύντομη κλήση'),
-    priceNote='Από τον 2ο χρόνο 290 € / έτος', later='Φιλοξενία e-shop από τον 2ο χρόνο: 290 € / έτος')
+    priceNote='Από τον 2ο χρόνο ' + E(29000) + ' € / έτος', later='Φιλοξενία e-shop από τον 2ο χρόνο: ' + E(29000) + ' € / έτος')
 # ---------- social & ads (monthly) ----------
 add(id='social', cat='social', name='Διαχείριση Social Media', price=4900, unit='month',
     short='Instagram & Facebook με την ταυτότητά σας — τα αναλαμβάνουμε όλα.',
@@ -60,7 +73,7 @@ add(id='ads', cat='social', name='Google Ads', price=0, listPrice=5900, unit='mo
     desc=B('Στήσιμο δωρεάν και 1ος μήνας δωρεάν', 'Μέτρηση κάθε κλήσης και ραντεβού', 'Εγγύηση 60 ημερών: αν δεν φέρει επαφές, δεν πληρώνετε εμάς', 'Το ποσό διαφήμισης πάει απευθείας στη Google (από 5 €/ημέρα)'),
     long='Όταν κάποιος γράφει στο Google αυτό που κάνετε, στην περιοχή σας, βλέπει πρώτα εσάς. Μετράμε κάθε κλήση και κάθε ραντεβού.',
     steps=L('Βρίσκουμε τι ψάχνουν οι πελάτες σας', 'Στήνουμε την καμπάνια και τη μέτρηση κλήσεων', 'Τη βελτιώνουμε κάθε εβδομάδα', 'Κάθε μήνα σας στέλνουμε αναφορά'),
-    priceNote='Ο 1ος μήνας δωρεάν', later='Google Ads από τον 2ο μήνα: 59 € / μήνα')
+    priceNote='Ο 1ος μήνας δωρεάν', later='Google Ads από τον 2ο μήνα: ' + E(5900) + ' € / μήνα')
 # ---------- bundles (example prices) ----------
 def bundle(id, name, price, inc, was, short, badge=None, needs=False):
     add(id=id, cat='bundles', kind='bundle', name=name, price=price, unit='month', example=True, includes=inc, badge=badge,
@@ -96,8 +109,20 @@ add(id='qr', cat='extras', name='Ψηφιακό μενού QR', price=9000, exam
 add(id='wedding', cat='more', name='Ιστοσελίδα γάμου / βάπτισης', price=9000, example=True,
     short='Ένα link στο προσκλητήριο: εκκλησία, χάρτης, δήλωση παρουσίας.', desc=B('Δήλωση παρουσίας online', 'Χάρτης για εκκλησία και δεξίωση'))
 
+# apply the Stripe-fee raise to every price
+for p in P:
+    for k in ('price', 'listPrice'):
+        if p.get(k): p[k] = F(p[k])
+    for v in p.get('variants') or []:
+        if v.get('price'): v['price'] = F(v['price'])
+def part(ref):
+    pid, _, vid = ref.partition(':'); q = next(x for x in P if x['id'] == pid)
+    if vid: return next(v['price'] for v in q['variants'] if v['id'] == vid)
+    return q.get('listPrice') or q['price']
+for p in P:
+    if p.get('kind') == 'bundle': p['compareAt'] = sum(part(r) for r in p['includes'])
 for i, p in enumerate(P): p['order'] = i
-cat = {"schema": 5, "version": 1, "updatedAt": None, "vatDefault": 24,
+cat = {"schema": 6, "version": 1, "updatedAt": None, "vatDefault": 24,
        "categories": [dict(c, order=i) for i, c in enumerate(cats)], "products": P,
        "coupons": [{"code": "ADVON10", "type": "pct", "value": 10, "min": 0, "from": None, "to": None, "maxUses": 0, "uses": 0, "active": True, "label": "Δοκιμαστικός κωδικός −10%"}],
        "catSales": [],

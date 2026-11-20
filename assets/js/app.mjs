@@ -145,7 +145,7 @@ function paintDrawer() {
    ${priced.coupon ? `<div class="okm">${icon('check')} Ο κωδικός ${esc(priced.coupon.code)} εφαρμόστηκε</div>` : ''}
    <div class="err">${esc(priced.errors.join(' '))}</div>
    <button class="btn primary lg block" type="button" data-pay ${priced.errors.length ? 'disabled' : ''}>${icon('lock')} Ολοκλήρωση αγοράς · ${euro(priced.total, { always2: true })}</button>
-   <p class="secure">Κάρτα · Apple Pay · Google Pay · IRIS — με τιμολόγιο</p>
+   <p class="secure">Κάρτα · Apple Pay · Google Pay — με τιμολόγιο</p>
    ${sug.length ? `<div class="sugg"><h3>Προτείνουμε μαζί</h3><div class="upl">${sug.map(id => upRow(cat, P(id), st())).join('')}</div></div>` : ''}`;
   if (focusNote) { const inp = b.querySelector(`[data-note="${focusNote}"]`); if (inp) { inp.focus(); inp.setSelectionRange(inp.value.length, inp.value.length); } }
 }

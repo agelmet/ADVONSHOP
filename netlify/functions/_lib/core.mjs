@@ -146,7 +146,8 @@ export async function markPaid(o, info, s = store()) {
     }
     if (touched) await s.setJSON('catalog.json', cat);
   } catch (e) { console.warn('stock/coupon', e); }
-  await sendOrderMails(o, 'paid').catch(e => console.warn('mail', e));
+  const mailed = await sendOrderMails(o, 'paid').catch(e => { console.warn('mail', e); return false; });
+  if (mailed) { o.mailed = true; await putOrder(o, s).catch(() => {}); }
   return { changed: true, order: o };
 }
 
@@ -194,7 +195,7 @@ export async function sendOrderMails(o, why) {
   const owner = env('SHOP_NOTIFY_TO') || s.notifyEmail;
   const tag = why === 'paid' ? '✅ Πληρώθηκε' : (o.method === 'bank' ? '🏦 Αναμονή κατάθεσης' : 'Νέα');
   await sendMail({ to: owner, subject: `${tag} · ${o.id} · ${euro(o.priced.total, { always2: true })} · ${o.customer.name}`, html: orderHtml(o, cat, true), replyTo: o.customer.email });
-  await sendMail({ to: o.customer.email, subject: `Η παραγγελία σας ${o.id} — ${s.shopName || 'Advon Media'}`, html: orderHtml(o, cat, false), replyTo: s.email || owner });
+  return await sendMail({ to: o.customer.email, subject: `Η παραγγελία σας ${o.id} — ${s.shopName || 'Advon Media'}`, html: orderHtml(o, cat, false), replyTo: s.email || owner });
 }
 
 /* ---------- admin login token ---------- */

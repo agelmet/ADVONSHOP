@@ -20,7 +20,7 @@ function render(o) {
   const pr = o.priced;
   if (params.get('fail') === '1' && o.status === 'pending') o.status = 'failed';
   const st = {
-    paid: [ICON.ok, `Ευχαριστούμε${o.name ? ', ' + esc(o.name) : ''}!`, 'Η πληρωμή ολοκληρώθηκε. Σας στείλαμε e-mail επιβεβαίωσης.'],
+    paid: [ICON.ok, `Ευχαριστούμε${o.name ? ', ' + esc(o.name) : ''}!`, 'Η πληρωμή ολοκληρώθηκε. ' + (o.mailed || o.demo ? 'Σας στείλαμε e-mail επιβεβαίωσης.' : 'Θα επικοινωνήσουμε μαζί σας σύντομα για τα επόμενα βήματα.')],
     done: [ICON.ok, 'Η παραγγελία ολοκληρώθηκε', 'Ευχαριστούμε!'],
     awaiting_transfer: [ICON.wait, 'Μένει μόνο η κατάθεση', 'Κάντε την κατάθεση με τα στοιχεία παρακάτω. Ξεκινάμε μόλις τη δούμε.'],
     pending: [ICON.wait, 'Περιμένουμε την επιβεβαίωση της πληρωμής', 'Συνήθως παίρνει λίγα δευτερόλεπτα…'],
@@ -30,7 +30,7 @@ function render(o) {
   if (o.status === 'paid' || o.status === 'awaiting_transfer') cart.clear();
   const b = o.bank;
   box.innerHTML = `<div class="ostate">${st[0]}<div><h1>${st[1]}</h1><p>${st[2]}</p></div></div>
-   ${o.demo && o.status === 'pending' ? `<div class="demopay"><b>Δοκιμαστική πληρωμή</b><br>Εδώ, στο κανονικό κατάστημα, ο πελάτης θα ήταν στη σελίδα πληρωμής της ${o.method === 'viva' ? 'Viva' : 'Stripe'}. Τίποτα δεν χρεώνεται.<div class="b2"><button class="btn primary" id="dOk">Η πληρωμή πέτυχε</button><button class="btn outline" id="dNo">Ακύρωση πληρωμής</button></div></div>` : ''}
+   ${o.demo && o.status === 'pending' ? `<div class="demopay"><b>Δοκιμαστική πληρωμή</b><br>Εδώ, στο κανονικό κατάστημα, ο πελάτης θα ήταν στη σελίδα πληρωμής. Τίποτα δεν χρεώνεται.<div class="b2"><button class="btn primary" id="dOk">Η πληρωμή πέτυχε</button><button class="btn outline" id="dNo">Ακύρωση πληρωμής</button></div></div>` : ''}
    ${o.status === 'awaiting_transfer' && b ? `<div class="bankbox">
      <div><span>Τράπεζα</span><b>${esc(b.bankName)}</b></div>
      <div><span>IBAN</span><b>${esc(b.iban)} <button class="copy" onclick="copyTxt('${esc(b.iban)}')">Αντιγραφή</button></b></div>

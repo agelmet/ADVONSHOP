@@ -1,6 +1,6 @@
 /* starting catalogue — written by tools/build.mjs from data/catalog.json. After the first save in the panel, the live catalogue lives in Netlify Blobs. */
 export default {
- "schema": 5,
+ "schema": 6,
  "version": 1,
  "updatedAt": null,
  "vatDefault": 24,
@@ -42,7 +42,7 @@ export default {
    "cat": "site",
    "kind": "build",
    "name": "Ιστοσελίδα",
-   "price": 13000,
+   "price": 13300,
    "unit": "year",
    "badge": "Δημοφιλές",
    "short": "Σχεδιασμένη μόνο για εσάς. Κατασκευή δωρεάν — πληρώνετε μόνο τη φιλοξενία.",
@@ -54,13 +54,13 @@ export default {
     {
      "id": "basic",
      "name": "Βασικό",
-     "price": 13000,
+     "price": 13300,
      "note": "Φιλοξενία, domain, SSL, backups, υποστήριξη"
     },
     {
      "id": "growth",
      "name": "Growth",
-     "price": 47500,
+     "price": 48500,
      "note": "+ 3 άρθρα τον μήνα για το Google, 1 αίτημα αλλαγών τον μήνα, μηνιαία αναφορά"
     }
    ],
@@ -76,7 +76,7 @@ export default {
    "cat": "site",
    "kind": "build",
    "name": "Ιστοσελίδα καταλύματος",
-   "price": 13000,
+   "price": 13300,
    "unit": "year",
    "short": "Για βίλες, δωμάτια και διαμερίσματα — κρατήσεις χωρίς προμήθειες.",
    "desc": "• Κατασκευή δωρεάν, domain δώρο\n• Χώροι, φωτογραφίες, περιοχή, κριτικές επισκεπτών\n• Ελληνικά & Αγγλικά\n• Αίτημα κράτησης σε WhatsApp ή e-mail\n• Το Α.Μ.Α. του καταλύματος, όπως ζητά ο νόμος",
@@ -87,20 +87,20 @@ export default {
     {
      "id": "b1",
      "name": "Βασικό",
-     "price": 13000,
+     "price": 13300,
      "note": "Κουμπιά κράτησης σε Booking / Airbnb"
     },
     {
      "id": "b2",
      "name": "Με ημερολόγιο",
-     "price": 23000,
+     "price": 23500,
      "note": "+ ημερολόγιο διαθεσιμότητας & αίτημα κράτησης",
      "example": true
     },
     {
      "id": "b3",
      "name": "Με channel manager",
-     "price": 39000,
+     "price": 39800,
      "note": "+ δικές σας κρατήσεις, συγχρονισμός με Booking & Airbnb",
      "example": true
     }
@@ -117,15 +117,15 @@ export default {
    "cat": "site",
    "kind": "build",
    "name": "E-shop",
-   "price": 68000,
+   "price": 69400,
    "example": true,
    "badge": "Νέο",
    "short": "Δικό σας ηλεκτρονικό κατάστημα — χωρίς προμήθειες σε πλατφόρμες.",
    "desc": "• Κατασκευή + 1ος χρόνος φιλοξενίας\n• Κάρτα, Apple Pay, Google Pay, IRIS\n• Τα χρήματα πάνε κατευθείαν σε εσάς\n• Ανεβάζουμε εμείς τα προϊόντα σας\n• Πίνακας για προϊόντα, τιμές, εκπτώσεις",
    "long": "Ένα κατάστημα που είναι δικό σας: χωρίς προμήθειες σε κάθε πώληση. Εμείς το στήνουμε, ανεβάζουμε τα προϊόντα και συνδέουμε τις πληρωμές· εσείς αλλάζετε τιμές και προϊόντα από τον πίνακα, όποτε θέλετε.",
    "steps": "Μας λέτε πόσα και ποια προϊόντα έχετε\nΣτήνουμε το κατάστημα και ανεβάζουμε τα προϊόντα\nΣυνδέουμε τις πληρωμές στον δικό σας λογαριασμό\nΣας δείχνουμε τον πίνακα σε μια σύντομη κλήση",
-   "priceNote": "Από τον 2ο χρόνο 290 € / έτος",
-   "later": "Φιλοξενία e-shop από τον 2ο χρόνο: 290 € / έτος",
+   "priceNote": "Από τον 2ο χρόνο 296 € / έτος",
+   "later": "Φιλοξενία e-shop από τον 2ο χρόνο: 296 € / έτος",
    "unit": "once",
    "vat": 24,
    "active": true,
@@ -138,7 +138,7 @@ export default {
    "id": "social",
    "cat": "social",
    "name": "Διαχείριση Social Media",
-   "price": 4900,
+   "price": 5100,
    "unit": "month",
    "short": "Instagram & Facebook με την ταυτότητά σας — τα αναλαμβάνουμε όλα.",
    "desc": "• Reels, posts & carousels\n• Σχέδιο αναρτήσεων κάθε μήνα\n• Δεν χρειάζεται να μας στείλετε τίποτα\n• Μηνιαία αναφορά",
@@ -149,17 +149,17 @@ export default {
     {
      "id": "basic",
      "name": "8 αναρτήσεις",
-     "price": 4900
+     "price": 5100
     },
     {
      "id": "growth",
      "name": "12 αναρτήσεις",
-     "price": 7900
+     "price": 8100
     },
     {
      "id": "pro",
      "name": "16 αναρτήσεις",
-     "price": 9900
+     "price": 10200
     }
    ],
    "vat": 24,
@@ -173,7 +173,7 @@ export default {
    "id": "meta",
    "cat": "social",
    "name": "Meta Ads",
-   "price": 7900,
+   "price": 8100,
    "unit": "month",
    "example": true,
    "short": "Διαφημίσεις σε Facebook & Instagram που φέρνουν μηνύματα και κλήσεις.",
@@ -193,7 +193,7 @@ export default {
    "cat": "social",
    "name": "Google Ads",
    "price": 0,
-   "listPrice": 5900,
+   "listPrice": 6100,
    "unit": "month",
    "needsSite": true,
    "badge": "1ος μήνας δωρεάν",
@@ -202,7 +202,7 @@ export default {
    "long": "Όταν κάποιος γράφει στο Google αυτό που κάνετε, στην περιοχή σας, βλέπει πρώτα εσάς. Μετράμε κάθε κλήση και κάθε ραντεβού.",
    "steps": "Βρίσκουμε τι ψάχνουν οι πελάτες σας\nΣτήνουμε την καμπάνια και τη μέτρηση κλήσεων\nΤη βελτιώνουμε κάθε εβδομάδα\nΚάθε μήνα σας στέλνουμε αναφορά",
    "priceNote": "Ο 1ος μήνας δωρεάν",
-   "later": "Google Ads από τον 2ο μήνα: 59 € / μήνα",
+   "later": "Google Ads από τον 2ο μήνα: 61 € / μήνα",
    "vat": 24,
    "active": true,
    "maxQty": 1,
@@ -215,7 +215,7 @@ export default {
    "cat": "bundles",
    "kind": "bundle",
    "name": "Πακέτο Ξεκίνημα",
-   "price": 10900,
+   "price": 11200,
    "unit": "month",
    "example": true,
    "includes": [
@@ -232,7 +232,7 @@ export default {
     "b-full"
    ],
    "short": "Social Media (8 αναρτήσεις) + Meta Ads.",
-   "compareAt": 12800,
+   "compareAt": 13200,
    "priceNote": "Χωρίς δέσμευση",
    "vat": 24,
    "active": true,
@@ -246,7 +246,7 @@ export default {
    "cat": "bundles",
    "kind": "bundle",
    "name": "Πακέτο Ανάπτυξη",
-   "price": 13900,
+   "price": 14200,
    "unit": "month",
    "example": true,
    "includes": [
@@ -263,7 +263,7 @@ export default {
     "b-full"
    ],
    "short": "Social Media (12 αναρτήσεις) + Meta Ads.",
-   "compareAt": 15800,
+   "compareAt": 16200,
    "priceNote": "Χωρίς δέσμευση",
    "vat": 24,
    "active": true,
@@ -277,7 +277,7 @@ export default {
    "cat": "bundles",
    "kind": "bundle",
    "name": "Πακέτο Πλήρης προβολή",
-   "price": 17900,
+   "price": 18300,
    "unit": "month",
    "example": true,
    "includes": [
@@ -295,7 +295,7 @@ export default {
     "b-grow"
    ],
    "short": "Social Media (12 αναρτήσεις) + Meta Ads + Google Ads.",
-   "compareAt": 21700,
+   "compareAt": 22300,
    "priceNote": "Χωρίς δέσμευση",
    "vat": 24,
    "active": true,
@@ -308,7 +308,7 @@ export default {
    "id": "form",
    "cat": "extras",
    "name": "Φόρμα επικοινωνίας",
-   "price": 5000,
+   "price": 5200,
    "needsSite": true,
    "short": "Οι επισκέπτες σάς γράφουν — το λαμβάνετε στο e-mail σας.",
    "desc": "• Με προστασία από spam\n• Έρχεται στο e-mail σας\n• Σύμφωνη με τον GDPR",
@@ -324,7 +324,7 @@ export default {
    "id": "articles",
    "cat": "extras",
    "name": "Ενότητα άρθρων",
-   "price": 7000,
+   "price": 7200,
    "needsSite": true,
    "short": "Γράφετε και δημοσιεύετε άρθρα μόνοι σας.",
    "desc": "• Από το κινητό ή τον υπολογιστή\n• Κάθε άρθρο σε δική του σελίδα για το Google",
@@ -340,7 +340,7 @@ export default {
    "id": "panel",
    "cat": "extras",
    "name": "Πίνακας διαχείρισης",
-   "price": 18000,
+   "price": 18400,
    "needsSite": true,
    "short": "Αλλάζετε μόνοι σας κείμενα και φωτογραφίες.",
    "desc": "• Χωρίς τεχνικές γνώσεις\n• Οι αλλαγές φαίνονται αμέσως",
@@ -356,7 +356,7 @@ export default {
    "id": "quiz",
    "cat": "extras",
    "name": "Διαδραστικό τεστ",
-   "price": 18000,
+   "price": 18400,
    "needsSite": true,
    "short": "Λίγες ερωτήσεις στον επισκέπτη — οι απαντήσεις έρχονται σε εσάς.",
    "desc": "• Οι απαντήσεις στο e-mail σας\n• Φέρνει ραντεβού",
@@ -372,7 +372,7 @@ export default {
    "id": "ai",
    "cat": "extras",
    "name": "AI βοηθός",
-   "price": 2900,
+   "price": 3000,
    "unit": "month",
    "needsSite": true,
    "example": true,
@@ -390,7 +390,7 @@ export default {
    "id": "gbp",
    "cat": "extras",
    "name": "Google Maps + NFC stand",
-   "price": 9000,
+   "price": 9200,
    "short": "Πλήρες προφίλ στο Google Maps και stand για κριτικές με ένα άγγιγμα.",
    "desc": "• Κατηγορίες, ώρες, φωτογραφίες, υπηρεσίες\n• Stand στο γραφείο σας: κριτική με ένα άγγιγμα του κινητού",
    "unit": "once",
@@ -405,7 +405,7 @@ export default {
    "id": "booking",
    "cat": "extras",
    "name": "Online ραντεβού",
-   "price": 500,
+   "price": 550,
    "unit": "month",
    "short": "Οι πελάτες κλείνουν μόνοι τους ώρα — με υπενθυμίσεις.",
    "desc": "• Δική σας σελίδα κρατήσεων\n• Υπενθυμίσεις με e-mail",
@@ -413,12 +413,12 @@ export default {
     {
      "id": "one",
      "name": "1 άτομο",
-     "price": 500
+     "price": 550
     },
     {
      "id": "team",
      "name": "Ομάδα",
-     "price": 1500
+     "price": 1600
     }
    ],
    "priceNote": "Χωρίς δέσμευση",
@@ -433,7 +433,7 @@ export default {
    "id": "changes",
    "cat": "more",
    "name": "Αλλαγές σε ιστοσελίδα",
-   "price": 5000,
+   "price": 5200,
    "unit": "request",
    "maxQty": 5,
    "needsSite": true,
@@ -449,7 +449,7 @@ export default {
    "id": "renew",
    "cat": "more",
    "name": "Ανανέωση φιλοξενίας",
-   "price": 13000,
+   "price": 13300,
    "unit": "year",
    "needsSite": true,
    "link": "ananeosi.html",
@@ -458,12 +458,12 @@ export default {
     {
      "id": "hosting",
      "name": "Βασικό",
-     "price": 13000
+     "price": 13300
     },
     {
      "id": "growth",
      "name": "Growth",
-     "price": 47500
+     "price": 48500
     }
    ],
    "vat": 24,
@@ -477,7 +477,7 @@ export default {
    "id": "qr",
    "cat": "extras",
    "name": "Ψηφιακό μενού QR",
-   "price": 9000,
+   "price": 9200,
    "example": true,
    "short": "Δίγλωσσο μενού με φωτογραφίες — αλλάζετε τιμές όποτε θέλετε.",
    "desc": "• Για καφέ, εστιατόρια, μπαρ\n• Ελληνικά & Αγγλικά",
@@ -493,7 +493,7 @@ export default {
    "id": "wedding",
    "cat": "more",
    "name": "Ιστοσελίδα γάμου / βάπτισης",
-   "price": 9000,
+   "price": 9200,
    "example": true,
    "short": "Ένα link στο προσκλητήριο: εκκλησία, χάρτης, δήλωση παρουσίας.",
    "desc": "• Δήλωση παρουσίας online\n• Χάρτης για εκκλησία και δεξίωση",

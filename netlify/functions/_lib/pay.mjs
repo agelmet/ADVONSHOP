@@ -1,6 +1,6 @@
 /* Advon Shop — talking to Stripe and Viva (plain fetch, no SDK, nothing loaded in the visitor's browser).
    The visitor is SENT to the payment company's own page; card numbers never touch our site. */
-import { env, hmacHex, safeEqual, euro } from './core.mjs';
+import { env, hmacHex, safeEqual, euro, store } from './core.mjs';
 
 /* ================= STRIPE ================= */
 function form(obj, prefix = '', out = []) {
@@ -24,19 +24,99 @@ async function stripe(path, method = 'GET', params) {
   return d;
 }
 
+/* ---------- the shop's products, mirrored in the payment company's own product catalogue ----------
+   Same id in test and live: advon_<product>[_<option>]. The price charged is ALWAYS the one the server
+   calculates (price_data); the catalogue copy only gives tidy reports per product, pictures on the
+   payment page and ready prices for invoices or payment links. */
+export const stripeMode = () => /_live_/.test(env('STRIPE_SECRET_KEY')) ? 'live' : 'test';
+const mapKey = () => 'stripe/products-' + stripeMode() + '.json';
+export const stripePid = (pid, vid) => ('advon_' + pid + (vid ? '_' + vid : '')).replace(/[^A-Za-z0-9_-]/g, '_').slice(0, 60);
+export async function stripeProductMap(s = store()) { return (await s.get(mapKey(), { type: 'json' }).catch(() => null)) || { ids: {} }; }
+
+const UNIT_TXT = { month: 'ανά μήνα', year: 'ανά έτος', request: 'ανά αίτημα', once: 'εφάπαξ' };
+export function stripeCatalogItems(cat) {
+  const out = [];
+  for (const p of cat.products || []) {
+    if (p.active === false) continue;
+    const vat = Number.isFinite(p.vat) ? p.vat : (cat.vatDefault ?? 24);
+    const opts = (p.variants && p.variants.length) ? p.variants.map(v => ({ v, price: v.price })) : [{ v: null, price: p.listPrice || p.price }];
+    for (const { v, price } of opts) {
+      if (!price || price <= 0) continue;
+      const gross = cat.settings && cat.settings.pricesIncludeVat ? price : price + Math.round(price * vat / 100);
+      out.push({
+        id: stripePid(p.id, v && v.id), shop: p.id, variant: v ? v.id : '', unit: p.unit || 'once', gross,
+        name: p.name + (v ? ' — ' + v.name : ''),
+        description: [p.short, v && v.note].filter(Boolean).join(' · ').slice(0, 300) || undefined,
+        img: p.img ? String(p.img).replace(/\.webp$/, '.jpg') : ''
+      });
+    }
+  }
+  return out;
+}
+
+/* sync a few products per call (the panel calls again until done) */
+export async function stripeSync(cat, base, from = 0, n = 5, s = store()) {
+  const items = stripeCatalogItems(cat), map = await stripeProductMap(s);
+  const part = items.slice(from, from + n), log = [];
+  for (const it of part) {
+    const fields = {
+      name: it.name, description: it.description || '', active: 'true',
+      metadata: { shop_product: it.shop, shop_option: it.variant || '-', unit: it.unit },
+      url: base + '/'
+    };
+    if (it.img) fields.images = { 0: base + '/' + it.img };
+    let prod;
+    try { prod = await stripe('products/' + it.id); }
+    catch (e) { if (!/No such product/i.test(e.message)) throw e; }
+    if (prod) prod = await stripe('products/' + it.id, 'POST', fields);
+    else prod = await stripe('products', 'POST', { id: it.id, ...fields });
+    /* price: keep the current one if it already matches, otherwise add a new one and retire the old */
+    const want = { amount: it.gross, interval: it.unit === 'month' ? 'month' : it.unit === 'year' ? 'year' : null };
+    let price = null;
+    if (prod.default_price) {
+      const cur = await stripe('prices/' + (typeof prod.default_price === 'string' ? prod.default_price : prod.default_price.id));
+      const iv = cur.recurring ? cur.recurring.interval : null;
+      if (cur.active && cur.unit_amount === want.amount && iv === want.interval && cur.currency === 'eur') price = cur;
+    }
+    let state = 'ίδιο';
+    if (!price) {
+      const pp = { product: it.id, currency: 'eur', unit_amount: want.amount, nickname: UNIT_TXT[it.unit] + ' · με ΦΠΑ', lookup_key: it.id, transfer_lookup_key: 'true', metadata: { shop_product: it.shop, shop_option: it.variant || '-' } };
+      if (want.interval) pp.recurring = { interval: want.interval };
+      price = await stripe('prices', 'POST', pp);
+      const old = prod.default_price && (typeof prod.default_price === 'string' ? prod.default_price : prod.default_price.id);
+      await stripe('products/' + it.id, 'POST', { default_price: price.id });
+      if (old && old !== price.id) await stripe('prices/' + old, 'POST', { active: 'false' }).catch(() => {});
+      state = prod.created && Date.now() / 1000 - prod.created < 120 ? 'νέο' : 'νέα τιμή';
+    }
+    map.ids[it.id] = price.id;
+    log.push({ id: it.id, name: it.name, price: euro(it.gross, { always2: true }), state });
+  }
+  /* products that left the shop are switched off (never deleted) */
+  const next = from + part.length, done = next >= items.length;
+  if (done) {
+    const keep = new Set(items.map(i => i.id));
+    for (const id of Object.keys(map.ids)) if (!keep.has(id)) {
+      await stripe('products/' + id, 'POST', { active: 'false' }).catch(() => {});
+      delete map.ids[id]; log.push({ id, name: id, state: 'απενεργοποιήθηκε' });
+    }
+    map.at = new Date().toISOString();
+  }
+  await s.setJSON(mapKey(), map);
+  return { next, done, total: items.length, mode: stripeMode(), log };
+}
+
 /* one Stripe line per cart line, at the price the SERVER calculated (incl. VAT) */
 export async function stripeCheckout(order, base) {
   const pr = order.priced;
   const line_items = {};
+  const map = await stripeProductMap().catch(() => ({ ids: {} }));
   pr.lines.forEach((l, i) => {
-    line_items[i] = {
-      quantity: 1,
-      price_data: {
-        currency: 'eur',
-        unit_amount: l.gross,
-        product_data: { name: (l.qty > 1 ? l.qty + ' × ' : '') + l.name + (l.vname ? ' — ' + l.vname : ''), description: l.note ? l.note.slice(0, 200) : undefined }
-      }
-    };
+    const pid = stripePid(l.id, l.v);
+    const linked = map.ids[pid] && l.gross % l.qty === 0;   // product exists in the payment catalogue → reports per product
+    line_items[i] = linked
+      ? { quantity: l.qty, price_data: { currency: 'eur', unit_amount: l.gross / l.qty, product: pid } }
+      : { quantity: 1, price_data: { currency: 'eur', unit_amount: l.gross,
+          product_data: { name: (l.qty > 1 ? l.qty + ' × ' : '') + l.name + (l.vname ? ' — ' + l.vname : ''), description: l.note ? l.note.slice(0, 200) : undefined } } };
   });
   if (pr.shipping) line_items[pr.lines.length] = { quantity: 1, price_data: { currency: 'eur', unit_amount: pr.shipping, product_data: { name: 'Μεταφορικά' } } };
   const s = await stripe('checkout/sessions', 'POST', {

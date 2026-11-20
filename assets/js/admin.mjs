@@ -534,12 +534,27 @@ async function drawKeys() {
   const r = await api('keys'); if (!r.ok) { box.textContent = r.error || 'Σφάλμα'; return; }
   box.innerHTML = KEYDEF.map(([g, ks]) => `<div class="sub"><b>${g}</b><div class="grid2">${ks.map(([k, l, ph]) => { const v = r.keys[k] || {};
     return `<label class="field"><span>${l} ${v.set ? `<span class="status ok">✓ ${esc(v.end)}${v.fromHosting ? ' (hosting)' : ''}</span>` : '<span class="status no">κενό</span>'}</span><input data-key="${k}" type="${k === 'VIVA_ENV' || k === 'VIVA_SOURCE_CODE' ? 'text' : 'password'}" autocomplete="off" spellcheck="false" placeholder="${v.set ? 'αφήστε κενό για να μείνει ίδιο' : esc(ph)}"></label>`; }).join('')}</div></div>`).join('')
-    + `<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="ksave">Αποθήκευση κλειδιών</button><button class="btn ghost sm" id="kclear">Διαγραφή κλειδιού…</button></div>`;
+    + `<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="ksave">Αποθήκευση κλειδιών</button><button class="btn ghost sm" id="kclear">Διαγραφή κλειδιού…</button></div>`
+    + `<div class="sub" style="margin-top:16px"><b>Προϊόντα στο Stripe</b><p class="hint" style="margin:4px 0 10px">Περνά όλα τα προϊόντα του καταστήματος (όνομα, φωτογραφία, τιμή με ΦΠΑ) στον κατάλογο του Stripe, για καθαρές αναφορές ανά προϊόν. Πατήστε το μετά από αλλαγές σε τιμές ή προϊόντα. Ό,τι χρεώνεται υπολογίζεται πάντα από το κατάστημα.</p>`
+    + `<button class="btn ghost sm" id="ksync" ${r.keys.STRIPE_SECRET_KEY && r.keys.STRIPE_SECRET_KEY.set ? '' : 'disabled'}>Συγχρονισμός προϊόντων με Stripe</button><div id="ksynclog" class="hint" style="margin-top:8px"></div></div>`;
   $('#ksave').onclick = async () => {
     const keys = {}; $$('[data-key]').forEach(i => { if (i.value.trim()) keys[i.dataset.key] = i.value.trim(); });
     if (!Object.keys(keys).length) return toast('Δεν γράψατε κάποιο κλειδί.');
     const x = await api('setKeys', { keys }); if (!x.ok) return toast(x.error);
     S.pay = x.pay || S.pay; toast('Τα κλειδιά αποθηκεύτηκαν'); draw();
+  };
+  const ks = $('#ksync'); if (ks) ks.onclick = async () => {
+    ks.disabled = true; const out = $('#ksynclog'); let from = 0, done = false, rows = [], mode = '';
+    try {
+      while (!done) {
+        out.textContent = 'Συγχρονισμός… ' + from;
+        const x = await api('stripeSync', { from }); if (!x.ok) { out.textContent = x.error; break; }
+        rows = rows.concat(x.log || []); from = x.next; done = x.done; mode = x.mode;
+        out.textContent = 'Συγχρονισμός… ' + from + ' / ' + x.total;
+      }
+      if (done) { const nw = rows.filter(r => r.state !== 'ίδιο').length;
+        out.innerHTML = `✓ ${rows.length} προϊόντα στο Stripe (${mode === 'live' ? 'πραγματικός' : 'δοκιμαστικός'} λογαριασμός) · ${nw} νέα ή με νέα τιμή`; toast('Τα προϊόντα πέρασαν στο Stripe'); }
+    } finally { ks.disabled = false; }
   };
   $('#kclear').onclick = async () => {
     const name = prompt('Ποιο κλειδί να διαγραφεί; Γράψτε το όνομα, π.χ. STRIPE_SECRET_KEY'); if (!name) return;

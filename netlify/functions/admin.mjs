@@ -1,6 +1,7 @@
 /* POST /api/admin — everything the owner's panel does. Every action except «login» needs the panel token. */
 import { purgeCache } from '@netlify/functions';
-import { readCatalog, writeCatalog, store, json, bad, checkPass, makeToken, checkToken, getOrder, putOrder, markPaid, payMethods, rand, loadKeys, env, PANEL_KEYS, SCHEMA } from './_lib/core.mjs';
+import { readCatalog, writeCatalog, store, json, bad, checkPass, makeToken, checkToken, getOrder, putOrder, markPaid, payMethods, rand, loadKeys, env, PANEL_KEYS, SCHEMA, siteUrl } from './_lib/core.mjs';
+import { stripeSync } from './_lib/pay.mjs';
 
 const STATUSES = ['pending', 'awaiting_transfer', 'paid', 'done', 'cancelled', 'failed', 'refunded'];
 const isInt = (n, max = 1e8) => Number.isInteger(n) && n >= 0 && n <= max;
@@ -158,6 +159,12 @@ export default async (req) => {
       }
       await s.setJSON('secret/keys.json', k); await loadKeys(true); await purge();
       return json({ ok: true, pay: payMethods(await readCatalog(s)) });
+    }
+    case 'stripeSync': {
+      await loadKeys(true);
+      if (!env('STRIPE_SECRET_KEY')) return bad('Βάλτε πρώτα το Stripe Secret key.');
+      try { return json({ ok: true, ...(await stripeSync(await readCatalog(s), siteUrl(req), Math.max(0, Number(b.from) || 0), 5, s)) }); }
+      catch (e) { return bad('Stripe: ' + String(e.message || e).replace(/^Stripe: /, '').slice(0, 200)); }
     }
     case 'orders': return json({ ok: true, orders: (await listOrders(s)).map(o => { const x = { ...o }; delete x.token; return x; }) });
     case 'status': {

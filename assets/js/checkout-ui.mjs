@@ -7,8 +7,8 @@ import { euro } from './pricing.mjs';
 export function formHtml(cat) {
   const pay = cat.pay || {};
   const m = [];
-  if (pay.stripe) m.push(['stripe', 'Κάρτα, Apple Pay, Google Pay', 'Ασφαλής σελίδα της Stripe']);
-  if (pay.viva) m.push(['viva', 'Κάρτα ή IRIS', 'Ασφαλής σελίδα της Viva']);
+  if (pay.stripe) m.push(['stripe', 'Κάρτα, Apple Pay, Google Pay', 'Ασφαλής σελίδα πληρωμής']);
+  if (pay.viva) m.push(['viva', 'Κάρτα ή IRIS', 'Ασφαλής σελίδα πληρωμής']);
   if (pay.bank) m.push(['bank', 'Τραπεζική κατάθεση', 'Ξεκινάμε μόλις δούμε την κατάθεση']);
   return `<form class="cf" novalidate>
    <h3 class="subh" style="margin-top:22px">Τα στοιχεία σας</h3>
