@@ -118,7 +118,7 @@ export async function stripeSync(cat, base, from = 0, n = 5, s = store()) {
 }
 
 /* one Stripe line per cart line, at the price the SERVER calculated (incl. VAT) */
-export async function stripeCheckout(order, base) {
+export async function stripeCheckout(order, base, urls = null) {   // urls = {success, cancel} for pages outside the shop (advonmedia.com/ksekinima)
   const pr = order.priced;
   const line_items = {};
   const map = await stripeProductMap().catch(() => ({ ids: {} }));
@@ -139,8 +139,8 @@ export async function stripeCheckout(order, base) {
     line_items,
     metadata: { order: order.id },
     payment_intent_data: { description: 'Παραγγελία ' + order.id, metadata: { order: order.id } },
-    success_url: `${base}/order.html?o=${order.id}&k=${order.token}&sid={CHECKOUT_SESSION_ID}`,
-    cancel_url: `${base}/?cancel=${order.id}#cart`,
+    success_url: urls ? urls.success : `${base}/order.html?o=${order.id}&k=${order.token}&sid={CHECKOUT_SESSION_ID}`,
+    cancel_url: urls ? urls.cancel : `${base}/?cancel=${order.id}#cart`,
     expires_at: Math.floor(Date.now() / 1000) + 60 * 60
   });
   return { url: s.url, ref: s.id };
